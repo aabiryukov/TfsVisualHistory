@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="03C04FA1-E142-4F5C-83BD-EBCF54142A07" Version="1.3" Language="en-US" Publisher="Alexandr Biryukov" />
+    <DisplayName>TFS Source Control History Visualization</DisplayName>
+    <Description xml:space="preserve">An VS2012 extension to TFS source control history visualization based on Gource tool project.
+VS Extension created by Alexander Biryukov, e-mail: aabiryukov@gmail.com
+
+Related links:
+- Gource tool project: http://code.google.com/p/gource/
+- Visualizing tfs with Gource: http://mark-dot-net.blogspot.ru/2011/07/visualizing-tfs-repositories-with.html</Description>
+    <MoreInfo>http://www.sitonics.com</MoreInfo>
+    <License>License..txt</License>
+    <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
+    <Icon>Resources\Package.ico</Icon>
+    <PreviewImage>Resources\Preview.png</PreviewImage>
+    <Tags>TFS, Source Control, Visualization, History, Gource</Tags>
+  </Metadata>
+  <Installation InstalledByMsi="false">
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="11.0" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
+    <Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="11.0" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+  </Assets>
+</PackageManifest>

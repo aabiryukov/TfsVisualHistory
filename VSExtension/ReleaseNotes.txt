@@ -1,0 +1,43 @@
+﻿TFS Source Control History Visualization
+(Visual Studio Extension)
+
+How to use:
+1) Install this extension
+2) Open TFS "Source Control" window
+3) Select source control folder (or file) and click Right button
+4) Select in pop-up menu item "Visualize History (using Gource)"
+5) Enjoy the history visualization :)
+
+--------------------------------
+Release Notes
+--------------------------------
+
+v1.2 (12 Jan 2013)
+------------------
+Added Settings dialog with filters (by users/file types) and options.
+Added the ability to cancel the loading process.
+Added functionality to save/load settigs.
+Added Help (about hotkeys).
+Fixed formatting of file extensions.
+
+v1.1 (10 Jan 2013)
+------------------
+Fixed error when selecting history by file (not a folder).
+
+v1.0 (09 Jan 2013)
+------------------
+Initial release.
+Allow to show gource window for selected Source Contol path.
+Have progress window.
+Some limitations:
+- not yet customization;
+- not possible to cancel process while reading history from TFS;
+- supported VS2012 only;
+
+
+Contacts:
+Alexander Biryukov, email: aabiryukov@gmail.com
+
+Notes:
+The extension based on Gource visualization tool. 
+Gource project site: http://code.google.com/p/gource/
