@@ -51,14 +51,14 @@
         {
             get
             {
-                if (this.m_teamexpIntegrator == null)
+                if (m_teamexpIntegrator == null)
                 {
-                    this.m_teamexpIntegrator = new TeamExplorerIntegrator(
-                        this.GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility,
-                        (ITeamFoundationContextManager)this.GetService(typeof(ITeamFoundationContextManager)));
+                    m_teamexpIntegrator = new TeamExplorerIntegrator(
+                        GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility,
+                        (ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager)));
                 }
 
-                return this.m_teamexpIntegrator;
+                return m_teamexpIntegrator;
             }
         }
 
@@ -76,12 +76,12 @@
             base.Initialize();
 
             // Add our command handlers for menu (commands must exist in the .vsct file)
-            OleMenuCommandService mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (null != mcs)
             {
                 // Create the command for the menu item.
-                CommandID menuCommandID = new CommandID(GuidList.GuidTfsVisualHistoryVSExtensionCmdSet, (int)PkgCmdIDList.CmdidSitronicsMotionTooling);
-                var menuItem = new MenuCommand(this.MenuItemCallback, menuCommandID);
+                var menuCommandID = new CommandID(GuidList.GuidTfsVisualHistoryVSExtensionCmdSet, (int)PkgCmdIDList.CmdidSitronicsMotionTooling);
+                var menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
 /*
                 menuItem.BeforeQueryStatus += (sender, evt) =>
                 {
@@ -105,7 +105,7 @@
         /// </summary>
         private void MenuItemCallback(object sender, EventArgs e)
         {
-            IVsUIShell uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
+            var uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
              
             try
             {

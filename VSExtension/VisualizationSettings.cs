@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -39,22 +38,22 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         public static VisualizationSettings LoadFromFile(string fileName)
         {
-            using (StreamReader myReader = new StreamReader(fileName, false))
+            using (var myReader = new StreamReader(fileName, false))
             {
-                XmlSerializer xsSubmit = new XmlSerializer(typeof(VisualizationSettings));
+                var xsSubmit = new XmlSerializer(typeof(VisualizationSettings));
                 //                XmlWriter writer = XmlWriter.Create(myWriter);
                 var settings = (VisualizationSettings)xsSubmit.Deserialize(myReader);
                 return settings;
             }
         }
-
+/*
         private static void AddParameter(XmlElement root, string parameterName, string value)
         {
             var node = root.OwnerDocument.CreateElement(parameterName);
             node.InnerText = value;
             root.AppendChild(node);
         }
-
+*/
         public void SaveToFile(string fileName)
         {
 /*
@@ -67,9 +66,9 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             AddParameter(root, "xxx", "xxx");
  */
-            using (StreamWriter myWriter = new StreamWriter(fileName, false))
+            using (var myWriter = new StreamWriter(fileName, false))
             {
-                XmlSerializer xsSubmit = new XmlSerializer(typeof(VisualizationSettings));
+                var xsSubmit = new XmlSerializer(typeof(VisualizationSettings));
 //                XmlWriter writer = XmlWriter.Create(myWriter);
                 xsSubmit.Serialize(myWriter, this);
             }

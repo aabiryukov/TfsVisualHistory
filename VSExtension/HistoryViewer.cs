@@ -11,7 +11,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
     {
 //        private Uri m_tfsCollectionUri;
 //        string m_sourceControlFolder;
-        private VisualizationSettings m_settigs;
+        private readonly VisualizationSettings m_settigs;
         private bool m_canceled;
 
         private HistoryViewer(VisualizationSettings settigs)
@@ -24,7 +24,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             var settingForm = new SettingForm();
             settingForm.SetSourcePath(sourceControlFolder);
 
-            if (settingForm.ShowDialog() != System.Windows.Forms.DialogResult.OK) return;
+            if (settingForm.ShowDialog() != DialogResult.OK) return;
 
             var historyViewer = new HistoryViewer(settingForm.Settigs);
             historyViewer.ExecViewHistory(tfsCollectionUri, sourceControlFolder);
@@ -40,7 +40,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             var logFile = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
 
             bool hasLines;
-            using (var waitMessage = new Sitronics.Installer.UI.WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
+            using (var waitMessage = new Installer.UI.WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
             {
                 hasLines = 
                     TfsLogWriter.CreateGourceLogFile(
@@ -49,7 +49,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                         sourceControlFolder,
                         m_settigs,
                         ref m_canceled,
-                        (x) => 
+                        x => 
                         {
                             waitMessage.Text = "Loading history (" + x.ToString() + "% done) ...";
                         });
@@ -64,7 +64,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 return;
             }
 
-            var baseDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var baseDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "unknown";
             if (baseDirectory.Contains("Test"))
             {
                 baseDirectory += @"\..\..\..\VSExtension";
@@ -117,9 +117,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             arguments += " --max-files " + m_settigs.MaxFiles.ToString(CultureInfo.InvariantCulture);
 
-            var si = new ProcessStartInfo(gourcePath, arguments);
-            si.WindowStyle = ProcessWindowStyle.Maximized;
-            si.UseShellExecute = true;
+            var si = new ProcessStartInfo(gourcePath, arguments)
+                {
+                    WindowStyle = ProcessWindowStyle.Maximized,
+                    UseShellExecute = true
+                };
             Process.Start(si);
         }
     }
