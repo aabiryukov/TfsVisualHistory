@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
 
@@ -37,12 +31,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             // Loading recent configuration
             try
             {
-                if (File.Exists(RecentConfigurationFile))
-                {
-                    m_settigs = VisualizationSettings.LoadFromFile(RecentConfigurationFile);
-                }
-                else m_settigs = DefaultSettigs;
-
+                m_settigs = File.Exists(RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(RecentConfigurationFile) : DefaultSettigs;
                 SetSettigs(m_settigs);
             }
             catch (Exception ex)
@@ -62,35 +51,59 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             SetSettigs(DefaultSettigs);
         }
 
+        private static bool TryParseInt(string text, out int value)
+        {
+            return int.TryParse(text, NumberStyles.Integer, CultureInfo.CurrentCulture, out value);
+        }
+
         private VisualizationSettings GetSettigs()
         {
-            var settigs = new VisualizationSettings();
+            var settigs = new VisualizationSettings
+                {
+                    DateFrom = dateFromPicker.Value,
+                    DateTo = dateToPicker.Value,
+                    IncludeUsers = userIncludeTextBox.Text,
+                    ExcludeUsers = userExcludeTextBox.Text,
+                    IncludeFiles = filesIncludeTextBox.Text,
+                    ExcludeFiles = filesExcludeTextBox.Text,
+                    HideFileNames = hideFileNamesCheckBox.Checked,
+                    HideDirNames = hideDirNamesCheckBox.Checked,
+                    LoopPlayback = loopPlaybackCheckBox.Checked
+                };
 
-            settigs.DateFrom = dateFromPicker.Value;
-            settigs.DateTo = dateToPicker.Value;
-
-            settigs.IncludeUsers = userIncludeTextBox.Text;
-            settigs.ExcludeUsers = userExcludeTextBox.Text;
-
-            settigs.IncludeFiles = filesIncludeTextBox.Text;
-            settigs.ExcludeFiles = filesExcludeTextBox.Text;
-
-            settigs.HideFileNames = hideFileNamesCheckBox.Checked;
-
-            settigs.FullScreen = fullScreenCheckBox.Checked;
-
-            if (!int.TryParse(secondsPerDayTextBox.Text, out settigs.SecondsPerDay) || settigs.SecondsPerDay < 0 || settigs.SecondsPerDay > 1000)
+            if (!TryParseInt(secondsPerDayTextBox.Text, out settigs.SecondsPerDay) || settigs.SecondsPerDay < 0 || settigs.SecondsPerDay > 1000)
             {
                 MessageBox.Show("Incorrect value in 'Seconds Per Day'.", DialogCaption);
                 ActiveControl = secondsPerDayTextBox;
                 return null;
             }
 
-            if (!int.TryParse(maxFilesTextBox.Text, out settigs.MaxFiles) || settigs.MaxFiles < 1 || settigs.MaxFiles > 1000000)
+            if (!TryParseInt(maxFilesTextBox.Text, out settigs.MaxFiles) || settigs.MaxFiles < 1 || settigs.MaxFiles > 1000000)
             {
                 MessageBox.Show("Incorrect value in 'Max Files' (Range: 1-1000000).", DialogCaption);
                 ActiveControl = maxFilesTextBox;
                 return null;
+            }
+
+
+            settigs.FullScreen = fullScreenCheckBox.Checked;
+            settigs.SetResolution = setResolutionCheckBox.Checked;
+
+            if (setResolutionCheckBox.Checked)
+            {
+                if (!TryParseInt(resolutionWidthTextBox.Text, out settigs.ResolutionWidth) || settigs.ResolutionWidth < 100)
+                {
+                    MessageBox.Show("Incorrect value in 'Resolution width' (min: 100).", DialogCaption);
+                    ActiveControl = resolutionWidthTextBox;
+                    return null;
+                }
+
+                if (!TryParseInt(resolutionHeightTextBox.Text, out settigs.ResolutionHeight) || settigs.ResolutionHeight < 100)
+                {
+                    MessageBox.Show("Incorrect value in 'Resolution height' (min: 100).", DialogCaption);
+                    ActiveControl = resolutionHeightTextBox;
+                    return null;
+                }
             }
 
             return settigs;
@@ -108,10 +121,16 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             filesExcludeTextBox.Text = settigs.ExcludeFiles;
 
             hideFileNamesCheckBox.Checked = settigs.HideFileNames;
-            secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString();
+            hideDirNamesCheckBox.Checked = settigs.HideDirNames;
+            secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
+            loopPlaybackCheckBox.Checked = settigs.LoopPlayback;
 
             fullScreenCheckBox.Checked = settigs.FullScreen;
-            maxFilesTextBox.Text = settigs.MaxFiles.ToString();
+            setResolutionCheckBox.Checked = settigs.SetResolution;
+            resolutionWidthTextBox.Text = settigs.ResolutionWidth.ToString(CultureInfo.CurrentCulture);
+            resolutionHeightTextBox.Text = settigs.ResolutionHeight.ToString(CultureInfo.CurrentCulture);
+
+            maxFilesTextBox.Text = settigs.MaxFiles.ToString(CultureInfo.CurrentCulture);
         }
 
         private static string RecentConfigurationFile
@@ -170,7 +189,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             var settigs = GetSettigs();
             if (settigs == null) return;
 
-            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 settigs.SaveToFile(saveFileDialog1.FileName);
             }
@@ -178,7 +197,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         private void loadSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
@@ -195,6 +214,12 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         private void ShowError(Exception ex)
         {
             MessageBox.Show(this, ex.Message, DialogCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void setResolutionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            resolutionHeightTextBox.Enabled = setResolutionCheckBox.Checked;
+            resolutionWidthTextBox.Enabled = setResolutionCheckBox.Checked;
         }
     }
 }

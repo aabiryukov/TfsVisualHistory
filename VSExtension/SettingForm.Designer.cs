@@ -51,9 +51,9 @@
             this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.loopPlaybackCheckBox = new System.Windows.Forms.CheckBox();
             this.maxFilesTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.fullScreenCheckBox = new System.Windows.Forms.CheckBox();
             this.secondsPerDayTextBox = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.hideFileNamesCheckBox = new System.Windows.Forms.CheckBox();
@@ -68,18 +68,26 @@
             this.interactiveKeyboardCommandsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.setResolutionCheckBox = new System.Windows.Forms.CheckBox();
+            this.fullScreenCheckBox = new System.Windows.Forms.CheckBox();
+            this.resolutionHeightTextBox = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.resolutionWidthTextBox = new System.Windows.Forms.TextBox();
+            this.hideDirNamesCheckBox = new System.Windows.Forms.CheckBox();
             this.datesGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.okButton.Location = new System.Drawing.Point(392, 258);
+            this.okButton.Location = new System.Drawing.Point(392, 317);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(135, 23);
             this.okButton.TabIndex = 0;
@@ -91,7 +99,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(533, 258);
+            this.cancelButton.Location = new System.Drawing.Point(533, 317);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 1;
@@ -129,7 +137,7 @@
             this.datesGroupBox.Size = new System.Drawing.Size(308, 53);
             this.datesGroupBox.TabIndex = 5;
             this.datesGroupBox.TabStop = false;
-            this.datesGroupBox.Text = "Query histrory for the period";
+            this.datesGroupBox.Text = "History period";
             // 
             // dateToLabel
             // 
@@ -184,9 +192,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(61, 67);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(217, 13);
+            this.label4.Size = new System.Drawing.Size(183, 13);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Syntax example: *John*; MyDomain\\*; *robot";
+            this.label4.Text = "Example: *John*; MyDomain\\*; *robot";
             // 
             // userExcludeTextBox
             // 
@@ -226,7 +234,7 @@
             // resetToDefaultButton
             // 
             this.resetToDefaultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.resetToDefaultButton.Location = new System.Drawing.Point(15, 258);
+            this.resetToDefaultButton.Location = new System.Drawing.Point(15, 317);
             this.resetToDefaultButton.Name = "resetToDefaultButton";
             this.resetToDefaultButton.Size = new System.Drawing.Size(96, 23);
             this.resetToDefaultButton.TabIndex = 9;
@@ -253,9 +261,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(61, 67);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 13);
+            this.label5.Size = new System.Drawing.Size(92, 13);
             this.label5.TabIndex = 4;
-            this.label5.Text = "Syntax example: *.cs;*.txt";
+            this.label5.Text = "Example: *.cs;*.txt";
             // 
             // filesExcludeTextBox
             // 
@@ -294,22 +302,33 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.hideDirNamesCheckBox);
+            this.groupBox3.Controls.Add(this.loopPlaybackCheckBox);
             this.groupBox3.Controls.Add(this.maxFilesTextBox);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.fullScreenCheckBox);
             this.groupBox3.Controls.Add(this.secondsPerDayTextBox);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.hideFileNamesCheckBox);
-            this.groupBox3.Location = new System.Drawing.Point(14, 120);
+            this.groupBox3.Location = new System.Drawing.Point(15, 188);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(308, 117);
+            this.groupBox3.Size = new System.Drawing.Size(308, 123);
             this.groupBox3.TabIndex = 6;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Visualization";
             // 
+            // loopPlaybackCheckBox
+            // 
+            this.loopPlaybackCheckBox.AutoSize = true;
+            this.loopPlaybackCheckBox.Location = new System.Drawing.Point(13, 100);
+            this.loopPlaybackCheckBox.Name = "loopPlaybackCheckBox";
+            this.loopPlaybackCheckBox.Size = new System.Drawing.Size(96, 17);
+            this.loopPlaybackCheckBox.TabIndex = 6;
+            this.loopPlaybackCheckBox.Text = "Loop playback";
+            this.loopPlaybackCheckBox.UseVisualStyleBackColor = true;
+            // 
             // maxFilesTextBox
             // 
-            this.maxFilesTextBox.Location = new System.Drawing.Point(207, 91);
+            this.maxFilesTextBox.Location = new System.Drawing.Point(201, 74);
             this.maxFilesTextBox.MaxLength = 7;
             this.maxFilesTextBox.Name = "maxFilesTextBox";
             this.maxFilesTextBox.Size = new System.Drawing.Size(51, 20);
@@ -318,25 +337,15 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(9, 94);
+            this.label9.Location = new System.Drawing.Point(3, 74);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(133, 13);
             this.label9.TabIndex = 4;
             this.label9.Text = "Max number of active files:";
             // 
-            // fullScreenCheckBox
-            // 
-            this.fullScreenCheckBox.AutoSize = true;
-            this.fullScreenCheckBox.Location = new System.Drawing.Point(12, 22);
-            this.fullScreenCheckBox.Name = "fullScreenCheckBox";
-            this.fullScreenCheckBox.Size = new System.Drawing.Size(192, 17);
-            this.fullScreenCheckBox.TabIndex = 0;
-            this.fullScreenCheckBox.Text = "Full Screen mode (toggle Alt+Enter)";
-            this.fullScreenCheckBox.UseVisualStyleBackColor = true;
-            // 
             // secondsPerDayTextBox
             // 
-            this.secondsPerDayTextBox.Location = new System.Drawing.Point(207, 65);
+            this.secondsPerDayTextBox.Location = new System.Drawing.Point(201, 48);
             this.secondsPerDayTextBox.MaxLength = 5;
             this.secondsPerDayTextBox.Name = "secondsPerDayTextBox";
             this.secondsPerDayTextBox.Size = new System.Drawing.Size(51, 20);
@@ -345,7 +354,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(9, 68);
+            this.label8.Location = new System.Drawing.Point(3, 51);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(192, 13);
             this.label8.TabIndex = 2;
@@ -354,7 +363,7 @@
             // hideFileNamesCheckBox
             // 
             this.hideFileNamesCheckBox.AutoSize = true;
-            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(12, 45);
+            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(13, 28);
             this.hideFileNamesCheckBox.Name = "hideFileNamesCheckBox";
             this.hideFileNamesCheckBox.Size = new System.Drawing.Size(98, 17);
             this.hideFileNamesCheckBox.TabIndex = 1;
@@ -444,13 +453,88 @@
             this.openFileDialog1.Filter = "Setting|*.VHCfg";
             this.openFileDialog1.Title = "Open Visualization Settings";
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.setResolutionCheckBox);
+            this.groupBox4.Controls.Add(this.fullScreenCheckBox);
+            this.groupBox4.Controls.Add(this.resolutionHeightTextBox);
+            this.groupBox4.Controls.Add(this.label10);
+            this.groupBox4.Controls.Add(this.resolutionWidthTextBox);
+            this.groupBox4.Location = new System.Drawing.Point(14, 112);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(307, 70);
+            this.groupBox4.TabIndex = 10;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "View Size";
+            // 
+            // setResolutionCheckBox
+            // 
+            this.setResolutionCheckBox.AutoSize = true;
+            this.setResolutionCheckBox.Location = new System.Drawing.Point(14, 44);
+            this.setResolutionCheckBox.Name = "setResolutionCheckBox";
+            this.setResolutionCheckBox.Size = new System.Drawing.Size(95, 17);
+            this.setResolutionCheckBox.TabIndex = 7;
+            this.setResolutionCheckBox.Text = "Set Resolution";
+            this.setResolutionCheckBox.UseVisualStyleBackColor = true;
+            this.setResolutionCheckBox.CheckedChanged += new System.EventHandler(this.setResolutionCheckBox_CheckedChanged);
+            // 
+            // fullScreenCheckBox
+            // 
+            this.fullScreenCheckBox.AutoSize = true;
+            this.fullScreenCheckBox.Location = new System.Drawing.Point(14, 19);
+            this.fullScreenCheckBox.Name = "fullScreenCheckBox";
+            this.fullScreenCheckBox.Size = new System.Drawing.Size(192, 17);
+            this.fullScreenCheckBox.TabIndex = 6;
+            this.fullScreenCheckBox.Text = "Full Screen mode (toggle Alt+Enter)";
+            this.fullScreenCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // resolutionHeightTextBox
+            // 
+            this.resolutionHeightTextBox.Enabled = false;
+            this.resolutionHeightTextBox.Location = new System.Drawing.Point(190, 42);
+            this.resolutionHeightTextBox.MaxLength = 4;
+            this.resolutionHeightTextBox.Name = "resolutionHeightTextBox";
+            this.resolutionHeightTextBox.Size = new System.Drawing.Size(43, 20);
+            this.resolutionHeightTextBox.TabIndex = 4;
+            this.resolutionHeightTextBox.Text = "600";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(172, 45);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(12, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "x";
+            // 
+            // resolutionWidthTextBox
+            // 
+            this.resolutionWidthTextBox.Enabled = false;
+            this.resolutionWidthTextBox.Location = new System.Drawing.Point(119, 42);
+            this.resolutionWidthTextBox.MaxLength = 4;
+            this.resolutionWidthTextBox.Name = "resolutionWidthTextBox";
+            this.resolutionWidthTextBox.Size = new System.Drawing.Size(47, 20);
+            this.resolutionWidthTextBox.TabIndex = 2;
+            this.resolutionWidthTextBox.Text = "800";
+            // 
+            // hideDirNamesCheckBox
+            // 
+            this.hideDirNamesCheckBox.AutoSize = true;
+            this.hideDirNamesCheckBox.Location = new System.Drawing.Point(134, 27);
+            this.hideDirNamesCheckBox.Name = "hideDirNamesCheckBox";
+            this.hideDirNamesCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.hideDirNamesCheckBox.TabIndex = 7;
+            this.hideDirNamesCheckBox.Text = "Hide directory names";
+            this.hideDirNamesCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SettingForm
             // 
             this.AcceptButton = this.okButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(620, 293);
+            this.ClientSize = new System.Drawing.Size(620, 352);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.resetToDefaultButton);
@@ -480,6 +564,8 @@
             this.groupBox3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,7 +599,6 @@
         private System.Windows.Forms.CheckBox hideFileNamesCheckBox;
         private System.Windows.Forms.TextBox secondsPerDayTextBox;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.CheckBox fullScreenCheckBox;
         private System.Windows.Forms.TextBox maxFilesTextBox;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.MenuStrip menuStrip1;
@@ -527,5 +612,13 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox resolutionHeightTextBox;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox resolutionWidthTextBox;
+        private System.Windows.Forms.CheckBox setResolutionCheckBox;
+        private System.Windows.Forms.CheckBox fullScreenCheckBox;
+        private System.Windows.Forms.CheckBox loopPlaybackCheckBox;
+        private System.Windows.Forms.CheckBox hideDirNamesCheckBox;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
 
@@ -15,10 +16,17 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 		public DateTime DateFrom { get; set; }
 		public DateTime DateTo { get; set; }
 
-        public bool FullScreen;
         public bool HideFileNames;
+        public bool HideDirNames;
+        
         public int SecondsPerDay;
         public int MaxFiles;
+        public bool LoopPlayback;
+
+        public bool FullScreen;
+        public bool SetResolution;
+        public int ResolutionWidth;
+        public int ResolutionHeight;
 
         public VisualizationSettings()
         {
@@ -34,6 +42,9 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             HideFileNames = true;
             SecondsPerDay = 10;
             MaxFiles = 1000;
+
+            ResolutionWidth = Screen.PrimaryScreen.Bounds.Width;
+            ResolutionHeight = Screen.PrimaryScreen.Bounds.Height;
         }
 
         public static VisualizationSettings LoadFromFile(string fileName)

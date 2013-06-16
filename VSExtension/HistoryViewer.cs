@@ -90,7 +90,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
        //             + " --fullscreen"
 //                    + " --viewport " + System.Windows.Forms.SystemInformation.VirtualScreen.Width + "x" + System.Windows.Forms.SystemInformation.VirtualScreen.Height
                     + " --highlight-users"
-                    + " --user-image-dir Avatars"
+//                    + " --user-image-dir Avatars"
                     + " --logo \"{1}\""
                     + " --title \"{2}\"",
                     logFilePath, Path.Combine(dataPath, "Logo.png"), title
@@ -99,6 +99,19 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             if (m_settigs.FullScreen)
             {
                 arguments += " --fullscreen";
+
+                // By default gource not using full area of screen width ( It's a bug. Must be fixed in gource 0.41).
+                // Fixing fullscreen resolution to real full screen.
+                if (!m_settigs.SetResolution)
+                {
+                    var screenBounds = Screen.PrimaryScreen.Bounds;
+                    arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", screenBounds.Width, screenBounds.Height);
+                }
+            }
+
+            if (m_settigs.SetResolution)
+            {
+                arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", m_settigs.ResolutionWidth, m_settigs.ResolutionHeight);
             }
 
             if (m_settigs.SecondsPerDay == 0)
@@ -110,9 +123,25 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 arguments += " --seconds-per-day " + m_settigs.SecondsPerDay.ToString(CultureInfo.InvariantCulture);
             }
 
-            if (m_settigs.HideFileNames)
+            if (m_settigs.HideDirNames || m_settigs.HideFileNames)
             {
-                arguments += " --hide filenames";
+                var hideItems = string.Empty;
+                if (m_settigs.HideDirNames)
+                {
+                    hideItems = "dirnames";
+                }
+                if (m_settigs.HideFileNames)
+                {
+                    if (hideItems.Length > 0) hideItems += ",";
+                    hideItems += "filenames";
+                }
+
+                arguments += " --hide " + hideItems;
+            }
+
+            if (m_settigs.LoopPlayback)
+            {
+                arguments += " --loop";
             }
 
             arguments += " --max-files " + m_settigs.MaxFiles.ToString(CultureInfo.InvariantCulture);

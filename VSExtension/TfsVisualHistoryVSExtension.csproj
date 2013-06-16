@@ -241,7 +241,19 @@
     <Content Include="Gource\jpeg.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Gource\libboost_filesystem-mgw47-1_52.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Gource\libboost_system-mgw47-1_52.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Gource\libgcc_s_dw2-1.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Gource\libpng12-0.dll">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Gource\libstdc++-6.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Gource\pcre3.dll">
@@ -257,9 +269,6 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Gource\SDL_image.dll">
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="Gource\THANKS.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Gource\zlib1.dll">

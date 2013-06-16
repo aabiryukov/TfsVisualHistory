@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Sitronics.TfsVisualHistory.VSExtension.Utility;
+using System.Linq;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
 {
@@ -18,15 +18,14 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             ref bool cancelFlag,
 			Action<int> progressReporter)
 		{
-            var hasLines = false;
-
-			var credentials = new UICredentialsProvider();
-			var tpc = new TfsTeamProjectCollection(sourceControlUrl, credentials);
+//			var credentials = new UICredentialsProvider();
+            
+			var tpc = new TfsTeamProjectCollection(sourceControlUrl);
 			tpc.EnsureAuthenticated();
             if (cancelFlag) return false;
 
 			var vcs = tpc.GetService<VersionControlServer>();
-			int latestChangesetId = vcs.GetLatestChangesetId();
+//			int latestChangesetId = vcs.GetLatestChangesetId();
             if (cancelFlag) return false;
 
             var includeUsersWildcard = new Wildcard(settings.IncludeUsers, RegexOptions.IgnoreCase);
@@ -38,9 +37,36 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             var versionFrom = new DateVersionSpec(settings.DateFrom);
             var versionTo = new DateVersionSpec(settings.DateTo);
 
+            int latestChangesetId;
+            // Getting latest changeset ID for current search criteria
+		    {
+                var latestChanges = vcs.QueryHistory(
+                    serverPath,
+                    VersionSpec.Latest,
+                    0,
+                    RecursionType.Full,
+                    null, //any user
+                    versionFrom, // from first changeset
+                    versionTo, // to last changeset
+                    1,
+                    false, // with changes
+                    false,
+                    false,
+                    false); // sorted
+
+		        var latestChangeset = latestChanges.Cast<Changeset>().FirstOrDefault();
+                if (latestChangeset == null)
+                {
+                    // History not found
+                    return false;
+                }
+                latestChangesetId = latestChangeset.ChangesetId;
+                if (cancelFlag) return false;
+            }
+
 			using (var writer = new StreamWriter(outputFile))
 			{
-				IEnumerable csList = vcs.QueryHistory(
+				var csList = vcs.QueryHistory(
 					serverPath,
 					VersionSpec.Latest,
 					0,
@@ -54,13 +80,9 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 					false,
 					true); // sorted
 
-				var enumerator = csList.GetEnumerator();
-
-				while (enumerator.MoveNext())
-				{
+                foreach (var changeset in csList.Cast<Changeset>())
+                {
                     if (cancelFlag) return false;
-
-					var changeset = (Changeset)enumerator.Current;
 
 					if (progressReporter != null)
 						progressReporter(changeset.ChangesetId * 100 / latestChangesetId);
@@ -92,13 +114,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 							userName,
 							changeTypeCode,
                             fileName);
-
-                        hasLines = true;
 					}
 				}
 			}
 
-            return hasLines;
+            return true;
 		}
 
         private static string FormatFileName(string fileName)

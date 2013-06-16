@@ -12,6 +12,18 @@ How to use:
 Release Notes
 --------------------------------
 
+v1.4 (16 Jun 2013)
+------------------
+Adden new options: screen resolution, hide dirnames, loop playback
+Fixed fullscreen resolution
+Fixed progress percent calculation
+Gource updated to v0.40
+
+v1.3 (08 May 2013)
+------------------
+Code quality improvements.
+Sources published on Codeplex: https://tfsvisualhistory.codeplex.com/
+
 v1.2 (12 Jan 2013)
 ------------------
 Added Settings dialog with filters (by users/file types) and options.
