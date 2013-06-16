@@ -64,6 +64,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 if (cancelFlag) return false;
             }
 
+		    var firstChangesetId = 0;
+
 			using (var writer = new StreamWriter(outputFile))
 			{
 				var csList = vcs.QueryHistory(
@@ -84,10 +86,17 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 {
                     if (cancelFlag) return false;
 
-					if (progressReporter != null)
-						progressReporter(changeset.ChangesetId * 100 / latestChangesetId);
+                    if (firstChangesetId == 0) firstChangesetId = changeset.ChangesetId;
 
-					if (!FilterByUser(changeset, includeUsersWildcard, excludeUsersWildcard))
+                    if (progressReporter != null)
+                    {
+                        var progressValue = changeset.ChangesetId - firstChangesetId;
+                        var progressTotal = latestChangesetId - firstChangesetId;
+
+                        progressReporter(progressTotal > 0 ? progressValue * 100 / progressTotal : 100);
+                    }
+
+                    if (!FilterByUser(changeset, includeUsersWildcard, excludeUsersWildcard))
 						continue;
 
 					foreach (var change in changeset.Changes)
