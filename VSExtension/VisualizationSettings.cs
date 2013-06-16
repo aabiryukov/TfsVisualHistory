@@ -29,6 +29,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         public bool HideFileNames;
         public bool HideDirNames;
+        public bool HideUserNames;
         
         public int SecondsPerDay;
         public TimeScaleOption TimeScale;

@@ -68,6 +68,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     ExcludeFiles = filesExcludeTextBox.Text,
                     HideFileNames = hideFileNamesCheckBox.Checked,
                     HideDirNames = hideDirNamesCheckBox.Checked,
+                    HideUserNames = hideUserNamesCheckBox.Checked,
                     LoopPlayback = loopPlaybackCheckBox.Checked
                 };
 
@@ -138,6 +139,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             hideFileNamesCheckBox.Checked = settigs.HideFileNames;
             hideDirNamesCheckBox.Checked = settigs.HideDirNames;
+            hideUserNamesCheckBox.Checked = settigs.HideUserNames;
+            
             timeScaleComboBox.SelectedIndex = (int)settigs.TimeScale;
             secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
             loopPlaybackCheckBox.Checked = settigs.LoopPlayback;

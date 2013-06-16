@@ -151,7 +151,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     arguments += " --time-scale " + optionValue;
             }
 
-            if (m_settigs.HideDirNames || m_settigs.HideFileNames)
+            // Process "--hide" option
             {
                 var hideItems = string.Empty;
                 if (m_settigs.HideDirNames)
@@ -163,8 +163,14 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     if (hideItems.Length > 0) hideItems += ",";
                     hideItems += "filenames";
                 }
+                if (m_settigs.HideUserNames)
+                {
+                    if (hideItems.Length > 0) hideItems += ",";
+                    hideItems += "usernames";
+                }
 
-                arguments += " --hide " + hideItems;
+                if (hideItems.Length > 0)
+                    arguments += " --hide " + hideItems;
             }
 
             if (m_settigs.LoopPlayback)

@@ -51,6 +51,8 @@
             this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.timeScaleComboBox = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.hideDirNamesCheckBox = new System.Windows.Forms.CheckBox();
             this.loopPlaybackCheckBox = new System.Windows.Forms.CheckBox();
             this.maxFilesTextBox = new System.Windows.Forms.TextBox();
@@ -75,8 +77,8 @@
             this.resolutionHeightTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.resolutionWidthTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.timeScaleComboBox = new System.Windows.Forms.ComboBox();
+            this.hideUserNamesCheckBox = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.datesGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -304,6 +306,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.hideUserNamesCheckBox);
             this.groupBox3.Controls.Add(this.timeScaleComboBox);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.hideDirNamesCheckBox);
@@ -320,14 +324,40 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Visualization";
             // 
+            // timeScaleComboBox
+            // 
+            this.timeScaleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timeScaleComboBox.FormattingEnabled = true;
+            this.timeScaleComboBox.Items.AddRange(new object[] {
+            "<None>",
+            "Slow x1/8",
+            "Slow x1/4",
+            "Slow x1/2",
+            "Fast x2",
+            "Fast x3",
+            "Fast x4"});
+            this.timeScaleComboBox.Location = new System.Drawing.Point(170, 74);
+            this.timeScaleComboBox.Name = "timeScaleComboBox";
+            this.timeScaleComboBox.Size = new System.Drawing.Size(82, 21);
+            this.timeScaleComboBox.TabIndex = 7;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 77);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(61, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Time scale:";
+            // 
             // hideDirNamesCheckBox
             // 
             this.hideDirNamesCheckBox.AutoSize = true;
-            this.hideDirNamesCheckBox.Location = new System.Drawing.Point(134, 27);
+            this.hideDirNamesCheckBox.Location = new System.Drawing.Point(132, 26);
             this.hideDirNamesCheckBox.Name = "hideDirNamesCheckBox";
-            this.hideDirNamesCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.hideDirNamesCheckBox.TabIndex = 1;
-            this.hideDirNamesCheckBox.Text = "Hide directory names";
+            this.hideDirNamesCheckBox.Size = new System.Drawing.Size(76, 17);
+            this.hideDirNamesCheckBox.TabIndex = 2;
+            this.hideDirNamesCheckBox.Text = "Directories";
             this.hideDirNamesCheckBox.UseVisualStyleBackColor = true;
             // 
             // loopPlaybackCheckBox
@@ -336,7 +366,7 @@
             this.loopPlaybackCheckBox.Location = new System.Drawing.Point(9, 128);
             this.loopPlaybackCheckBox.Name = "loopPlaybackCheckBox";
             this.loopPlaybackCheckBox.Size = new System.Drawing.Size(96, 17);
-            this.loopPlaybackCheckBox.TabIndex = 8;
+            this.loopPlaybackCheckBox.TabIndex = 10;
             this.loopPlaybackCheckBox.Text = "Loop playback";
             this.loopPlaybackCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -346,7 +376,7 @@
             this.maxFilesTextBox.MaxLength = 7;
             this.maxFilesTextBox.Name = "maxFilesTextBox";
             this.maxFilesTextBox.Size = new System.Drawing.Size(51, 20);
-            this.maxFilesTextBox.TabIndex = 7;
+            this.maxFilesTextBox.TabIndex = 9;
             // 
             // label9
             // 
@@ -354,7 +384,7 @@
             this.label9.Location = new System.Drawing.Point(7, 101);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(133, 13);
-            this.label9.TabIndex = 6;
+            this.label9.TabIndex = 8;
             this.label9.Text = "Max number of active files:";
             // 
             // secondsPerDayTextBox
@@ -363,7 +393,7 @@
             this.secondsPerDayTextBox.MaxLength = 5;
             this.secondsPerDayTextBox.Name = "secondsPerDayTextBox";
             this.secondsPerDayTextBox.Size = new System.Drawing.Size(51, 20);
-            this.secondsPerDayTextBox.TabIndex = 3;
+            this.secondsPerDayTextBox.TabIndex = 5;
             // 
             // label8
             // 
@@ -371,17 +401,17 @@
             this.label8.Location = new System.Drawing.Point(7, 51);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(192, 13);
-            this.label8.TabIndex = 2;
+            this.label8.TabIndex = 4;
             this.label8.Text = "Seconds per day (1-1000, 0 - real time):";
             // 
             // hideFileNamesCheckBox
             // 
             this.hideFileNamesCheckBox.AutoSize = true;
-            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(13, 27);
+            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(79, 26);
             this.hideFileNamesCheckBox.Name = "hideFileNamesCheckBox";
-            this.hideFileNamesCheckBox.Size = new System.Drawing.Size(98, 17);
-            this.hideFileNamesCheckBox.TabIndex = 0;
-            this.hideFileNamesCheckBox.Text = "Hide file names";
+            this.hideFileNamesCheckBox.Size = new System.Drawing.Size(47, 17);
+            this.hideFileNamesCheckBox.TabIndex = 1;
+            this.hideFileNamesCheckBox.Text = "Files";
             this.hideFileNamesCheckBox.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
@@ -531,31 +561,24 @@
             this.resolutionWidthTextBox.TabIndex = 2;
             this.resolutionWidthTextBox.Text = "800";
             // 
-            // label11
+            // hideUserNamesCheckBox
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 77);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 13);
-            this.label11.TabIndex = 4;
-            this.label11.Text = "Time scale:";
+            this.hideUserNamesCheckBox.AutoSize = true;
+            this.hideUserNamesCheckBox.Location = new System.Drawing.Point(214, 26);
+            this.hideUserNamesCheckBox.Name = "hideUserNamesCheckBox";
+            this.hideUserNamesCheckBox.Size = new System.Drawing.Size(53, 17);
+            this.hideUserNamesCheckBox.TabIndex = 3;
+            this.hideUserNamesCheckBox.Text = "Users";
+            this.hideUserNamesCheckBox.UseVisualStyleBackColor = true;
             // 
-            // timeScaleComboBox
+            // label12
             // 
-            this.timeScaleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.timeScaleComboBox.FormattingEnabled = true;
-            this.timeScaleComboBox.Items.AddRange(new object[] {
-            "<None>",
-            "Slow x1/8",
-            "Slow x1/4",
-            "Slow x1/2",
-            "Fast x2",
-            "Fast x3",
-            "Fast x4"});
-            this.timeScaleComboBox.Location = new System.Drawing.Point(170, 74);
-            this.timeScaleComboBox.Name = "timeScaleComboBox";
-            this.timeScaleComboBox.Size = new System.Drawing.Size(82, 21);
-            this.timeScaleComboBox.TabIndex = 5;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 26);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(66, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "Hide names:";
             // 
             // SettingForm
             // 
@@ -652,5 +675,7 @@
         private System.Windows.Forms.CheckBox hideDirNamesCheckBox;
         private System.Windows.Forms.ComboBox timeScaleComboBox;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.CheckBox hideUserNamesCheckBox;
     }
 }

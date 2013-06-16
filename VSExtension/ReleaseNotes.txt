@@ -12,6 +12,10 @@ How to use:
 Release Notes
 --------------------------------
 
+v1.5 (XX Jun 2013)
+------------------
+Added new option "Hide user names" (useful for large teams)
+
 v1.5 (16 Jun 2013)
 ------------------
 Added new option "Time scale": x1/8 (slow) - x4 (fast)
