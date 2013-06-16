@@ -87,9 +87,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             var arguments =
                 string.Format(CultureInfo.InvariantCulture,
                     " \"{0}\" "
-       //             + " --fullscreen"
-//                    + " --viewport " + System.Windows.Forms.SystemInformation.VirtualScreen.Width + "x" + System.Windows.Forms.SystemInformation.VirtualScreen.Height
                     + " --highlight-users"
+//                    + " --auto-skip-seconds 1"
 //                    + " --user-image-dir Avatars"
                     + " --logo \"{1}\""
                     + " --title \"{2}\"",
@@ -121,6 +120,35 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             else
             {
                 arguments += " --seconds-per-day " + m_settigs.SecondsPerDay.ToString(CultureInfo.InvariantCulture);
+            }
+
+            if (m_settigs.TimeScale != VisualizationSettings.TimeScaleOption.None)
+            {
+                string optionValue = null;
+                switch (m_settigs.TimeScale)
+                {
+                    case VisualizationSettings.TimeScaleOption.Slow8:
+                        optionValue = "0.125";
+                        break;
+                    case VisualizationSettings.TimeScaleOption.Slow4:
+                        optionValue = "0.25";
+                        break;
+                    case VisualizationSettings.TimeScaleOption.Slow2:
+                        optionValue = "0.5";
+                        break;
+                    case VisualizationSettings.TimeScaleOption.Fast2:
+                        optionValue = "2";
+                        break;
+                    case VisualizationSettings.TimeScaleOption.Fast3:
+                        optionValue = "3";
+                        break;
+                    case VisualizationSettings.TimeScaleOption.Fast4:
+                        optionValue = "4";
+                        break;
+                }
+
+                if (optionValue != null)
+                    arguments += " --time-scale " + optionValue;
             }
 
             if (m_settigs.HideDirNames || m_settigs.HideFileNames)

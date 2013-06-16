@@ -12,9 +12,13 @@ How to use:
 Release Notes
 --------------------------------
 
+v1.5 (16 Jun 2013)
+------------------
+Added new option "Time scale": x1/8 (slow) - x4 (fast)
+
 v1.4 (16 Jun 2013)
 ------------------
-Adden new options: screen resolution, hide dirnames, loop playback
+Added new options: screen resolution, hide dirnames, loop playback
 Fixed fullscreen resolution
 Fixed progress percent calculation
 Gource updated to v0.40

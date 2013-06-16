@@ -71,6 +71,22 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     LoopPlayback = loopPlaybackCheckBox.Checked
                 };
 
+            if (timeScaleComboBox.SelectedIndex >= 0)
+            {
+                var timeScaleMapping = new[]
+                    {
+                        VisualizationSettings.TimeScaleOption.None,
+                        VisualizationSettings.TimeScaleOption.Slow8,
+                        VisualizationSettings.TimeScaleOption.Slow4,
+                        VisualizationSettings.TimeScaleOption.Slow2,
+                        VisualizationSettings.TimeScaleOption.Fast2,
+                        VisualizationSettings.TimeScaleOption.Fast3,
+                        VisualizationSettings.TimeScaleOption.Fast4
+                    };
+
+                settigs.TimeScale = timeScaleMapping[timeScaleComboBox.SelectedIndex];
+            }
+
             if (!TryParseInt(secondsPerDayTextBox.Text, out settigs.SecondsPerDay) || settigs.SecondsPerDay < 0 || settigs.SecondsPerDay > 1000)
             {
                 MessageBox.Show("Incorrect value in 'Seconds Per Day'.", DialogCaption);
@@ -122,6 +138,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             hideFileNamesCheckBox.Checked = settigs.HideFileNames;
             hideDirNamesCheckBox.Checked = settigs.HideDirNames;
+            timeScaleComboBox.SelectedIndex = (int)settigs.TimeScale;
             secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
             loopPlaybackCheckBox.Checked = settigs.LoopPlayback;
 

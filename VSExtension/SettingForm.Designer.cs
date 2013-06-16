@@ -51,6 +51,7 @@
             this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.hideDirNamesCheckBox = new System.Windows.Forms.CheckBox();
             this.loopPlaybackCheckBox = new System.Windows.Forms.CheckBox();
             this.maxFilesTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -74,7 +75,8 @@
             this.resolutionHeightTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.resolutionWidthTextBox = new System.Windows.Forms.TextBox();
-            this.hideDirNamesCheckBox = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.timeScaleComboBox = new System.Windows.Forms.ComboBox();
             this.datesGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -87,7 +89,7 @@
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.okButton.Location = new System.Drawing.Point(392, 317);
+            this.okButton.Location = new System.Drawing.Point(392, 351);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(135, 23);
             this.okButton.TabIndex = 0;
@@ -99,7 +101,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(533, 317);
+            this.cancelButton.Location = new System.Drawing.Point(533, 351);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 1;
@@ -134,7 +136,7 @@
             this.datesGroupBox.Controls.Add(this.dateFromPicker);
             this.datesGroupBox.Location = new System.Drawing.Point(14, 53);
             this.datesGroupBox.Name = "datesGroupBox";
-            this.datesGroupBox.Size = new System.Drawing.Size(308, 53);
+            this.datesGroupBox.Size = new System.Drawing.Size(307, 53);
             this.datesGroupBox.TabIndex = 5;
             this.datesGroupBox.TabStop = false;
             this.datesGroupBox.Text = "History period";
@@ -183,7 +185,7 @@
             this.groupBox1.Location = new System.Drawing.Point(328, 53);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(280, 89);
-            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "User name filter";
             // 
@@ -234,10 +236,10 @@
             // resetToDefaultButton
             // 
             this.resetToDefaultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.resetToDefaultButton.Location = new System.Drawing.Point(15, 317);
+            this.resetToDefaultButton.Location = new System.Drawing.Point(15, 351);
             this.resetToDefaultButton.Name = "resetToDefaultButton";
             this.resetToDefaultButton.Size = new System.Drawing.Size(96, 23);
-            this.resetToDefaultButton.TabIndex = 9;
+            this.resetToDefaultButton.TabIndex = 10;
             this.resetToDefaultButton.Text = "Restore &Defaults";
             this.resetToDefaultButton.UseVisualStyleBackColor = true;
             this.resetToDefaultButton.Click += new System.EventHandler(this.resetToDefaultButton_Click);
@@ -252,7 +254,7 @@
             this.groupBox2.Location = new System.Drawing.Point(328, 148);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(280, 89);
-            this.groupBox2.TabIndex = 8;
+            this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "File type filter";
             // 
@@ -302,6 +304,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.timeScaleComboBox);
+            this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.hideDirNamesCheckBox);
             this.groupBox3.Controls.Add(this.loopPlaybackCheckBox);
             this.groupBox3.Controls.Add(this.maxFilesTextBox);
@@ -311,36 +315,46 @@
             this.groupBox3.Controls.Add(this.hideFileNamesCheckBox);
             this.groupBox3.Location = new System.Drawing.Point(15, 188);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(308, 123);
-            this.groupBox3.TabIndex = 6;
+            this.groupBox3.Size = new System.Drawing.Size(306, 151);
+            this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Visualization";
+            // 
+            // hideDirNamesCheckBox
+            // 
+            this.hideDirNamesCheckBox.AutoSize = true;
+            this.hideDirNamesCheckBox.Location = new System.Drawing.Point(134, 27);
+            this.hideDirNamesCheckBox.Name = "hideDirNamesCheckBox";
+            this.hideDirNamesCheckBox.Size = new System.Drawing.Size(125, 17);
+            this.hideDirNamesCheckBox.TabIndex = 1;
+            this.hideDirNamesCheckBox.Text = "Hide directory names";
+            this.hideDirNamesCheckBox.UseVisualStyleBackColor = true;
             // 
             // loopPlaybackCheckBox
             // 
             this.loopPlaybackCheckBox.AutoSize = true;
-            this.loopPlaybackCheckBox.Location = new System.Drawing.Point(13, 100);
+            this.loopPlaybackCheckBox.Location = new System.Drawing.Point(9, 128);
             this.loopPlaybackCheckBox.Name = "loopPlaybackCheckBox";
             this.loopPlaybackCheckBox.Size = new System.Drawing.Size(96, 17);
-            this.loopPlaybackCheckBox.TabIndex = 6;
+            this.loopPlaybackCheckBox.TabIndex = 8;
             this.loopPlaybackCheckBox.Text = "Loop playback";
             this.loopPlaybackCheckBox.UseVisualStyleBackColor = true;
             // 
             // maxFilesTextBox
             // 
-            this.maxFilesTextBox.Location = new System.Drawing.Point(201, 74);
+            this.maxFilesTextBox.Location = new System.Drawing.Point(201, 101);
             this.maxFilesTextBox.MaxLength = 7;
             this.maxFilesTextBox.Name = "maxFilesTextBox";
             this.maxFilesTextBox.Size = new System.Drawing.Size(51, 20);
-            this.maxFilesTextBox.TabIndex = 5;
+            this.maxFilesTextBox.TabIndex = 7;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 74);
+            this.label9.Location = new System.Drawing.Point(7, 101);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(133, 13);
-            this.label9.TabIndex = 4;
+            this.label9.TabIndex = 6;
             this.label9.Text = "Max number of active files:";
             // 
             // secondsPerDayTextBox
@@ -354,7 +368,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 51);
+            this.label8.Location = new System.Drawing.Point(7, 51);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(192, 13);
             this.label8.TabIndex = 2;
@@ -363,10 +377,10 @@
             // hideFileNamesCheckBox
             // 
             this.hideFileNamesCheckBox.AutoSize = true;
-            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(13, 28);
+            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(13, 27);
             this.hideFileNamesCheckBox.Name = "hideFileNamesCheckBox";
             this.hideFileNamesCheckBox.Size = new System.Drawing.Size(98, 17);
-            this.hideFileNamesCheckBox.TabIndex = 1;
+            this.hideFileNamesCheckBox.TabIndex = 0;
             this.hideFileNamesCheckBox.Text = "Hide file names";
             this.hideFileNamesCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -463,7 +477,7 @@
             this.groupBox4.Location = new System.Drawing.Point(14, 112);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(307, 70);
-            this.groupBox4.TabIndex = 10;
+            this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "View Size";
             // 
@@ -473,7 +487,7 @@
             this.setResolutionCheckBox.Location = new System.Drawing.Point(14, 44);
             this.setResolutionCheckBox.Name = "setResolutionCheckBox";
             this.setResolutionCheckBox.Size = new System.Drawing.Size(95, 17);
-            this.setResolutionCheckBox.TabIndex = 7;
+            this.setResolutionCheckBox.TabIndex = 1;
             this.setResolutionCheckBox.Text = "Set Resolution";
             this.setResolutionCheckBox.UseVisualStyleBackColor = true;
             this.setResolutionCheckBox.CheckedChanged += new System.EventHandler(this.setResolutionCheckBox_CheckedChanged);
@@ -484,7 +498,7 @@
             this.fullScreenCheckBox.Location = new System.Drawing.Point(14, 19);
             this.fullScreenCheckBox.Name = "fullScreenCheckBox";
             this.fullScreenCheckBox.Size = new System.Drawing.Size(192, 17);
-            this.fullScreenCheckBox.TabIndex = 6;
+            this.fullScreenCheckBox.TabIndex = 0;
             this.fullScreenCheckBox.Text = "Full Screen mode (toggle Alt+Enter)";
             this.fullScreenCheckBox.UseVisualStyleBackColor = true;
             // 
@@ -495,7 +509,7 @@
             this.resolutionHeightTextBox.MaxLength = 4;
             this.resolutionHeightTextBox.Name = "resolutionHeightTextBox";
             this.resolutionHeightTextBox.Size = new System.Drawing.Size(43, 20);
-            this.resolutionHeightTextBox.TabIndex = 4;
+            this.resolutionHeightTextBox.TabIndex = 3;
             this.resolutionHeightTextBox.Text = "600";
             // 
             // label10
@@ -517,15 +531,31 @@
             this.resolutionWidthTextBox.TabIndex = 2;
             this.resolutionWidthTextBox.Text = "800";
             // 
-            // hideDirNamesCheckBox
+            // label11
             // 
-            this.hideDirNamesCheckBox.AutoSize = true;
-            this.hideDirNamesCheckBox.Location = new System.Drawing.Point(134, 27);
-            this.hideDirNamesCheckBox.Name = "hideDirNamesCheckBox";
-            this.hideDirNamesCheckBox.Size = new System.Drawing.Size(125, 17);
-            this.hideDirNamesCheckBox.TabIndex = 7;
-            this.hideDirNamesCheckBox.Text = "Hide directory names";
-            this.hideDirNamesCheckBox.UseVisualStyleBackColor = true;
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 77);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(61, 13);
+            this.label11.TabIndex = 4;
+            this.label11.Text = "Time scale:";
+            // 
+            // timeScaleComboBox
+            // 
+            this.timeScaleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timeScaleComboBox.FormattingEnabled = true;
+            this.timeScaleComboBox.Items.AddRange(new object[] {
+            "<None>",
+            "Slow x1/8",
+            "Slow x1/4",
+            "Slow x1/2",
+            "Fast x2",
+            "Fast x3",
+            "Fast x4"});
+            this.timeScaleComboBox.Location = new System.Drawing.Point(170, 74);
+            this.timeScaleComboBox.Name = "timeScaleComboBox";
+            this.timeScaleComboBox.Size = new System.Drawing.Size(82, 21);
+            this.timeScaleComboBox.TabIndex = 5;
             // 
             // SettingForm
             // 
@@ -533,7 +563,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(620, 352);
+            this.ClientSize = new System.Drawing.Size(620, 386);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -620,5 +650,7 @@
         private System.Windows.Forms.CheckBox fullScreenCheckBox;
         private System.Windows.Forms.CheckBox loopPlaybackCheckBox;
         private System.Windows.Forms.CheckBox hideDirNamesCheckBox;
+        private System.Windows.Forms.ComboBox timeScaleComboBox;
+        private System.Windows.Forms.Label label11;
     }
 }

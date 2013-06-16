@@ -7,6 +7,17 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 {
 	public class VisualizationSettings
 	{
+        public enum TimeScaleOption
+        {
+            None,
+            Slow8 = 1,
+            Slow4 = 2,
+            Slow2 = 3,
+            Fast2 = 4,
+            Fast3 = 5,
+            Fast4 = 6
+        }
+
         public string IncludeUsers;
         public string ExcludeUsers;
 
@@ -20,6 +31,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         public bool HideDirNames;
         
         public int SecondsPerDay;
+        public TimeScaleOption TimeScale;
         public int MaxFiles;
         public bool LoopPlayback;
 
@@ -40,6 +52,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             ExcludeFiles = "";
 
             HideFileNames = true;
+            TimeScale = TimeScaleOption.None;
             SecondsPerDay = 10;
             MaxFiles = 1000;
 
