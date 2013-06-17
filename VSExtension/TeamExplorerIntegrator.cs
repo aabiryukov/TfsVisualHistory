@@ -13,84 +13,68 @@
 
     public interface ITeamExplorerIntegrator
     {
-        Uri TPCollectionUri { get; }
+        Uri TeamProjectCollectionUri { get; }
 
-        string TPName { get; set; }
+        string TeamProjectName { get; set; }
 
         string CurrentSourceControlFolder { get; }
 
-        void SetSourceControlExplorerDirty(string p);
+        void SetSourceControlExplorerDirty(string serverPath);
 
         void RefreshSourceControlExplorer();
     }
 
     public class TeamExplorerIntegrator : ITeamExplorerIntegrator
     {
-        private ITeamFoundationContextManager m_tfsContextManager;
+//        private ITeamFoundationContextManager m_tfsContextManager;
         private readonly DTE2 m_applicationObject;
-        ////private AddIn _addInInstance; 
 
         private readonly VersionControlExt m_srcCtrlExplorer;
         private TeamFoundationServerExt m_tfsExt;
-        private TfsTeamProjectCollection m_tfsTpCollection;
 
         private readonly List<string> m_dirtyPath;
  
         /// <summary>Initializes a new instance of the TeamExplorerIntegrator class, The constructor for the Add-in object. Place your initialization code within this method.</summary> 
         public TeamExplorerIntegrator(EnvDTE.IVsExtensibility extensibility, ITeamFoundationContextManager te)
         {
-            this.m_dirtyPath = new List<string>();
-            this.m_tfsContextManager = te;
+            if (extensibility == null)
+                throw new ArgumentNullException("extensibility");
+
+            m_dirtyPath = new List<string>();
+//            m_tfsContextManager = te;
 
             // get IDE Globals object and DTE from that
-            EnvDTE80.DTE2 dte2 = extensibility.GetGlobalsObject(null).DTE as EnvDTE80.DTE2;
-            this.m_applicationObject = dte2;
+            var dte2 = extensibility.GetGlobalsObject(null).DTE as DTE2;
+            m_applicationObject = dte2;
 
-            Debug.Assert(dte2 != null, "No DTE2");
+            if (dte2 == null)
+                throw new ApplicationException("No DTE2");
 
             var tfsExt = (TeamFoundationServerExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.TeamFoundationServerExt");
-            this.m_srcCtrlExplorer = (VersionControlExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
+            m_srcCtrlExplorer = (VersionControlExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
 
-            this.DoConnect(tfsExt);
+            DoConnect(tfsExt);
         } 
 
-        public string TPName { get; set; }
+        public string TeamProjectName { get; set; }
 
-        public TfsTeamProjectCollection TPCollection
-        {
-            get
-            {
-                return this.m_tfsTpCollection;
-            }
-        }
+        public TfsTeamProjectCollection TeamProjectCollection { get; private set; }
 
-        public Uri TPCollectionUri
-        {
-            get
-            {
-                return this.m_tfsTpCollection.Uri;
-            }
-        }
+        public Uri TeamProjectCollectionUri { get { return TeamProjectCollection.Uri; } }
 
         public bool IsSingleSelected
         {
-            get { return this.m_srcCtrlExplorer.Explorer.SelectedItems.Length == 1; }
+            get { return m_srcCtrlExplorer.Explorer.SelectedItems.Length == 1; }
         }
 
         public string CurrentSourceControlFolder
         {
             get 
             {
-//                VersionControlExplorerItem itm = this.srcCtrlExplorer.Explorer.SelectedItems.First(i => i.IsFolder == true);
-                VersionControlExplorerItem itm = this.m_srcCtrlExplorer.Explorer.SelectedItems.First();
-                if (itm == null)
-                {
-                    return this.m_srcCtrlExplorer.Explorer.CurrentFolderItem.SourceServerPath; 
-                }
-                else
-                {
-                    return itm.SourceServerPath;
-                }
+                var itm = m_srcCtrlExplorer.Explorer.SelectedItems.First();
+                return itm == null 
+                    ? m_srcCtrlExplorer.Explorer.CurrentFolderItem.SourceServerPath 
+                    : itm.SourceServerPath;
             }
         }
         
@@ -99,54 +83,55 @@
         /// <param name='parameter'>String that are the parameter to the command to execute.</param>               
         public void ExecuteCommands(string command, string parameter)
         {
-            this.m_applicationObject.ExecuteCommand(command, parameter);
+            m_applicationObject.ExecuteCommand(command, parameter);
         }
 
         public void DoConnect(TeamFoundationServerExt tfsEx)
         {
             try
             {
-                this.m_tfsExt = tfsEx;              
+                m_tfsExt = tfsEx;              
  
-                if (null != this.m_tfsExt)
+                if (null != m_tfsExt)
                 {
-                    this.m_tfsExt.ProjectContextChanged += new EventHandler(this.TfsExt_ProjectContextChanged);
+                    m_tfsExt.ProjectContextChanged += TfsExt_ProjectContextChanged;
 
-                    if (null != this.m_tfsExt.ActiveProjectContext)
+                    if (null != m_tfsExt.ActiveProjectContext)
                     {
                         // Run the event handler without the event actually having fired, so we pick up the initial state. 
-                        this.TfsExt_ProjectContextChanged(null, EventArgs.Empty);
+                        TfsExt_ProjectContextChanged(null, EventArgs.Empty);
                     }
                 }
             }
             catch (Exception ex)
             {
-                Trace.WriteLine("***** MATTIAS **** " + ex.Message);
+                Trace.WriteLine("[TfsVisualHistory][DoConnect] " + ex.Message);
                 ////MessageBox.Show(ex.Message); 
             }
         }
 
         public void RefreshSourceControlExplorer()
         {
-            foreach (string s in this.m_dirtyPath)
+            foreach (string s in m_dirtyPath)
             {
                 try
                 {
-                    this.m_srcCtrlExplorer.Explorer.Workspace.Get(
+                    m_srcCtrlExplorer.Explorer.Workspace.Get(
                         new GetRequest(s, RecursionType.OneLevel, VersionSpec.Latest),
                         GetOptions.Preview);
                 }
-                catch
+                catch(Exception exception)
                 {
+                    Trace.TraceError("[TfsVisualHistory][Refresh] " + exception.Message);
                 }
             }
 
-            this.m_srcCtrlExplorer.Explorer.Workspace.Refresh();
+            m_srcCtrlExplorer.Explorer.Workspace.Refresh();
         }
 
-        public void SetSourceControlExplorerDirty(string serverpath)
+        public void SetSourceControlExplorerDirty(string serverPath)
         {
-            this.m_dirtyPath.Add(serverpath);
+            m_dirtyPath.Add(serverPath);
         }
 
         /// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary> 
@@ -156,10 +141,10 @@
         public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom) 
         { 
             // Unhook the ProjectContextChanged event handler. 
-            if (null != this.m_tfsExt) 
+            if (null != m_tfsExt) 
             { 
-                this.m_tfsExt.ProjectContextChanged -= new EventHandler(this.TfsExt_ProjectContextChanged); 
-                this.m_tfsExt = null; 
+                m_tfsExt.ProjectContextChanged -= TfsExt_ProjectContextChanged; 
+                m_tfsExt = null; 
             } 
         } 
 
@@ -191,27 +176,27 @@
         /// <param name="e">The arguments of the event</param> 
         private void TfsExt_ProjectContextChanged(object sender, EventArgs e) 
         { 
-            if (null != this.m_tfsExt.ActiveProjectContext && 
-                !string.IsNullOrEmpty(this.m_tfsExt.ActiveProjectContext.DomainUri)) 
+            if (null != m_tfsExt.ActiveProjectContext && 
+                !string.IsNullOrEmpty(m_tfsExt.ActiveProjectContext.DomainUri)) 
             { 
-                this.SwitchToTfs(TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(this.m_tfsExt.ActiveProjectContext.DomainUri)));
-                this.TPName = this.m_tfsExt.ActiveProjectContext.ProjectName;
+                SwitchToTfs(TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(m_tfsExt.ActiveProjectContext.DomainUri)));
+                TeamProjectName = m_tfsExt.ActiveProjectContext.ProjectName;
             } 
             else 
             { 
-                this.SwitchToTfs(null); 
+                SwitchToTfs(null); 
             }           
         } 
 
         private void SwitchToTfs(TfsTeamProjectCollection tfs) 
         { 
-            if (object.ReferenceEquals(this.m_tfsTpCollection, tfs)) 
+            if (ReferenceEquals(TeamProjectCollection, tfs)) 
             { 
                 // No work to do; could be a team project switch only 
                 return; 
             } 
 
-            this.m_tfsTpCollection = tfs;           
+            TeamProjectCollection = tfs;           
         }
     } 
 }

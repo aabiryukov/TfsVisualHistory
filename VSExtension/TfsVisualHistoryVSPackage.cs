@@ -117,11 +117,11 @@
                         // Views.SelectBranchPlan dlg = new Views.SelectBranchPlan(TeamExplorerIntegrator);
                         // WindowHelper.ShowModal(dlg);
                         // System.Windows.Forms.MessageBox.Show("CurrentSourceControlFolder=" + (TeamExplorerIntegrator.CurrentSourceControlFolder ?? "null"));
-                        // System.Windows.Forms.MessageBox.Show("TPCollectionUri=" + (TeamExplorerIntegrator.TPCollectionUri != null ? TeamExplorerIntegrator.TPCollectionUri.ToString() : "null"));
+                        // System.Windows.Forms.MessageBox.Show("TeamProjectCollectionUri=" + (TeamExplorerIntegrator.TeamProjectCollectionUri != null ? TeamExplorerIntegrator.TeamProjectCollectionUri.ToString() : "null"));
 
-                        if (TeamExplorerIntegrator != null && TeamExplorerIntegrator.TPCollection != null && !string.IsNullOrEmpty(TeamExplorerIntegrator.CurrentSourceControlFolder))
+                        if (TeamExplorerIntegrator != null && TeamExplorerIntegrator.TeamProjectCollection != null && !string.IsNullOrEmpty(TeamExplorerIntegrator.CurrentSourceControlFolder))
                         {
-                            HistoryViewer.ViewHistory(TeamExplorerIntegrator.TPCollectionUri, TeamExplorerIntegrator.CurrentSourceControlFolder);
+                            HistoryViewer.ViewHistory(TeamExplorerIntegrator.TeamProjectCollectionUri, TeamExplorerIntegrator.CurrentSourceControlFolder);
                         }
                         break;
                 }                

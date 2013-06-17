@@ -21,13 +21,15 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         public static void ViewHistory(Uri tfsCollectionUri, string sourceControlFolder)
         {
-            var settingForm = new SettingForm();
-            settingForm.SetSourcePath(sourceControlFolder);
+            using (var settingForm = new SettingForm())
+            {
+                settingForm.SetSourcePath(sourceControlFolder);
 
-            if (settingForm.ShowDialog() != DialogResult.OK) return;
+                if (settingForm.ShowDialog() != DialogResult.OK) return;
 
-            var historyViewer = new HistoryViewer(settingForm.Settigs);
-            historyViewer.ExecViewHistory(tfsCollectionUri, sourceControlFolder);
+                var historyViewer = new HistoryViewer(settingForm.Settigs);
+                historyViewer.ExecViewHistory(tfsCollectionUri, sourceControlFolder);
+            }
         }
 
         private void OnCancelByUser(object sender, EventArgs e)
@@ -40,7 +42,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             var logFile = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
 
             bool hasLines;
-            using (var waitMessage = new Installer.UI.WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
+            using (var waitMessage = new Utility.WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
             {
                 hasLines = 
                     TfsLogWriter.CreateGourceLogFile(
@@ -51,7 +53,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                         ref m_canceled,
                         x => 
                         {
-                            waitMessage.Text = "Loading history (" + x.ToString() + "% done) ...";
+                            waitMessage.Text = "Loading history (" + x.ToString(CultureInfo.CurrentCulture) + "% done) ...";
                         });
             }
 

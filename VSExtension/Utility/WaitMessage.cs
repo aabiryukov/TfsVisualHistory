@@ -19,7 +19,7 @@ using System.Windows.Forms;
 
 #endregion
 
-namespace Sitronics.Installer.UI
+namespace Sitronics.TfsVisualHistory.VSExtension.Utility
 {
 	/// <summary>
 	/// This class encapsulates a form that can be used from lengthy processing
@@ -94,7 +94,7 @@ namespace Sitronics.Installer.UI
 		/// </summary>
 		public bool AllowAbort { get; set; }
 
-        public bool Canceled { get; private set; }
+//        public bool Canceled { get; private set; }
 
 		/// <summary>
 		/// Gets or sets wether to verify that the user wanted to abort or not, defaults to <c>true</c>.
@@ -149,7 +149,7 @@ namespace Sitronics.Installer.UI
 			}
 		}
 
-        public delegate void Procedure();
+        private delegate void Procedure();
 
 		/// <summary>
 		/// Closes the form.

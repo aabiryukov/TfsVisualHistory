@@ -11,12 +11,12 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         private VisualizationSettings m_settigs;
 
-        public VisualizationSettings Settigs
+        internal VisualizationSettings Settigs
         {
             get { return m_settigs; }
         }
 
-        public static VisualizationSettings DefaultSettigs
+        internal static VisualizationSettings DefaultSettigs
         {
             get 
             {
@@ -126,7 +126,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             return settigs;
         }
 
-        public void SetSettigs(VisualizationSettings settigs)
+        internal void SetSettigs(VisualizationSettings settigs)
         {
             dateFromPicker.Value = settigs.DateFrom;
             dateToPicker.Value = settigs.DateTo;
@@ -215,6 +215,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void loadSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)

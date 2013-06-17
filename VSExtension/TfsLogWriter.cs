@@ -8,25 +8,45 @@ using System.Linq;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
 {
-	public static class TfsLogWriter
+	internal static class TfsLogWriter
 	{
-		public static bool CreateGourceLogFile(
+	    public static bool CreateGourceLogFile(
+	        string outputFile,
+	        Uri sourceControlUrl,
+	        string serverPath,
+	        VisualizationSettings settings,
+	        ref bool cancel,
+	        Action<int> progressReporter)
+	    {
+            //			var credentials = new UICredentialsProvider();
+
+	        using (var tpc = new TfsTeamProjectCollection(sourceControlUrl))
+	        {
+	            tpc.EnsureAuthenticated();
+	            if (cancel) return false;
+
+	            var vcs = tpc.GetService<VersionControlServer>();
+
+	            return CreateGourceLogFile(
+	                outputFile,
+	                vcs,
+	                serverPath,
+	                settings,
+	                ref cancel,
+	                progressReporter);
+	        }
+	    }
+
+	    private static bool CreateGourceLogFile(
 			string outputFile,
-            Uri sourceControlUrl,
+            VersionControlServer vcs,
 			string serverPath,
 			VisualizationSettings settings,
-            ref bool cancelFlag,
+            ref bool cancel,
 			Action<int> progressReporter)
 		{
-//			var credentials = new UICredentialsProvider();
-            
-			var tpc = new TfsTeamProjectCollection(sourceControlUrl);
-			tpc.EnsureAuthenticated();
-            if (cancelFlag) return false;
-
-			var vcs = tpc.GetService<VersionControlServer>();
 //			int latestChangesetId = vcs.GetLatestChangesetId();
-            if (cancelFlag) return false;
+            if (cancel) return false;
 
             var includeUsersWildcard = new Wildcard(settings.IncludeUsers, RegexOptions.IgnoreCase);
             var excludeUsersWildcard = new Wildcard(settings.ExcludeUsers, RegexOptions.IgnoreCase);
@@ -61,7 +81,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     return false;
                 }
                 latestChangesetId = latestChangeset.ChangesetId;
-                if (cancelFlag) return false;
+                if (cancel) return false;
             }
 
 		    var firstChangesetId = 0;
@@ -84,7 +104,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
                 foreach (var changeset in csList.Cast<Changeset>())
                 {
-                    if (cancelFlag) return false;
+                    if (cancel) return false;
 
                     if (firstChangesetId == 0) firstChangesetId = changeset.ChangesetId;
 

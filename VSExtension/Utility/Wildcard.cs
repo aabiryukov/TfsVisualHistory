@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Sitronics.TfsVisualHistory.VSExtension.Utility
 {
@@ -10,7 +7,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
     /// Represents a wildcard running on the
     /// <see cref="System.Text.RegularExpressions"/> engine.
     /// </summary>
-    public class Wildcard : Regex
+    internal class Wildcard : Regex
     {
         /// <summary>
         /// Initializes a wildcard with the given search pattern.
@@ -26,7 +23,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
         /// </summary>
         /// <param name="pattern">The wildcard pattern to match.</param>
         /// <param name="options">A combination of one or more
-        /// <see cref="System.Text.RegexOptions"/>.</param>
+        /// <see cref="RegexOptions"/>.</param>
         public Wildcard(string pattern, RegexOptions options)
             : base(WildcardToRegex(pattern), options)
         {
@@ -48,7 +45,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
             var items = pattern.Split(new []{';'}, StringSplitOptions.RemoveEmptyEntries);
             for(var i=0; i<items.Length; i++)
             {
-                items[i] = "^" + Regex.Escape(items[i].Trim()).
+                items[i] = "^" + Escape(items[i].Trim()).
                  Replace("\\*", ".*").
                  Replace("\\?", ".") + "$";
             }

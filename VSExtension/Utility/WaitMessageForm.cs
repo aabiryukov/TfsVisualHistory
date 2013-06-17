@@ -1,9 +1,8 @@
 using System;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
-namespace Sitronics.Installer.UI
+namespace Sitronics.TfsVisualHistory.VSExtension.Utility
 {
     internal partial class WaitMessageForm : Form
     {
