@@ -121,9 +121,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
 					foreach (var change in changeset.Changes)
 					{
-//                        if (change.Item.ItemType != ItemType.File) continue;
-
-                        if (change.Item.ItemType == ItemType.File)
+//                        if (change.Item.ItemType == ItemType.File)
                         {
                             if (!FilterByFileType(change.Item.ServerItem, includeFilesWildcard, excludeFilesWildcard))
                                 continue;

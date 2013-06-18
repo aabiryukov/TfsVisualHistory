@@ -92,6 +92,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     + " --highlight-users"
 //                    + " --auto-skip-seconds 1"
 //                    + " --user-image-dir Avatars"
+//                    + " --background-colour FFFFFF"
                     + " --logo \"{1}\""
                     + " --title \"{2}\"",
                     logFilePath, Path.Combine(dataPath, "Logo.png"), title
