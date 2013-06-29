@@ -5,7 +5,6 @@
     using System.Diagnostics;
     using System.Globalization;
     using System.Runtime.InteropServices;
-    using Microsoft.TeamFoundation.Client;
     using Microsoft.VisualStudio.Shell;
     using Microsoft.VisualStudio.Shell.Interop;
   
@@ -26,7 +25,7 @@
 
     // This attribute is used to register the information needed to show this package
     // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "1.6", IconResourceID = 400)]
 
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource("Menus.ctmenu", 1)]
@@ -54,8 +53,9 @@
                 if (m_teamexpIntegrator == null)
                 {
                     m_teamexpIntegrator = new TeamExplorerIntegrator(
-                        GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility,
-                        (ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager)));
+                        GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
+//                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
+                        );
                 }
 
                 return m_teamexpIntegrator;

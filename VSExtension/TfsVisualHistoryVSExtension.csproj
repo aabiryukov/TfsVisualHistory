@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChangesetConverter.cs" />
+    <Compile Include="Utility\StringFilter.cs" />
     <Compile Include="Utility\WaitMessageProgress.cs" />
     <Compile Include="VersionControlLogReader.cs" />
     <Compile Include="VisualizationSettings.cs" />
@@ -300,7 +301,7 @@
     <Content Include="Gource\data\shaders\text.vert">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="source.extension.vsixmanifest">
+    <None Include="Source.Extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
     <None Include="TfsVisualHistory.ruleset" />

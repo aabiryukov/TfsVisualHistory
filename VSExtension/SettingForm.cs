@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Forms;
 using System.IO;
+using Sitronics.TfsVisualHistory.VSExtension.Utility;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
 {
@@ -9,12 +10,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
     {
         const string DialogCaption = "Visualization Settings";
 
-        private VisualizationSettings m_settigs;
-
-        internal VisualizationSettings Settigs
-        {
-            get { return m_settigs; }
-        }
+        internal VisualizationSettings Settigs { get; private set; }
 
         internal static VisualizationSettings DefaultSettigs
         {
@@ -31,8 +27,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             // Loading recent configuration
             try
             {
-                m_settigs = File.Exists(RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(RecentConfigurationFile) : DefaultSettigs;
-                SetSettigs(m_settigs);
+                Settigs = File.Exists(RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(RecentConfigurationFile) : DefaultSettigs;
+                SetSettigs(Settigs);
             }
             catch (Exception ex)
             {
@@ -66,10 +62,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     DateFrom = dateFromPicker.Value,
                     DateTo = dateToPicker.Value,
                     LoopPlayback = loopPlaybackCheckBox.Checked,
-                    IncludeUsers = userIncludeTextBox.Text,
-                    ExcludeUsers = userExcludeTextBox.Text,
-                    IncludeFiles = filesIncludeTextBox.Text,
-                    ExcludeFiles = filesExcludeTextBox.Text,
+                    UsersFilter = new StringFilter(userIncludeTextBox.Text, userExcludeTextBox.Text),
+                    FilesFilter = new StringFilter(filesIncludeTextBox.Text, filesExcludeTextBox.Text), 
                     ViewFileNames = viewFileNamesCheckBox.Checked,
                     ViewDirNames = viewDirNamesCheckBox.Checked,
                     ViewUserNames = viewUserNamesCheckBox.Checked,
@@ -144,11 +138,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             dateFromPicker.Value = settigs.DateFrom;
             dateToPicker.Value = settigs.DateTo;
 
-            userIncludeTextBox.Text = settigs.IncludeUsers;
-            userExcludeTextBox.Text = settigs.ExcludeUsers;
+            userIncludeTextBox.Text = settigs.UsersFilter.IncludeMask;
+            userExcludeTextBox.Text = settigs.UsersFilter.ExcludeMask;
 
-            filesIncludeTextBox.Text = settigs.IncludeFiles;
-            filesExcludeTextBox.Text = settigs.ExcludeFiles;
+            filesIncludeTextBox.Text = settigs.FilesFilter.IncludeMask;
+            filesExcludeTextBox.Text = settigs.FilesFilter.ExcludeMask;
 
             viewFilesExtentionMapCheckBox.Checked = settigs.ViewFilesExtentionMap;
 
@@ -175,12 +169,12 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         private void okButton_Click(object sender, EventArgs e)
         {
-            m_settigs = GetSettigs();
-            if (m_settigs != null)
+            Settigs = GetSettigs();
+            if (Settigs != null)
             {
                 try
                 {
-                    m_settigs.SaveToFile(RecentConfigurationFile);
+                    Settigs.SaveToFile(RecentConfigurationFile);
                 }
                 catch (Exception ex)
                 {

@@ -1,20 +1,10 @@
-﻿TFS Source Control History Visualization
-(Visual Studio Extension)
+﻿*** TFS History Visualization ***
 
-How to use:
-1) Install this extension
-2) Open TFS "Source Control" window
-3) Select source control folder (or file) and click Right button
-4) Select in pop-up menu item "Visualize History (using Gource)"
-5) Enjoy the history visualization :)
+Release Notes:
 
---------------------------------
-Release Notes
---------------------------------
-
-v1.6 (29 Jun 2013)
+v1.6 (30 Jun 2013)
 ------------------
-Added new mode "Live changes" (useful for view current team activity)
+Added new mode "Live changes" (useful for view current activity of a team)
 Fixed progress calculation
 Added option "Hide user names" (useful for large teams)
 Added option "View files extension map"
@@ -58,7 +48,6 @@ Some limitations:
 - not yet customization;
 - not possible to cancel process while reading history from TFS;
 - supported VS2012 only;
-
 
 Contacts:
 Alexander Biryukov, email: aabiryukov@gmail.com

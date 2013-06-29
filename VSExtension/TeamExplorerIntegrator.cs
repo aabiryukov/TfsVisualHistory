@@ -35,7 +35,7 @@
         private readonly List<string> m_dirtyPath;
  
         /// <summary>Initializes a new instance of the TeamExplorerIntegrator class, The constructor for the Add-in object. Place your initialization code within this method.</summary> 
-        public TeamExplorerIntegrator(EnvDTE.IVsExtensibility extensibility, ITeamFoundationContextManager te)
+        public TeamExplorerIntegrator(EnvDTE.IVsExtensibility extensibility/*, ITeamFoundationContextManager te*/)
         {
             if (extensibility == null)
                 throw new ArgumentNullException("extensibility");
@@ -52,6 +52,8 @@
 
             var tfsExt = (TeamFoundationServerExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.TeamFoundationServerExt");
             m_srcCtrlExplorer = (VersionControlExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
+
+//            var events = m_applicationObject.Events;
 
             DoConnect(tfsExt);
         } 

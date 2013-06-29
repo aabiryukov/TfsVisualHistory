@@ -15,7 +15,7 @@ namespace TfsVisualHistoryTest
             InitializeComponent();
 
             // Load recent settigns
-            tfsUriTextBox.Text = (string)Registry.CurrentUser.GetValue(RegistyPathTfsName, "https://tfs.xxxx.com/tfs");
+            tfsUriTextBox.Text = (string)Registry.CurrentUser.GetValue(RegistyPathTfsName, "https://TFS-SERVER-NAME.com/tfs/DefaultCollection");
             sourceControlFolderTextBox.Text = (string)Registry.CurrentUser.GetValue(RegistyPathTfsFolder, "$/FORIS_Mobile/");
         }
 

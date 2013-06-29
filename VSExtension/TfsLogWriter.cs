@@ -78,7 +78,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
 		    var firstChangesetId = 0;
 
-	        var changesetConverter = new ChangesetConverter(settings);
+	        var changesetConverter = new ChangesetConverter(settings.UsersFilter, settings.FilesFilter);
 
 			using (var writer = new StreamWriter(outputFile))
 			{

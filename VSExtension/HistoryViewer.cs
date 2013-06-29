@@ -3,6 +3,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Globalization;
+using Sitronics.TfsVisualHistory.VSExtension.Utility;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
 {
@@ -53,14 +54,16 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         {
             // gource start arguments
             string arguments;
+            string title;
 
             if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
             {
+                title = "Live changes of " + sourceControlFolder;
                 var logFile = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
 
                 bool hasLines;
 
-                using (var waitMessage = new Utility.WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
+                using (var waitMessage = new WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
                 {
                     var progress = waitMessage.CreateProgress<int>("Loading history ({0}% done) ...");
 
@@ -108,13 +111,14 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             else
             {
                 // PlayMode: Live
+                title = "History of " + sourceControlFolder;
 
                 arguments = " --realtime --log-format custom -";
-
-                arguments += " --file-idle-time 28800"; // 8 hours
+                arguments += " --file-idle-time 28800"; // 8 hours (work day)
             }
 
-            var baseDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "unknown";
+            var baseDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ??
+                                "unknown";
             if (baseDirectory.Contains("Test"))
             {
                 baseDirectory += @"\..\..\..\VSExtension";
@@ -122,7 +126,6 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             var gourcePath = Path.Combine(baseDirectory, @"Gource\Gource.exe");
             var dataPath = Path.Combine(baseDirectory, @"Data");
-            var title = "History of " + sourceControlFolder;
 
             // ******************************************************
             // Configuring Gource command line
@@ -130,14 +133,14 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             arguments +=
                 string.Format(CultureInfo.InvariantCulture,
-                    " --highlight-users"
-//                    + " --auto-skip-seconds 1"
-//                    + " --user-image-dir Avatars"
-//                    + " --background-colour FFFFFF"
-                    + " --logo \"{0}\""
-                    + " --title \"{1}\"",
-                    Path.Combine(dataPath, "Logo.png"), title
-                );
+                              " --highlight-users"
+                              //                    + " --auto-skip-seconds 1"
+                              //                    + " --user-image-dir Avatars"
+                              //                    + " --background-colour FFFFFF"
+                              + " --logo \"{0}\""
+                              + " --title \"{1}\"",
+                              Path.Combine(dataPath, "Logo.png"), title
+                    );
 
             if (m_settigs.FullScreen)
             {
@@ -148,13 +151,15 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 if (!m_settigs.SetResolution)
                 {
                     var screenBounds = Screen.PrimaryScreen.Bounds;
-                    arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", screenBounds.Width, screenBounds.Height);
+                    arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", screenBounds.Width,
+                                               screenBounds.Height);
                 }
             }
 
             if (m_settigs.SetResolution)
             {
-                arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", m_settigs.ResolutionWidth, m_settigs.ResolutionHeight);
+                arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}",
+                                           m_settigs.ResolutionWidth, m_settigs.ResolutionHeight);
             }
 
             if (m_settigs.ViewFilesExtentionMap)
@@ -186,43 +191,49 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             arguments += " --max-files " + m_settigs.MaxFiles.ToString(CultureInfo.InvariantCulture);
 
-            var si = new ProcessStartInfo(gourcePath, arguments)
-                {
-                    WindowStyle = ProcessWindowStyle.Maximized,
-                    UseShellExecute = true
-                };
-
             if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
             {
+                var si = new ProcessStartInfo(gourcePath, arguments)
+                    {
+                        WindowStyle = ProcessWindowStyle.Maximized,
+                        UseShellExecute = true
+                    };
+
                 Process.Start(si);
             }
             else
             {
-                using (var sr = new VersionControlLogReader(tfsCollectionUri, sourceControlFolder, m_settigs))
-                // using (StreamWriter sw = new StreamWriter())
+                var logReader = new VersionControlLogReader(tfsCollectionUri, sourceControlFolder, m_settigs.UsersFilter,
+                                                     m_settigs.FilesFilter);
+                using (new WaitMessage("Connecting to Team Foundation Server..."))
                 {
-                    using (new Utility.WaitMessage("Connecting to Team Foundation Server..."))
+                    logReader.Connect();
+                }
+                var si = new ProcessStartInfo(gourcePath, arguments)
                     {
-                        sr.Connect();
-                    }
+                        WindowStyle = ProcessWindowStyle.Maximized,
+                        RedirectStandardInput = true,
+                        UseShellExecute = false
+                    };
 
-                    si.RedirectStandardInput = true;
-                    si.UseShellExecute = false;
-                    var process = Process.Start(si);
+                System.Threading.Tasks.Task.Factory.StartNew(() => RunLiveChangesMonitor(logReader, si));
+            }
+        }
 
-                    while (!process.HasExited)
-                    {
-                        var line = sr.ReadLine();
-                        if (line == null)
-                        {
-                            // Waiting for second to avoid frequent server calls 
-                            System.Threading.Thread.Sleep(1000);
-                        }
-                        else
-                        {
-                            process.StandardInput.WriteLine(line);
-                        }
-                    }
+        private static void RunLiveChangesMonitor(VersionControlLogReader reader, ProcessStartInfo gourceStartInfo)
+        {
+            var process = Process.Start(gourceStartInfo);
+            while (!process.HasExited)
+            {
+                var line = reader.ReadLine();
+                if (line == null)
+                {
+                    // Waiting for second to avoid frequent server calls 
+                    System.Threading.Thread.Sleep(1000);
+                }
+                else
+                {
+                    process.StandardInput.WriteLine(line);
                 }
             }
         }

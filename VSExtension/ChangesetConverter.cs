@@ -19,13 +19,13 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         private readonly Wildcard m_includeFilesWildcard;
         private readonly Wildcard m_excludeFilesWildcard;
 
-        public ChangesetConverter(VisualizationSettings settings)
+        public ChangesetConverter(StringFilter usersFilter, StringFilter filesFilter)
         {
-            m_includeUsersWildcard = new Wildcard(settings.IncludeUsers, RegexOptions.IgnoreCase);
-            m_excludeUsersWildcard = new Wildcard(settings.ExcludeUsers, RegexOptions.IgnoreCase);
+            m_includeUsersWildcard = new Wildcard(usersFilter.IncludeMask, RegexOptions.IgnoreCase);
+            m_excludeUsersWildcard = new Wildcard(usersFilter.ExcludeMask, RegexOptions.IgnoreCase);
 
-            m_includeFilesWildcard = new Wildcard(settings.IncludeFiles, RegexOptions.IgnoreCase);
-            m_excludeFilesWildcard = new Wildcard(settings.ExcludeFiles, RegexOptions.IgnoreCase);
+            m_includeFilesWildcard = new Wildcard(filesFilter.IncludeMask, RegexOptions.IgnoreCase);
+            m_excludeFilesWildcard = new Wildcard(filesFilter.ExcludeMask, RegexOptions.IgnoreCase);
         }
 
         private static bool FilterByString(string text, Wildcard include, Wildcard exclude)

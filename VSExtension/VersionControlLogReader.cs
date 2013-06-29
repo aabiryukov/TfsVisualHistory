@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
+using Sitronics.TfsVisualHistory.VSExtension.Utility;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
 {
@@ -22,9 +23,10 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         public VersionControlLogReader(
             Uri sourceControlUrl,
             string serverPath,
-            VisualizationSettings settings)
+            StringFilter usersFilter, 
+            StringFilter filesFilter)
         {
-            m_changesetConverter = new ChangesetConverter(settings);
+            m_changesetConverter = new ChangesetConverter(usersFilter, filesFilter);
             m_serverPath = serverPath;
 
 	        m_tpc = new TfsTeamProjectCollection(sourceControlUrl);

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
+using Sitronics.TfsVisualHistory.VSExtension.Utility;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
 {
@@ -27,11 +28,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
 	    public PlayModeOption PlayMode;
 
-        public string IncludeUsers;
-        public string ExcludeUsers;
-
-        public string IncludeFiles;
-        public string ExcludeFiles;
+        public StringFilter UsersFilter { get; set; }
+        public StringFilter FilesFilter { get; set; }
 
 		public DateTime DateFrom { get; set; }
 		public DateTime DateTo { get; set; }
@@ -59,11 +57,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             DateFrom = new DateTime(1900, 1, 1);
             DateTo = new DateTime(2099, 1, 1);
 
-            IncludeUsers = "*";
-            ExcludeUsers = "";
-
-            IncludeFiles = "*";
-            ExcludeFiles = "";
+            UsersFilter = new StringFilter("*", "");
+            FilesFilter = new StringFilter("*", ""); 
 
             ViewFileNames = false;
             ViewDirNames = true;
