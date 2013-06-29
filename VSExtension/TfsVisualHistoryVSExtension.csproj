@@ -36,6 +36,7 @@
     <CodeAnalysisRuleSet>..\Common\ALMRangersRuleSet.ruleset</CodeAnalysisRuleSet>
     <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
     <Prefer32Bit>false</Prefer32Bit>
+    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

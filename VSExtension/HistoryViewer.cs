@@ -58,7 +58,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
             if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
             {
-                title = "Live changes of " + sourceControlFolder;
+                title = "History of " + sourceControlFolder;
                 var logFile = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
 
                 bool hasLines;
@@ -111,7 +111,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             else
             {
                 // PlayMode: Live
-                title = "History of " + sourceControlFolder;
+                title = "Live changes of " + sourceControlFolder;
 
                 arguments = " --realtime --log-format custom -";
                 arguments += " --file-idle-time 28800"; // 8 hours (work day)
@@ -223,9 +223,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         private static void RunLiveChangesMonitor(VersionControlLogReader reader, ProcessStartInfo gourceStartInfo)
         {
             var process = Process.Start(gourceStartInfo);
+
             while (!process.HasExited)
             {
                 var line = reader.ReadLine();
+                Debug.WriteLine("LOG: " + (line ?? "<NULL>"));
                 if (line == null)
                 {
                     // Waiting for second to avoid frequent server calls 
@@ -234,6 +236,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 else
                 {
                     process.StandardInput.WriteLine(line);
+                    // System.Threading.Thread.Sleep(100);
                 }
             }
         }

@@ -20,6 +20,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         private int m_latestChangesetId;
         private readonly ChangesetConverter m_changesetConverter;
 
+        // Time simulation
+        private int m_lastReadLineTicks;
+        // How mutch a wait before get next line
+        private int m_waitMilliseconds;
+
         public VersionControlLogReader(
             Uri sourceControlUrl,
             string serverPath,
@@ -87,6 +92,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         public override string ReadLine()
         {
+            const int ChangesetTimeMilliseconds = 3000;
+
             if (m_vcs == null)
                 Connect();
 
@@ -101,6 +108,9 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 {
                     m_latestChanges.Enqueue(line);
                 }
+
+                // How mutch a wait before get next line
+                m_waitMilliseconds = m_latestChanges.Count > 0 ? ChangesetTimeMilliseconds / m_latestChanges.Count : 0;
 
                 m_latestChangesetId = latestChangeset.ChangesetId;
             }
@@ -122,10 +132,29 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                            m_latestChangesetId = changeset.ChangesetId;
                        }
                    }
+
+                   // How mutch a wait before get next line
+                   m_waitMilliseconds = m_latestChanges.Count > 0 ? ChangesetTimeMilliseconds / m_latestChanges.Count : 0;
                }
             }
 
-            return m_latestChanges.Count == 0 ? null : m_latestChanges.Dequeue();
+            if (m_latestChanges.Count == 0)
+                return null;
+
+            // Simulate changes time to avoid super fast
+            var sleepTime = m_waitMilliseconds - (Environment.TickCount - m_lastReadLineTicks);
+            if (sleepTime > 0 && sleepTime <= m_waitMilliseconds)
+            {
+                System.Diagnostics.Debug.WriteLine("WAIT: " + sleepTime);
+                System.Threading.Thread.Sleep(sleepTime);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("WAIT: none");
+            }
+            m_lastReadLineTicks = Environment.TickCount;
+
+            return m_latestChanges.Dequeue();
         }
     }
 }
