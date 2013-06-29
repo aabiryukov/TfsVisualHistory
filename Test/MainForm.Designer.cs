@@ -61,7 +61,6 @@
             this.tfsUriTextBox.Name = "tfsUriTextBox";
             this.tfsUriTextBox.Size = new System.Drawing.Size(427, 20);
             this.tfsUriTextBox.TabIndex = 2;
-            this.tfsUriTextBox.Text = "https://tfs.xbss.nvision-group.com/sts";
             // 
             // sourceControlFolderTextBox
             // 
@@ -69,7 +68,6 @@
             this.sourceControlFolderTextBox.Name = "sourceControlFolderTextBox";
             this.sourceControlFolderTextBox.Size = new System.Drawing.Size(427, 20);
             this.sourceControlFolderTextBox.TabIndex = 4;
-            this.sourceControlFolderTextBox.Text = "$/FORIS_Mobile/TeamWork/_Public";
             // 
             // label2
             // 
