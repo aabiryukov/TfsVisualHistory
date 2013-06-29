@@ -60,40 +60,50 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         {
             var settigs = new VisualizationSettings
                 {
+                    PlayMode = historyRadioButton.Checked
+                                           ? VisualizationSettings.PlayModeOption.History
+                                           : VisualizationSettings.PlayModeOption.Live,
                     DateFrom = dateFromPicker.Value,
                     DateTo = dateToPicker.Value,
+                    LoopPlayback = loopPlaybackCheckBox.Checked,
                     IncludeUsers = userIncludeTextBox.Text,
                     ExcludeUsers = userExcludeTextBox.Text,
                     IncludeFiles = filesIncludeTextBox.Text,
                     ExcludeFiles = filesExcludeTextBox.Text,
-                    HideFileNames = hideFileNamesCheckBox.Checked,
-                    HideDirNames = hideDirNamesCheckBox.Checked,
-                    HideUserNames = hideUserNamesCheckBox.Checked,
-                    LoopPlayback = loopPlaybackCheckBox.Checked
+                    ViewFileNames = viewFileNamesCheckBox.Checked,
+                    ViewDirNames = viewDirNamesCheckBox.Checked,
+                    ViewUserNames = viewUserNamesCheckBox.Checked,
+                    ViewFilesExtentionMap = viewFilesExtentionMapCheckBox.Checked
                 };
 
-            if (timeScaleComboBox.SelectedIndex >= 0)
-            {
-                var timeScaleMapping = new[]
-                    {
-                        VisualizationSettings.TimeScaleOption.None,
-                        VisualizationSettings.TimeScaleOption.Slow8,
-                        VisualizationSettings.TimeScaleOption.Slow4,
-                        VisualizationSettings.TimeScaleOption.Slow2,
-                        VisualizationSettings.TimeScaleOption.Fast2,
-                        VisualizationSettings.TimeScaleOption.Fast3,
-                        VisualizationSettings.TimeScaleOption.Fast4
-                    };
 
-                settigs.TimeScale = timeScaleMapping[timeScaleComboBox.SelectedIndex];
+            // History settings
+            if (historyRadioButton.Checked)
+            {
+                if (timeScaleComboBox.SelectedIndex >= 0)
+                {
+                    var timeScaleMapping = new[]
+                        {
+                            VisualizationSettings.TimeScaleOption.None,
+                            VisualizationSettings.TimeScaleOption.Slow8,
+                            VisualizationSettings.TimeScaleOption.Slow4,
+                            VisualizationSettings.TimeScaleOption.Slow2,
+                            VisualizationSettings.TimeScaleOption.Fast2,
+                            VisualizationSettings.TimeScaleOption.Fast3,
+                            VisualizationSettings.TimeScaleOption.Fast4
+                        };
+
+                    settigs.TimeScale = timeScaleMapping[timeScaleComboBox.SelectedIndex];
+                }
+
+                if (!TryParseInt(secondsPerDayTextBox.Text, out settigs.SecondsPerDay) || settigs.SecondsPerDay < 1 || settigs.SecondsPerDay > 1000)
+                {
+                    MessageBox.Show("Incorrect value in 'Seconds Per Day' (1-1000).", DialogCaption);
+                    ActiveControl = secondsPerDayTextBox;
+                    return null;
+                }
             }
 
-            if (!TryParseInt(secondsPerDayTextBox.Text, out settigs.SecondsPerDay) || settigs.SecondsPerDay < 0 || settigs.SecondsPerDay > 1000)
-            {
-                MessageBox.Show("Incorrect value in 'Seconds Per Day'.", DialogCaption);
-                ActiveControl = secondsPerDayTextBox;
-                return null;
-            }
 
             if (!TryParseInt(maxFilesTextBox.Text, out settigs.MaxFiles) || settigs.MaxFiles < 1 || settigs.MaxFiles > 1000000)
             {
@@ -128,6 +138,9 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         internal void SetSettigs(VisualizationSettings settigs)
         {
+            historyRadioButton.Checked = settigs.PlayMode == VisualizationSettings.PlayModeOption.History;
+            liveStreamRadioButton.Checked = settigs.PlayMode == VisualizationSettings.PlayModeOption.Live;
+
             dateFromPicker.Value = settigs.DateFrom;
             dateToPicker.Value = settigs.DateTo;
 
@@ -137,9 +150,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             filesIncludeTextBox.Text = settigs.IncludeFiles;
             filesExcludeTextBox.Text = settigs.ExcludeFiles;
 
-            hideFileNamesCheckBox.Checked = settigs.HideFileNames;
-            hideDirNamesCheckBox.Checked = settigs.HideDirNames;
-            hideUserNamesCheckBox.Checked = settigs.HideUserNames;
+            viewFilesExtentionMapCheckBox.Checked = settigs.ViewFilesExtentionMap;
+
+            viewFileNamesCheckBox.Checked = settigs.ViewFileNames;
+            viewDirNamesCheckBox.Checked = settigs.ViewDirNames;
+            viewUserNamesCheckBox.Checked = settigs.ViewUserNames;
             
             timeScaleComboBox.SelectedIndex = (int)settigs.TimeScale;
             secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
@@ -241,6 +256,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         {
             resolutionHeightTextBox.Enabled = setResolutionCheckBox.Checked;
             resolutionWidthTextBox.Enabled = setResolutionCheckBox.Checked;
+        }
+
+        private void historyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            historySettingsGroupBox.Enabled = historyRadioButton.Checked;
         }
     }
 }

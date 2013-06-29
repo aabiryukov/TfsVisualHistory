@@ -13,7 +13,6 @@
 #region Using
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -38,7 +37,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
 		private bool m_disposed;
 		private volatile bool m_closing;
 		private readonly Cursor m_saveCursor;
-        EventHandler m_onCancel;
+	    readonly EventHandler m_onCancel;
 
 		#endregion
 
@@ -52,16 +51,18 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
 			// Do nothing here
 		}
 */
-		/// <summary>
-		/// Constructs a new <see cref="WaitMessage"/> object with the specified setup.
-		/// </summary>
-		/// <param name="showNow">
-		/// Wether to show the busy form right away.
-		/// </param>
-		/// <param name="message">
-		/// The text to show on the form.
-		/// </param>
-        protected WaitMessage(bool showNow, string message, EventHandler onCancel)
+
+	    /// <summary>
+	    /// Constructs a new <see cref="WaitMessage"/> object with the specified setup.
+	    /// </summary>
+	    /// <param name="showNow">
+	    /// Wether to show the busy form right away.
+	    /// </param>
+	    /// <param name="message">
+	    /// The text to show on the form.
+	    /// </param>
+	    /// <param name="onCancel">Event handler for cancel the message</param>
+	    protected WaitMessage(bool showNow, string message, EventHandler onCancel)
 		{
             Text = message ?? "Please wait... completing request...";
 			AllowAbort = false;
@@ -253,5 +254,10 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
 		}
 
 		#endregion
+
+        public WaitMessageProgress<T> CreateProgress<T>(string format)
+	    {
+            return new WaitMessageProgress<T>(this, format);
+	    }
 	}
 }

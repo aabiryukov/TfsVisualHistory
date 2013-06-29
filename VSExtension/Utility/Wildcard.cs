@@ -7,7 +7,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
     /// Represents a wildcard running on the
     /// <see cref="System.Text.RegularExpressions"/> engine.
     /// </summary>
-    internal class Wildcard : Regex
+    public class Wildcard : Regex
     {
         /// <summary>
         /// Initializes a wildcard with the given search pattern.
@@ -41,6 +41,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension.Utility
         /// <returns>A regex equivalent of the given wildcard.</returns>
         public static string WildcardToRegex(string pattern)
         {
+            if (pattern == null) throw new ArgumentNullException("pattern");
+
             // Remove whitespaces
             var items = pattern.Split(new []{';'}, StringSplitOptions.RemoveEmptyEntries);
             for(var i=0; i<items.Length; i++)

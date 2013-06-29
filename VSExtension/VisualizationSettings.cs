@@ -18,6 +18,15 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             Fast4 = 6
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+        public enum PlayModeOption
+        {
+            History,
+            Live
+        }
+
+	    public PlayModeOption PlayMode;
+
         public string IncludeUsers;
         public string ExcludeUsers;
 
@@ -27,9 +36,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 		public DateTime DateFrom { get; set; }
 		public DateTime DateTo { get; set; }
 
-        public bool HideFileNames;
-        public bool HideDirNames;
-        public bool HideUserNames;
+        public bool ViewFilesExtentionMap;
+
+	    public bool ViewFileNames;
+        public bool ViewDirNames;
+        public bool ViewUserNames;
         
         public int SecondsPerDay;
         public TimeScaleOption TimeScale;
@@ -43,6 +54,8 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
         public VisualizationSettings()
         {
+            PlayMode = PlayModeOption.History;
+
             DateFrom = new DateTime(1900, 1, 1);
             DateTo = new DateTime(2099, 1, 1);
 
@@ -52,9 +65,12 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             IncludeFiles = "*";
             ExcludeFiles = "";
 
-            HideFileNames = true;
+            ViewFileNames = false;
+            ViewDirNames = true;
+            ViewUserNames = true;
+
             TimeScale = TimeScaleOption.None;
-            SecondsPerDay = 10;
+            SecondsPerDay = 5;
             MaxFiles = 1000;
 
             ResolutionWidth = Screen.PrimaryScreen.Bounds.Width;
@@ -66,35 +82,16 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             using (var myReader = new StreamReader(fileName, false))
             {
                 var xsSubmit = new XmlSerializer(typeof(VisualizationSettings));
-                //                XmlWriter writer = XmlWriter.Create(myWriter);
                 var settings = (VisualizationSettings)xsSubmit.Deserialize(myReader);
                 return settings;
             }
         }
-/*
-        private static void AddParameter(XmlElement root, string parameterName, string value)
-        {
-            var node = root.OwnerDocument.CreateElement(parameterName);
-            node.InnerText = value;
-            root.AppendChild(node);
-        }
-*/
+
         public void SaveToFile(string fileName)
         {
-/*
-            // Create the xml document containe
-            var doc = new XmlDocument();// Create the XML Declaration, and append it to XML document
-            XmlDeclaration dec = doc.CreateXmlDeclaration("1.0", null, null);
-            doc.AppendChild(dec);// Create the root element
-            var root = doc.CreateElement("VisualizationSettings");
-            doc.AppendChild(root);
-
-            AddParameter(root, "xxx", "xxx");
- */
             using (var myWriter = new StreamWriter(fileName, false))
             {
                 var xsSubmit = new XmlSerializer(typeof(VisualizationSettings));
-//                XmlWriter writer = XmlWriter.Create(myWriter);
                 xsSubmit.Serialize(myWriter, this);
             }
         }

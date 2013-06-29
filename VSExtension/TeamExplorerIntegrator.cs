@@ -174,7 +174,9 @@
         /// </summary> 
         /// <param name="sender">The object that is sending the event</param> 
         /// <param name="e">The arguments of the event</param> 
+// ReSharper disable InconsistentNaming
         private void TfsExt_ProjectContextChanged(object sender, EventArgs e) 
+// ReSharper restore InconsistentNaming
         { 
             if (null != m_tfsExt.ActiveProjectContext && 
                 !string.IsNullOrEmpty(m_tfsExt.ActiveProjectContext.DomainUri)) 

@@ -32,11 +32,16 @@
             this.cancelButton = new System.Windows.Forms.Button();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.datesGroupBox = new System.Windows.Forms.GroupBox();
+            this.historySettingsGroupBox = new System.Windows.Forms.GroupBox();
             this.dateToLabel = new System.Windows.Forms.Label();
             this.dateFromLabel = new System.Windows.Forms.Label();
+            this.timeScaleComboBox = new System.Windows.Forms.ComboBox();
+            this.loopPlaybackCheckBox = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.dateToPicker = new System.Windows.Forms.DateTimePicker();
             this.dateFromPicker = new System.Windows.Forms.DateTimePicker();
+            this.secondsPerDayTextBox = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.userExcludeTextBox = new System.Windows.Forms.TextBox();
@@ -51,15 +56,13 @@
             this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.timeScaleComboBox = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.hideDirNamesCheckBox = new System.Windows.Forms.CheckBox();
-            this.loopPlaybackCheckBox = new System.Windows.Forms.CheckBox();
+            this.viewFilesExtentionMapCheckBox = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.viewUserNamesCheckBox = new System.Windows.Forms.CheckBox();
+            this.viewDirNamesCheckBox = new System.Windows.Forms.CheckBox();
             this.maxFilesTextBox = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.secondsPerDayTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.hideFileNamesCheckBox = new System.Windows.Forms.CheckBox();
+            this.viewFileNamesCheckBox = new System.Windows.Forms.CheckBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,21 +80,23 @@
             this.resolutionHeightTextBox = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.resolutionWidthTextBox = new System.Windows.Forms.TextBox();
-            this.hideUserNamesCheckBox = new System.Windows.Forms.CheckBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.datesGroupBox.SuspendLayout();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.liveStreamRadioButton = new System.Windows.Forms.RadioButton();
+            this.historyRadioButton = new System.Windows.Forms.RadioButton();
+            this.historySettingsGroupBox.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // okButton
             // 
             this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.okButton.Location = new System.Drawing.Point(392, 351);
+            this.okButton.Location = new System.Drawing.Point(391, 384);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(135, 23);
             this.okButton.TabIndex = 0;
@@ -103,7 +108,7 @@
             // 
             this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(533, 351);
+            this.cancelButton.Location = new System.Drawing.Point(532, 384);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 1;
@@ -117,7 +122,7 @@
             this.pathTextBox.Location = new System.Drawing.Point(47, 27);
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.ReadOnly = true;
-            this.pathTextBox.Size = new System.Drawing.Size(561, 20);
+            this.pathTextBox.Size = new System.Drawing.Size(560, 20);
             this.pathTextBox.TabIndex = 4;
             this.pathTextBox.TabStop = false;
             // 
@@ -130,23 +135,28 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Path";
             // 
-            // datesGroupBox
+            // historySettingsGroupBox
             // 
-            this.datesGroupBox.Controls.Add(this.dateToLabel);
-            this.datesGroupBox.Controls.Add(this.dateFromLabel);
-            this.datesGroupBox.Controls.Add(this.dateToPicker);
-            this.datesGroupBox.Controls.Add(this.dateFromPicker);
-            this.datesGroupBox.Location = new System.Drawing.Point(14, 53);
-            this.datesGroupBox.Name = "datesGroupBox";
-            this.datesGroupBox.Size = new System.Drawing.Size(307, 53);
-            this.datesGroupBox.TabIndex = 5;
-            this.datesGroupBox.TabStop = false;
-            this.datesGroupBox.Text = "History period";
+            this.historySettingsGroupBox.Controls.Add(this.dateToLabel);
+            this.historySettingsGroupBox.Controls.Add(this.dateFromLabel);
+            this.historySettingsGroupBox.Controls.Add(this.timeScaleComboBox);
+            this.historySettingsGroupBox.Controls.Add(this.loopPlaybackCheckBox);
+            this.historySettingsGroupBox.Controls.Add(this.label11);
+            this.historySettingsGroupBox.Controls.Add(this.dateToPicker);
+            this.historySettingsGroupBox.Controls.Add(this.dateFromPicker);
+            this.historySettingsGroupBox.Controls.Add(this.secondsPerDayTextBox);
+            this.historySettingsGroupBox.Controls.Add(this.label8);
+            this.historySettingsGroupBox.Location = new System.Drawing.Point(12, 131);
+            this.historySettingsGroupBox.Name = "historySettingsGroupBox";
+            this.historySettingsGroupBox.Size = new System.Drawing.Size(308, 125);
+            this.historySettingsGroupBox.TabIndex = 5;
+            this.historySettingsGroupBox.TabStop = false;
+            this.historySettingsGroupBox.Text = "History setting";
             // 
             // dateToLabel
             // 
             this.dateToLabel.AutoSize = true;
-            this.dateToLabel.Location = new System.Drawing.Point(161, 25);
+            this.dateToLabel.Location = new System.Drawing.Point(159, 25);
             this.dateToLabel.Name = "dateToLabel";
             this.dateToLabel.Size = new System.Drawing.Size(23, 13);
             this.dateToLabel.TabIndex = 2;
@@ -155,16 +165,52 @@
             // dateFromLabel
             // 
             this.dateFromLabel.AutoSize = true;
-            this.dateFromLabel.Location = new System.Drawing.Point(8, 25);
+            this.dateFromLabel.Location = new System.Drawing.Point(6, 25);
             this.dateFromLabel.Name = "dateFromLabel";
             this.dateFromLabel.Size = new System.Drawing.Size(33, 13);
             this.dateFromLabel.TabIndex = 0;
             this.dateFromLabel.Text = "From:";
             // 
+            // timeScaleComboBox
+            // 
+            this.timeScaleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.timeScaleComboBox.FormattingEnabled = true;
+            this.timeScaleComboBox.Items.AddRange(new object[] {
+            "<None>",
+            "Slow x1/8",
+            "Slow x1/4",
+            "Slow x1/2",
+            "Fast x2",
+            "Fast x3",
+            "Fast x4"});
+            this.timeScaleComboBox.Location = new System.Drawing.Point(144, 77);
+            this.timeScaleComboBox.Name = "timeScaleComboBox";
+            this.timeScaleComboBox.Size = new System.Drawing.Size(82, 21);
+            this.timeScaleComboBox.TabIndex = 7;
+            // 
+            // loopPlaybackCheckBox
+            // 
+            this.loopPlaybackCheckBox.AutoSize = true;
+            this.loopPlaybackCheckBox.Location = new System.Drawing.Point(10, 104);
+            this.loopPlaybackCheckBox.Name = "loopPlaybackCheckBox";
+            this.loopPlaybackCheckBox.Size = new System.Drawing.Size(96, 17);
+            this.loopPlaybackCheckBox.TabIndex = 10;
+            this.loopPlaybackCheckBox.Text = "Loop playback";
+            this.loopPlaybackCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(7, 80);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(61, 13);
+            this.label11.TabIndex = 6;
+            this.label11.Text = "Time scale:";
+            // 
             // dateToPicker
             // 
             this.dateToPicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateToPicker.Location = new System.Drawing.Point(190, 25);
+            this.dateToPicker.Location = new System.Drawing.Point(188, 23);
             this.dateToPicker.Name = "dateToPicker";
             this.dateToPicker.Size = new System.Drawing.Size(105, 20);
             this.dateToPicker.TabIndex = 3;
@@ -172,10 +218,27 @@
             // dateFromPicker
             // 
             this.dateFromPicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateFromPicker.Location = new System.Drawing.Point(47, 24);
+            this.dateFromPicker.Location = new System.Drawing.Point(45, 22);
             this.dateFromPicker.Name = "dateFromPicker";
             this.dateFromPicker.Size = new System.Drawing.Size(105, 20);
             this.dateFromPicker.TabIndex = 1;
+            // 
+            // secondsPerDayTextBox
+            // 
+            this.secondsPerDayTextBox.Location = new System.Drawing.Point(144, 53);
+            this.secondsPerDayTextBox.MaxLength = 5;
+            this.secondsPerDayTextBox.Name = "secondsPerDayTextBox";
+            this.secondsPerDayTextBox.Size = new System.Drawing.Size(51, 20);
+            this.secondsPerDayTextBox.TabIndex = 5;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 57);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(132, 13);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Seconds per day (1-1000):";
             // 
             // groupBox1
             // 
@@ -238,7 +301,7 @@
             // resetToDefaultButton
             // 
             this.resetToDefaultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.resetToDefaultButton.Location = new System.Drawing.Point(15, 351);
+            this.resetToDefaultButton.Location = new System.Drawing.Point(15, 384);
             this.resetToDefaultButton.Name = "resetToDefaultButton";
             this.resetToDefaultButton.Size = new System.Drawing.Size(96, 23);
             this.resetToDefaultButton.TabIndex = 10;
@@ -306,73 +369,62 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.viewFilesExtentionMapCheckBox);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.hideUserNamesCheckBox);
-            this.groupBox3.Controls.Add(this.timeScaleComboBox);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.hideDirNamesCheckBox);
-            this.groupBox3.Controls.Add(this.loopPlaybackCheckBox);
+            this.groupBox3.Controls.Add(this.viewUserNamesCheckBox);
+            this.groupBox3.Controls.Add(this.viewDirNamesCheckBox);
             this.groupBox3.Controls.Add(this.maxFilesTextBox);
             this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Controls.Add(this.secondsPerDayTextBox);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.hideFileNamesCheckBox);
-            this.groupBox3.Location = new System.Drawing.Point(15, 188);
+            this.groupBox3.Controls.Add(this.viewFileNamesCheckBox);
+            this.groupBox3.Location = new System.Drawing.Point(12, 262);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(306, 151);
+            this.groupBox3.Size = new System.Drawing.Size(306, 104);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Visualization";
             // 
-            // timeScaleComboBox
+            // viewFilesExtentionMapCheckBox
             // 
-            this.timeScaleComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.timeScaleComboBox.FormattingEnabled = true;
-            this.timeScaleComboBox.Items.AddRange(new object[] {
-            "<None>",
-            "Slow x1/8",
-            "Slow x1/4",
-            "Slow x1/2",
-            "Fast x2",
-            "Fast x3",
-            "Fast x4"});
-            this.timeScaleComboBox.Location = new System.Drawing.Point(170, 74);
-            this.timeScaleComboBox.Name = "timeScaleComboBox";
-            this.timeScaleComboBox.Size = new System.Drawing.Size(82, 21);
-            this.timeScaleComboBox.TabIndex = 7;
+            this.viewFilesExtentionMapCheckBox.AutoSize = true;
+            this.viewFilesExtentionMapCheckBox.Location = new System.Drawing.Point(10, 78);
+            this.viewFilesExtentionMapCheckBox.Name = "viewFilesExtentionMapCheckBox";
+            this.viewFilesExtentionMapCheckBox.Size = new System.Drawing.Size(141, 17);
+            this.viewFilesExtentionMapCheckBox.TabIndex = 11;
+            this.viewFilesExtentionMapCheckBox.Text = "View files extension map";
+            this.viewFilesExtentionMapCheckBox.UseVisualStyleBackColor = true;
             // 
-            // label11
+            // label12
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 77);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(61, 13);
-            this.label11.TabIndex = 6;
-            this.label11.Text = "Time scale:";
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(7, 26);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(67, 13);
+            this.label12.TabIndex = 0;
+            this.label12.Text = "View names:";
             // 
-            // hideDirNamesCheckBox
+            // viewUserNamesCheckBox
             // 
-            this.hideDirNamesCheckBox.AutoSize = true;
-            this.hideDirNamesCheckBox.Location = new System.Drawing.Point(132, 26);
-            this.hideDirNamesCheckBox.Name = "hideDirNamesCheckBox";
-            this.hideDirNamesCheckBox.Size = new System.Drawing.Size(76, 17);
-            this.hideDirNamesCheckBox.TabIndex = 2;
-            this.hideDirNamesCheckBox.Text = "Directories";
-            this.hideDirNamesCheckBox.UseVisualStyleBackColor = true;
+            this.viewUserNamesCheckBox.AutoSize = true;
+            this.viewUserNamesCheckBox.Location = new System.Drawing.Point(214, 26);
+            this.viewUserNamesCheckBox.Name = "viewUserNamesCheckBox";
+            this.viewUserNamesCheckBox.Size = new System.Drawing.Size(53, 17);
+            this.viewUserNamesCheckBox.TabIndex = 3;
+            this.viewUserNamesCheckBox.Text = "Users";
+            this.viewUserNamesCheckBox.UseVisualStyleBackColor = true;
             // 
-            // loopPlaybackCheckBox
+            // viewDirNamesCheckBox
             // 
-            this.loopPlaybackCheckBox.AutoSize = true;
-            this.loopPlaybackCheckBox.Location = new System.Drawing.Point(9, 128);
-            this.loopPlaybackCheckBox.Name = "loopPlaybackCheckBox";
-            this.loopPlaybackCheckBox.Size = new System.Drawing.Size(96, 17);
-            this.loopPlaybackCheckBox.TabIndex = 10;
-            this.loopPlaybackCheckBox.Text = "Loop playback";
-            this.loopPlaybackCheckBox.UseVisualStyleBackColor = true;
+            this.viewDirNamesCheckBox.AutoSize = true;
+            this.viewDirNamesCheckBox.Location = new System.Drawing.Point(132, 26);
+            this.viewDirNamesCheckBox.Name = "viewDirNamesCheckBox";
+            this.viewDirNamesCheckBox.Size = new System.Drawing.Size(76, 17);
+            this.viewDirNamesCheckBox.TabIndex = 2;
+            this.viewDirNamesCheckBox.Text = "Directories";
+            this.viewDirNamesCheckBox.UseVisualStyleBackColor = true;
             // 
             // maxFilesTextBox
             // 
-            this.maxFilesTextBox.Location = new System.Drawing.Point(201, 101);
+            this.maxFilesTextBox.Location = new System.Drawing.Point(149, 52);
             this.maxFilesTextBox.MaxLength = 7;
             this.maxFilesTextBox.Name = "maxFilesTextBox";
             this.maxFilesTextBox.Size = new System.Drawing.Size(51, 20);
@@ -381,38 +433,21 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(7, 101);
+            this.label9.Location = new System.Drawing.Point(7, 55);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(133, 13);
             this.label9.TabIndex = 8;
             this.label9.Text = "Max number of active files:";
             // 
-            // secondsPerDayTextBox
+            // viewFileNamesCheckBox
             // 
-            this.secondsPerDayTextBox.Location = new System.Drawing.Point(201, 48);
-            this.secondsPerDayTextBox.MaxLength = 5;
-            this.secondsPerDayTextBox.Name = "secondsPerDayTextBox";
-            this.secondsPerDayTextBox.Size = new System.Drawing.Size(51, 20);
-            this.secondsPerDayTextBox.TabIndex = 5;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 51);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(192, 13);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "Seconds per day (1-1000, 0 - real time):";
-            // 
-            // hideFileNamesCheckBox
-            // 
-            this.hideFileNamesCheckBox.AutoSize = true;
-            this.hideFileNamesCheckBox.Location = new System.Drawing.Point(79, 26);
-            this.hideFileNamesCheckBox.Name = "hideFileNamesCheckBox";
-            this.hideFileNamesCheckBox.Size = new System.Drawing.Size(47, 17);
-            this.hideFileNamesCheckBox.TabIndex = 1;
-            this.hideFileNamesCheckBox.Text = "Files";
-            this.hideFileNamesCheckBox.UseVisualStyleBackColor = true;
+            this.viewFileNamesCheckBox.AutoSize = true;
+            this.viewFileNamesCheckBox.Location = new System.Drawing.Point(79, 26);
+            this.viewFileNamesCheckBox.Name = "viewFileNamesCheckBox";
+            this.viewFileNamesCheckBox.Size = new System.Drawing.Size(47, 17);
+            this.viewFileNamesCheckBox.TabIndex = 1;
+            this.viewFileNamesCheckBox.Text = "Files";
+            this.viewFileNamesCheckBox.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -421,7 +456,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(620, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(619, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -504,9 +539,9 @@
             this.groupBox4.Controls.Add(this.resolutionHeightTextBox);
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.resolutionWidthTextBox);
-            this.groupBox4.Location = new System.Drawing.Point(14, 112);
+            this.groupBox4.Location = new System.Drawing.Point(327, 263);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(307, 70);
+            this.groupBox4.Size = new System.Drawing.Size(280, 103);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "View Size";
@@ -561,24 +596,40 @@
             this.resolutionWidthTextBox.TabIndex = 2;
             this.resolutionWidthTextBox.Text = "800";
             // 
-            // hideUserNamesCheckBox
+            // groupBox5
             // 
-            this.hideUserNamesCheckBox.AutoSize = true;
-            this.hideUserNamesCheckBox.Location = new System.Drawing.Point(214, 26);
-            this.hideUserNamesCheckBox.Name = "hideUserNamesCheckBox";
-            this.hideUserNamesCheckBox.Size = new System.Drawing.Size(53, 17);
-            this.hideUserNamesCheckBox.TabIndex = 3;
-            this.hideUserNamesCheckBox.Text = "Users";
-            this.hideUserNamesCheckBox.UseVisualStyleBackColor = true;
+            this.groupBox5.Controls.Add(this.liveStreamRadioButton);
+            this.groupBox5.Controls.Add(this.historyRadioButton);
+            this.groupBox5.Location = new System.Drawing.Point(12, 53);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(308, 72);
+            this.groupBox5.TabIndex = 11;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Play Mode";
             // 
-            // label12
+            // liveStreamRadioButton
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(7, 26);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(66, 13);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "Hide names:";
+            this.liveStreamRadioButton.AutoSize = true;
+            this.liveStreamRadioButton.Location = new System.Drawing.Point(149, 33);
+            this.liveStreamRadioButton.Name = "liveStreamRadioButton";
+            this.liveStreamRadioButton.Size = new System.Drawing.Size(138, 17);
+            this.liveStreamRadioButton.TabIndex = 1;
+            this.liveStreamRadioButton.Text = "Live Changes (real time)";
+            this.liveStreamRadioButton.UseVisualStyleBackColor = true;
+            this.liveStreamRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
+            // 
+            // historyRadioButton
+            // 
+            this.historyRadioButton.AutoSize = true;
+            this.historyRadioButton.Checked = true;
+            this.historyRadioButton.Location = new System.Drawing.Point(22, 33);
+            this.historyRadioButton.Name = "historyRadioButton";
+            this.historyRadioButton.Size = new System.Drawing.Size(101, 17);
+            this.historyRadioButton.TabIndex = 0;
+            this.historyRadioButton.TabStop = true;
+            this.historyRadioButton.Text = "Visualize History";
+            this.historyRadioButton.UseVisualStyleBackColor = true;
+            this.historyRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
             // 
             // SettingForm
             // 
@@ -586,13 +637,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(620, 386);
+            this.ClientSize = new System.Drawing.Size(619, 419);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.resetToDefaultButton);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.datesGroupBox);
+            this.Controls.Add(this.historySettingsGroupBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.cancelButton);
@@ -607,8 +659,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Visualization Settings";
-            this.datesGroupBox.ResumeLayout(false);
-            this.datesGroupBox.PerformLayout();
+            this.historySettingsGroupBox.ResumeLayout(false);
+            this.historySettingsGroupBox.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -619,6 +671,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -630,7 +684,7 @@
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox datesGroupBox;
+        private System.Windows.Forms.GroupBox historySettingsGroupBox;
         private System.Windows.Forms.Label dateToLabel;
         private System.Windows.Forms.Label dateFromLabel;
         private System.Windows.Forms.DateTimePicker dateToPicker;
@@ -649,7 +703,7 @@
         private System.Windows.Forms.TextBox filesIncludeTextBox;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox hideFileNamesCheckBox;
+        private System.Windows.Forms.CheckBox viewFileNamesCheckBox;
         private System.Windows.Forms.TextBox secondsPerDayTextBox;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox maxFilesTextBox;
@@ -672,10 +726,14 @@
         private System.Windows.Forms.CheckBox setResolutionCheckBox;
         private System.Windows.Forms.CheckBox fullScreenCheckBox;
         private System.Windows.Forms.CheckBox loopPlaybackCheckBox;
-        private System.Windows.Forms.CheckBox hideDirNamesCheckBox;
+        private System.Windows.Forms.CheckBox viewDirNamesCheckBox;
         private System.Windows.Forms.ComboBox timeScaleComboBox;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox hideUserNamesCheckBox;
+        private System.Windows.Forms.CheckBox viewUserNamesCheckBox;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.RadioButton liveStreamRadioButton;
+        private System.Windows.Forms.RadioButton historyRadioButton;
+        private System.Windows.Forms.CheckBox viewFilesExtentionMapCheckBox;
     }
 }

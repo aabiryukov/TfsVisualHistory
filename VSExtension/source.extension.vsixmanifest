@@ -7,12 +7,8 @@
 Looks like a fascinating creation of a new galaxies in space.
 
 Sources:
-https://tfsvisualhistory.codeplex.com/
-
-Related links:
-- Gource tool project: http://code.google.com/p/gource/
-- Visualizing tfs with Gource: http://mark-dot-net.blogspot.ru/2011/07/visualizing-tfs-repositories-with.html</Description>
-    <MoreInfo>https://tfsvisualhistory.codeplex.com/</MoreInfo>
+https://tfsvisualhistory.codeplex.com/</Description>
+    <MoreInfo>https://tfsvisualhistory.codeplex.com/documentation</MoreInfo>
     <License>License..txt</License>
     <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
     <Icon>Resources\Package.ico</Icon>
@@ -20,11 +16,14 @@ Related links:
     <Tags>TFS, Source Control, Visualization, History, Gource</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="11.0" />
+    <InstallationTarget Version="[11.0,12.0)" Id="Microsoft.VisualStudio.VSWinExpress" />
+    <InstallationTarget Version="[11.0,12.0)" Id="Microsoft.VisualStudio.Pro" />
+    <InstallationTarget Version="[11.0,12.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="11.0" />
+    <Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="[11.0,12.0)" />
+    <Dependency d:Source="Installed" Id="Microsoft.VisualStudio.TeamFoundation.TeamExplorer.Extensions" DisplayName="Team Foundation Team Explorer Extensions" Version="[11.0,12.0)" d:InstallSource="Download" Location="http://www.microsoft.com/en-us/download/details.aspx?id=30656" />
   </Dependencies>
   <Assets>
     <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />

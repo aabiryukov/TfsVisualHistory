@@ -12,10 +12,14 @@ How to use:
 Release Notes
 --------------------------------
 
-v1.6 (XX Jun 2013)
+v1.6 (29 Jun 2013)
 ------------------
-Added new option "Hide user names" (useful for large teams)
-Fixed progress calculation (get first changeset)
+Added new mode "Live changes" (useful for view current team activity)
+Fixed progress calculation
+Added option "Hide user names" (useful for large teams)
+Added option "View files extension map"
+Added VS Express edition support
+Changed VS package icon
 
 v1.5 (17 Jun 2013)
 ------------------
