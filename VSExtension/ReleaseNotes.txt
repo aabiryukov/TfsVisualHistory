@@ -8,7 +8,6 @@ Added new mode "Live changes" (useful for view current activity of a team)
 Fixed progress calculation
 Added option "Hide user names" (useful for large teams)
 Added option "View files extension map"
-Added VS Express edition support
 Changed VS package icon
 
 v1.5 (17 Jun 2013)

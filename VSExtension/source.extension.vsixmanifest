@@ -16,9 +16,7 @@ https://tfsvisualhistory.codeplex.com/</Description>
     <Tags>TFS, Source Control, Visualization, History, Gource</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[11.0,12.0)" Id="Microsoft.VisualStudio.VSWinExpress" />
     <InstallationTarget Version="[11.0,12.0)" Id="Microsoft.VisualStudio.Pro" />
-    <InstallationTarget Version="[11.0,12.0)" Id="Microsoft.VisualStudio.VSWinDesktopExpress" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="4.5" />
