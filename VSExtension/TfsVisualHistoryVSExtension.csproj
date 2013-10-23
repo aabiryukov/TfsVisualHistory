@@ -266,7 +266,7 @@
     <Content Include="Gource\zlib1.dll">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="License..txt">
+    <Content Include="License.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
