@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="03C04FA1-E142-4F5C-83BD-EBCF54142A07" Version="2.0" Language="en-US" Publisher="Alexandr Biryukov" />
     <DisplayName>TFS Source Control History Visualization</DisplayName>
-    <Description xml:space="preserve">TFS source control history visualization (VS2012 extension).
+    <Description xml:space="preserve">TFS source control history visualization (VS2012/VS2013 extension).
 Looks like a fascinating creation of a new galaxies in space.
 
 Sources:
