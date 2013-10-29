@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.TeamFoundation.VersionControl.Client;
-using Sitronics.TfsVisualHistory.VSExtension.Utility;
+using Sitronics.TfsVisualHistory.Utility;
 
-namespace Sitronics.TfsVisualHistory.VSExtension
+namespace Sitronics.TfsVisualHistory
 {
     /// <summary>
     /// Convert TFS changesets to gource format.

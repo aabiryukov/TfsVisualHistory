@@ -2,6 +2,10 @@
 
 Release Notes:
 
+v2.0 (28 Oct 2013)
+------------------
+Added support VS2013 (one extension - multiple VS versions)
+
 v1.6 (30 Jun 2013)
 ------------------
 Added new mode "Live changes" (useful for view current activity of a team)

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Sitronics.TfsVisualHistory.VSExtension.Utility
+namespace Sitronics.TfsVisualHistory.Utility
 {
     public class WaitMessageProgress<T>
     {

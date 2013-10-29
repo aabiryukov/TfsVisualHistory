@@ -1,4 +1,7 @@
-﻿namespace Sitronics.TfsVisualHistory.VSExtension
+﻿using Sitronics.TfsVisualHistory.Common;
+using Sitronics.VisualStudioSelector;
+
+namespace Sitronics.TfsVisualHistory.VSExtension
 {
     using System;
     using System.ComponentModel.Design;
@@ -25,14 +28,15 @@
 
     // This attribute is used to register the information needed to show this package
     // in the Help/About dialog of Visual Studio.
-    [InstalledProductRegistration("#110", "#112", "1.6", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "2.0", IconResourceID = 400)]
 
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(GuidList.GuidTfsVisualHistoryVSExtensionPkgString)]
     public sealed class TfsVisualHistoryVSExtensionPackage : Package
     {
-        private TeamExplorerIntegrator m_teamexpIntegrator;
+		private ITeamExplorerIntegrator m_teamexpIntegrator;
+		private VisualStudioVersion m_vsVersion = VisualStudioVersion.Unknown;
 
         /// <summary>
         /// Initializes a new instance of the TfsVisualHistoryVSExtensionPackage class.
@@ -44,21 +48,59 @@
         public TfsVisualHistoryVSExtensionPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
-        }        
-
-        public TeamExplorerIntegrator TeamExplorerIntegrator
+        }
+/*
+		private static IEnumerable<Type> GetTypesSafely(Assembly assembly)
+		{
+			try
+			{
+				return assembly.GetTypes();
+			}
+			catch (ReflectionTypeLoadException ex)
+			{
+				return ex.Types.Where(x => x != null);
+			}
+		}
+*/
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
+		public ITeamExplorerIntegrator TeamExplorerIntegrator
         {
             get
             {
-                if (m_teamexpIntegrator == null)
-                {
-                    m_teamexpIntegrator = new TeamExplorerIntegrator(
-                        GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
-//                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
-                        );
-                }
+	            if (m_teamexpIntegrator != null) return m_teamexpIntegrator;
 
-                return m_teamexpIntegrator;
+/*
+	            var pluginPath = Path.Combine(
+		            Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) ?? "unknown",
+		            "Sitronics.TfsVisualHistory.VS2012.dll");
+	            var assembly = Assembly.LoadFrom(pluginPath);
+
+	            foreach (var type in GetTypesSafely(assembly))
+	            {
+		            if (type.IsAbstract || !type.IsClass || !type.IsPublic) continue;
+		            if (!type.IsSubclassOf(typeof(ITeamExplorerIntegrator))) continue;
+
+		            m_teamexpIntegrator = (ITeamExplorerIntegrator)Activator.CreateInstance(type);
+		            m_teamexpIntegrator.Initialize(
+			            GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
+			            //                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
+			            );
+		            break;
+	            }
+
+	            if (m_teamexpIntegrator == null)
+	            {
+		            throw new ApplicationException("Interface ITeamExplorerIntegrator not found!");
+	            }
+*/
+				//typeof(Package).Assembly.Location
+				m_teamexpIntegrator = VSSelector.CreateTeamExplorerIntegrator(m_vsVersion);
+				m_teamexpIntegrator.Initialize(
+					GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
+					//                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
+					);
+
+	            return m_teamexpIntegrator;
             }
         }
 
@@ -75,7 +117,16 @@
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
-            // Add our command handlers for menu (commands must exist in the .vsct file)
+	        if (UserRegistryRoot.ToString().Contains(@"\11"))
+	        {
+		        m_vsVersion = VisualStudioVersion.VS2012;
+	        }
+	        else
+	        {
+				m_vsVersion = VisualStudioVersion.VS2013;
+			}
+
+	        // Add our command handlers for menu (commands must exist in the .vsct file)
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (null != mcs)
             {
@@ -119,9 +170,9 @@
                         // System.Windows.Forms.MessageBox.Show("CurrentSourceControlFolder=" + (TeamExplorerIntegrator.CurrentSourceControlFolder ?? "null"));
                         // System.Windows.Forms.MessageBox.Show("TeamProjectCollectionUri=" + (TeamExplorerIntegrator.TeamProjectCollectionUri != null ? TeamExplorerIntegrator.TeamProjectCollectionUri.ToString() : "null"));
 
-                        if (TeamExplorerIntegrator != null && TeamExplorerIntegrator.TeamProjectCollection != null && !string.IsNullOrEmpty(TeamExplorerIntegrator.CurrentSourceControlFolder))
-                        {
-                            HistoryViewer.ViewHistory(TeamExplorerIntegrator.TeamProjectCollectionUri, TeamExplorerIntegrator.CurrentSourceControlFolder);
+						if (TeamExplorerIntegrator != null)
+						{
+							TeamExplorerIntegrator.ViewHistory();
                         }
                         break;
                 }                

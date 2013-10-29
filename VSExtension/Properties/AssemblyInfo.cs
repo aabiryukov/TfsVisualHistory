@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Sitronics.TfsSourceControlHistoryVisualization")]
 [assembly: AssemblyDescription("TFS Source Control History Visualization. Project site: https://tfsvisualhistory.codeplex.com/ E-mail: aabiryukov@gmail.com")]
-[assembly: AssemblyProduct("TfsSourceControlHistoryVisualization.VS2012")]
+[assembly: AssemblyProduct("TfsSourceControlHistoryVisualization")]
 [assembly: AssemblyCopyright("Copyright (c) 2013 Alexander Biryukov <aabiryukov@gmail.com> (aka alexbirk)")]
-[assembly: AssemblyVersion("1.6.0.0")]
-[assembly: AssemblyFileVersion("1.6.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")] // Culture must be empty (otherwise error 'Could not load file or assembly ...' )
 
@@ -18,3 +18,4 @@ using System.Runtime.InteropServices;
 //[assembly: CLSCompliant(true)]
 
 [assembly: NeutralResourcesLanguage("en")]
+

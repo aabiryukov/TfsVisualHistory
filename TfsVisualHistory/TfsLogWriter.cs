@@ -4,7 +4,7 @@ using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using System.Linq;
 
-namespace Sitronics.TfsVisualHistory.VSExtension
+namespace Sitronics.TfsVisualHistory
 {
 	internal static class TfsLogWriter
 	{

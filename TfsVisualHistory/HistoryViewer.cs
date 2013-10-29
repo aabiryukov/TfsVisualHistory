@@ -3,9 +3,9 @@ using System.IO;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Globalization;
-using Sitronics.TfsVisualHistory.VSExtension.Utility;
+using Sitronics.TfsVisualHistory.Utility;
 
-namespace Sitronics.TfsVisualHistory.VSExtension
+namespace Sitronics.TfsVisualHistory
 {
     public class HistoryViewer
     {
@@ -124,6 +124,9 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                 baseDirectory += @"\..\..\..\VSExtension";
             }
 
+#if DEBUG
+			// baseDirectory = @"C:\Temp\aaaa\уи³пс\";
+#endif
             var gourcePath = Path.Combine(baseDirectory, @"Gource\Gource.exe");
             var dataPath = Path.Combine(baseDirectory, @"Data");
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Sitronics.TfsVisualHistory.VSExtension.Utility
+namespace Sitronics.TfsVisualHistory.Utility
 {
     /// <summary>
     /// Represents a wildcard running on the

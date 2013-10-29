@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
-using Sitronics.TfsVisualHistory.VSExtension.Utility;
+using Sitronics.TfsVisualHistory.Utility;
 
-namespace Sitronics.TfsVisualHistory.VSExtension
+namespace Sitronics.TfsVisualHistory
 {
     /// <summary>
     /// TFS Version Control live changes reader

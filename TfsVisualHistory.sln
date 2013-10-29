@@ -1,13 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistoryVSExtension", "VSExtension\TfsVisualHistoryVSExtension.csproj", "{63817546-D392-4E3E-B485-520FE334623C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistoryTest", "Test\TfsVisualHistoryTest.csproj", "{72E3CD87-0576-46CB-8C0E-90B2B5E4A0C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistory.VS2012", "TfsVisualHistory\TfsVisualHistory.VS2012.csproj", "{61E0268D-184E-440D-91CB-950C8BA525A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistory.Common", "TfsVisualHistory.Common\TfsVisualHistory.Common.csproj", "{F7387705-8E05-4AE1-90F0-29830D275681}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistory.VS2013", "TfsVisualHistory\TfsVisualHistory.VS2013.csproj", "{A040DF02-C510-417B-A5EC-9C4A88D114EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudioSelector", "VisualStudioSelector\VisualStudioSelector.csproj", "{54108673-004D-4512-AD32-9F28EAF430E2}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs35
 		SccLocalPath0 = .
@@ -17,6 +27,18 @@ Global
 		SccProjectUniqueName2 = Test\\TfsVisualHistoryTest.csproj
 		SccProjectName2 = Test
 		SccLocalPath2 = Test
+		SccProjectUniqueName3 = TfsVisualHistory\\TfsVisualHistory.VS2012.csproj
+		SccProjectName3 = TfsVisualHistory
+		SccLocalPath3 = TfsVisualHistory
+		SccProjectUniqueName4 = TfsVisualHistory.Common\\TfsVisualHistory.Common.csproj
+		SccProjectName4 = TfsVisualHistory.Common
+		SccLocalPath4 = TfsVisualHistory.Common
+		SccProjectUniqueName5 = TfsVisualHistory\\TfsVisualHistory.VS2013.csproj
+		SccProjectName5 = TfsVisualHistory
+		SccLocalPath5 = TfsVisualHistory
+		SccProjectUniqueName6 = VisualStudioSelector\\VisualStudioSelector.csproj
+		SccProjectName6 = VisualStudioSelector
+		SccLocalPath6 = VisualStudioSelector
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +53,22 @@ Global
 		{72E3CD87-0576-46CB-8C0E-90B2B5E4A0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72E3CD87-0576-46CB-8C0E-90B2B5E4A0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72E3CD87-0576-46CB-8C0E-90B2B5E4A0C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61E0268D-184E-440D-91CB-950C8BA525A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61E0268D-184E-440D-91CB-950C8BA525A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61E0268D-184E-440D-91CB-950C8BA525A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61E0268D-184E-440D-91CB-950C8BA525A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7387705-8E05-4AE1-90F0-29830D275681}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7387705-8E05-4AE1-90F0-29830D275681}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7387705-8E05-4AE1-90F0-29830D275681}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7387705-8E05-4AE1-90F0-29830D275681}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A040DF02-C510-417B-A5EC-9C4A88D114EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A040DF02-C510-417B-A5EC-9C4A88D114EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A040DF02-C510-417B-A5EC-9C4A88D114EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A040DF02-C510-417B-A5EC-9C4A88D114EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54108673-004D-4512-AD32-9F28EAF430E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54108673-004D-4512-AD32-9F28EAF430E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54108673-004D-4512-AD32-9F28EAF430E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54108673-004D-4512-AD32-9F28EAF430E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

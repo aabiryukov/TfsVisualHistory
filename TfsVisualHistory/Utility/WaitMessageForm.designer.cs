@@ -1,4 +1,4 @@
-namespace Sitronics.TfsVisualHistory.VSExtension.Utility
+namespace Sitronics.TfsVisualHistory.Utility
 {
     partial class WaitMessageForm
     {

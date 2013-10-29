@@ -1,4 +1,4 @@
-#region File Header
+﻿#region File Header
 
 // This file released under the Modified BSD License (http://www.opensource.org/licenses/bsd-license.php)
 // Project hosted at: http://code.google.com/p/lvknet
@@ -18,7 +18,7 @@ using System.Windows.Forms;
 
 #endregion
 
-namespace Sitronics.TfsVisualHistory.VSExtension.Utility
+namespace Sitronics.TfsVisualHistory.Utility
 {
 	/// <summary>
 	/// This class encapsulates a form that can be used from lengthy processing

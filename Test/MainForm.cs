@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using Sitronics.TfsVisualHistory.VSExtension;
+using Sitronics.TfsVisualHistory;
 
 namespace TfsVisualHistoryTest
 {

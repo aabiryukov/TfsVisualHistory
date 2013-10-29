@@ -2,9 +2,9 @@
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.IO;
-using Sitronics.TfsVisualHistory.VSExtension.Utility;
+using Sitronics.TfsVisualHistory.Utility;
 
-namespace Sitronics.TfsVisualHistory.VSExtension
+namespace Sitronics.TfsVisualHistory
 {
 	public class VisualizationSettings
 	{

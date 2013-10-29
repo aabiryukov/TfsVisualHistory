@@ -1,4 +1,4 @@
-﻿namespace Sitronics.TfsVisualHistory.VSExtension
+﻿namespace Sitronics.TfsVisualHistory
 {
     partial class SettingForm
     {
