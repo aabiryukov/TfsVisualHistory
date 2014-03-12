@@ -2,6 +2,10 @@
 
 Release Notes:
 
+v2.1 (12 Mar 2014)
+------------------
+Fixed display name of the changeset commiter (now used changeset.OwnerDisplayName)
+
 v2.0 (28 Oct 2013)
 ------------------
 Added support VS2013 (one extension - multiple VS versions)

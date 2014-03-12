@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.TeamFoundation.VersionControl.Client;
@@ -59,18 +60,6 @@ namespace Sitronics.TfsVisualHistory
             return null;
         }
 
-        private static string FormatCommitterName(string initialName)
-        {
-            return initialName;
-            /*
-                        int ind = initialName.LastIndexOf('\\');
-                        if (ind == -1)
-                            return initialName;
-
-                        return initialName.Substring(ind + 1);
-             */
-        }
-
         private static string FormatFileName(string fileName)
         {
             // Преобразуем расширение к нижнему регистру, чтобы размер букв не влиял на визуализацию типов файлов.
@@ -91,7 +80,7 @@ namespace Sitronics.TfsVisualHistory
         public IEnumerable<string> GetLogLines(Changeset changeset)
         {
             // Filter changeset Owner
-            if (!FilterByString(changeset.Owner ?? "", m_includeUsersWildcard, m_excludeUsersWildcard))
+            if (!FilterByString(changeset.OwnerDisplayName ?? "", m_includeUsersWildcard, m_excludeUsersWildcard))
                 yield break;
 
             foreach (var change in changeset.Changes)
@@ -110,7 +99,7 @@ namespace Sitronics.TfsVisualHistory
 
 				double unixTime = (int)(changeset.CreationDate - st_unixTimeZero.ToLocalTime()).TotalSeconds;
 
-                var userName = FormatCommitterName(changeset.Committer);
+                var userName = changeset.OwnerDisplayName;
                 var fileName = FormatFileName(change.Item.ServerItem);
 
                 yield return 

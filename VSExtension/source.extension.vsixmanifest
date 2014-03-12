@@ -1,29 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="03C04FA1-E142-4F5C-83BD-EBCF54142A07" Version="2.0" Language="en-US" Publisher="Alexandr Biryukov" />
-    <DisplayName>TFS Source Control History Visualization</DisplayName>
-    <Description xml:space="preserve">TFS source control history visualization (VS2012/VS2013 extension).
+	<Metadata>
+		<Identity Id="03C04FA1-E142-4F5C-83BD-EBCF54142A07" Version="2.1" Language="en-US" Publisher="Alexandr Biryukov" />
+		<DisplayName>TFS Source Control History Visualization</DisplayName>
+		<Description xml:space="preserve">TFS source control history visualization (VS2012/VS2013 extension).
 Looks like a fascinating creation of a new galaxies in space.
 
 Sources:
 https://tfsvisualhistory.codeplex.com/</Description>
-    <MoreInfo>https://tfsvisualhistory.codeplex.com/documentation</MoreInfo>
-    <License>License.txt</License>
-    <ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
-    <Icon>Resources\Package.ico</Icon>
-    <PreviewImage>Resources\Preview.png</PreviewImage>
-    <Tags>TFS, Source Control, Visualization, History, Gource</Tags>
-  </Metadata>
-  <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[11.0,13.0)" Id="Microsoft.VisualStudio.Pro" />
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
-    <Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="[11.0,13.0)" />
-    <Dependency d:Source="Installed" Id="Microsoft.VisualStudio.TeamFoundation.TeamExplorer.Extensions" DisplayName="Team Foundation Team Explorer Extensions" Version="[11.0,13.0)" d:InstallSource="Download" Location="http://www.microsoft.com/en-us/download/details.aspx?id=30656" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-  </Assets>
+		<MoreInfo>https://tfsvisualhistory.codeplex.com/documentation</MoreInfo>
+		<License>License.txt</License>
+		<ReleaseNotes>ReleaseNotes.txt</ReleaseNotes>
+		<Icon>Resources\Package.ico</Icon>
+		<PreviewImage>Resources\Preview.png</PreviewImage>
+		<Tags>TFS, Source Control, Visualization, History, Gource</Tags>
+	</Metadata>
+	<Installation InstalledByMsi="false">
+		<InstallationTarget Version="[11.0,13.0)" Id="Microsoft.VisualStudio.Pro" />
+	</Installation>
+	<Dependencies>
+		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+		<Dependency Id="Microsoft.VisualStudio.MPF.11.0" DisplayName="Visual Studio MPF 11.0" d:Source="Installed" Version="[11.0,13.0)" />
+		<Dependency d:Source="Installed" Id="Microsoft.VisualStudio.TeamFoundation.TeamExplorer.Extensions" DisplayName="Team Foundation Team Explorer Extensions" Version="[11.0,13.0)" d:InstallSource="Download" Location="http://www.microsoft.com/en-us/download/details.aspx?id=30656" />
+	</Dependencies>
+	<Assets>
+		<Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+	</Assets>
 </PackageManifest>
