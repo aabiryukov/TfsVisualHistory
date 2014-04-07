@@ -117,7 +117,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
             base.Initialize();
 
-	        if (UserRegistryRoot.ToString().Contains(@"\11"))
+#if DEBUG
+	        System.Windows.Forms.MessageBox.Show("UserRegistryRoot=" + UserRegistryRoot);
+#endif
+
+			if (UserRegistryRoot.ToString().Contains(@"\11"))
 	        {
 		        m_vsVersion = VisualStudioVersion.VS2012;
 	        }
