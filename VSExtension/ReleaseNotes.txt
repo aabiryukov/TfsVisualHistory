@@ -2,9 +2,9 @@
 
 Release Notes:
 
-v2.3 (22 Jun 2014)
+v2.3 (23 Jun 2014)
 ------------------
-Added avatars support
+Added avatars support (show TFS users profile image)
 
 v2.2 (08 Apr 2014)
 ------------------

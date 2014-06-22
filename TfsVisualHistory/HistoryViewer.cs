@@ -50,18 +50,29 @@ namespace Sitronics.TfsVisualHistory
             return null;
         }
 
-        private void ExecViewHistory(Uri tfsCollectionUri, string sourceControlFolder)
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+		private void ExecViewHistory(Uri tfsCollectionUri, string sourceControlFolder)
         {
             // gource start arguments
             string arguments;
             string title;
+			string avatarsDirectory = null;
 
             if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
             {
                 title = "History of " + sourceControlFolder;
                 var logFile = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
+	            
+	            if (m_settigs.ViewAvatars)
+	            {
+		            avatarsDirectory = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.Avatars");
+		            if (!Directory.Exists(avatarsDirectory))
+		            {
+			            Directory.CreateDirectory(avatarsDirectory);
+		            }
+	            }
 
-                bool hasLines;
+	            bool hasLines;
 
                 using (var waitMessage = new WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
                 {
@@ -70,6 +81,7 @@ namespace Sitronics.TfsVisualHistory
                     hasLines =
                         TfsLogWriter.CreateGourceLogFile(
                             logFile,
+							avatarsDirectory,
                             tfsCollectionUri,
                             sourceControlFolder,
                             m_settigs,
@@ -172,9 +184,9 @@ namespace Sitronics.TfsVisualHistory
                 arguments += " --key";
             }
 
-			if(!string.IsNullOrEmpty(m_settigs.AvatarsDirectory))
+			if (!string.IsNullOrEmpty(avatarsDirectory))
 			{
-				arguments += string.Format(CultureInfo.InvariantCulture, " --user-image-dir \"{0}\"", m_settigs.AvatarsDirectory);
+				arguments += string.Format(CultureInfo.InvariantCulture, " --user-image-dir \"{0}\"", avatarsDirectory);
 			}
 
             // Process "--hide" option

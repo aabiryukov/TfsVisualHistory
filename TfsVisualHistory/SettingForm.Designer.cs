@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
 			this.okButton = new System.Windows.Forms.Button();
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.pathTextBox = new System.Windows.Forms.TextBox();
@@ -84,10 +83,7 @@
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.liveStreamRadioButton = new System.Windows.Forms.RadioButton();
 			this.historyRadioButton = new System.Windows.Forms.RadioButton();
-			this.avatarsDirLabel = new System.Windows.Forms.Label();
-			this.avatarsDirTextBox = new System.Windows.Forms.TextBox();
-			this.selectAvatarsDirButton = new System.Windows.Forms.Button();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.viewAvatarsCheckBox = new System.Windows.Forms.CheckBox();
 			this.historySettingsGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -101,7 +97,7 @@
 			// 
 			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.okButton.Location = new System.Drawing.Point(391, 412);
+			this.okButton.Location = new System.Drawing.Point(391, 376);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(135, 23);
 			this.okButton.TabIndex = 0;
@@ -113,7 +109,7 @@
 			// 
 			this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(532, 412);
+			this.cancelButton.Location = new System.Drawing.Point(532, 376);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
 			this.cancelButton.TabIndex = 1;
@@ -306,7 +302,7 @@
 			// resetToDefaultButton
 			// 
 			this.resetToDefaultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.resetToDefaultButton.Location = new System.Drawing.Point(15, 412);
+			this.resetToDefaultButton.Location = new System.Drawing.Point(15, 376);
 			this.resetToDefaultButton.Name = "resetToDefaultButton";
 			this.resetToDefaultButton.Size = new System.Drawing.Size(96, 23);
 			this.resetToDefaultButton.TabIndex = 14;
@@ -374,6 +370,7 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.viewAvatarsCheckBox);
 			this.groupBox3.Controls.Add(this.viewFilesExtentionMapCheckBox);
 			this.groupBox3.Controls.Add(this.label12);
 			this.groupBox3.Controls.Add(this.viewUserNamesCheckBox);
@@ -394,7 +391,7 @@
 			this.viewFilesExtentionMapCheckBox.Location = new System.Drawing.Point(10, 78);
 			this.viewFilesExtentionMapCheckBox.Name = "viewFilesExtentionMapCheckBox";
 			this.viewFilesExtentionMapCheckBox.Size = new System.Drawing.Size(141, 17);
-			this.viewFilesExtentionMapCheckBox.TabIndex = 11;
+			this.viewFilesExtentionMapCheckBox.TabIndex = 7;
 			this.viewFilesExtentionMapCheckBox.Text = "View files extension map";
 			this.viewFilesExtentionMapCheckBox.UseVisualStyleBackColor = true;
 			// 
@@ -403,14 +400,14 @@
 			this.label12.AutoSize = true;
 			this.label12.Location = new System.Drawing.Point(7, 26);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(67, 13);
+			this.label12.Size = new System.Drawing.Size(33, 13);
 			this.label12.TabIndex = 0;
-			this.label12.Text = "View names:";
+			this.label12.Text = "View:";
 			// 
 			// viewUserNamesCheckBox
 			// 
 			this.viewUserNamesCheckBox.AutoSize = true;
-			this.viewUserNamesCheckBox.Location = new System.Drawing.Point(214, 26);
+			this.viewUserNamesCheckBox.Location = new System.Drawing.Point(181, 25);
 			this.viewUserNamesCheckBox.Name = "viewUserNamesCheckBox";
 			this.viewUserNamesCheckBox.Size = new System.Drawing.Size(53, 17);
 			this.viewUserNamesCheckBox.TabIndex = 3;
@@ -420,7 +417,7 @@
 			// viewDirNamesCheckBox
 			// 
 			this.viewDirNamesCheckBox.AutoSize = true;
-			this.viewDirNamesCheckBox.Location = new System.Drawing.Point(132, 26);
+			this.viewDirNamesCheckBox.Location = new System.Drawing.Point(99, 25);
 			this.viewDirNamesCheckBox.Name = "viewDirNamesCheckBox";
 			this.viewDirNamesCheckBox.Size = new System.Drawing.Size(76, 17);
 			this.viewDirNamesCheckBox.TabIndex = 2;
@@ -433,7 +430,7 @@
 			this.maxFilesTextBox.MaxLength = 7;
 			this.maxFilesTextBox.Name = "maxFilesTextBox";
 			this.maxFilesTextBox.Size = new System.Drawing.Size(51, 20);
-			this.maxFilesTextBox.TabIndex = 9;
+			this.maxFilesTextBox.TabIndex = 6;
 			// 
 			// label9
 			// 
@@ -441,13 +438,13 @@
 			this.label9.Location = new System.Drawing.Point(7, 55);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(133, 13);
-			this.label9.TabIndex = 8;
+			this.label9.TabIndex = 5;
 			this.label9.Text = "Max number of active files:";
 			// 
 			// viewFileNamesCheckBox
 			// 
 			this.viewFileNamesCheckBox.AutoSize = true;
-			this.viewFileNamesCheckBox.Location = new System.Drawing.Point(79, 26);
+			this.viewFileNamesCheckBox.Location = new System.Drawing.Point(46, 25);
 			this.viewFileNamesCheckBox.Name = "viewFileNamesCheckBox";
 			this.viewFileNamesCheckBox.Size = new System.Drawing.Size(47, 17);
 			this.viewFileNamesCheckBox.TabIndex = 1;
@@ -636,31 +633,15 @@
 			this.historyRadioButton.UseVisualStyleBackColor = true;
 			this.historyRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
 			// 
-			// avatarsDirLabel
+			// viewAvatarsCheckBox
 			// 
-			this.avatarsDirLabel.AutoSize = true;
-			this.avatarsDirLabel.Location = new System.Drawing.Point(18, 379);
-			this.avatarsDirLabel.Name = "avatarsDirLabel";
-			this.avatarsDirLabel.Size = new System.Drawing.Size(89, 13);
-			this.avatarsDirLabel.TabIndex = 8;
-			this.avatarsDirLabel.Text = "Avatars directory:";
-			// 
-			// avatarsDirTextBox
-			// 
-			this.avatarsDirTextBox.Location = new System.Drawing.Point(113, 376);
-			this.avatarsDirTextBox.Name = "avatarsDirTextBox";
-			this.avatarsDirTextBox.Size = new System.Drawing.Size(447, 20);
-			this.avatarsDirTextBox.TabIndex = 9;
-			// 
-			// selectAvatarsDirButton
-			// 
-			this.selectAvatarsDirButton.Location = new System.Drawing.Point(567, 374);
-			this.selectAvatarsDirButton.Name = "selectAvatarsDirButton";
-			this.selectAvatarsDirButton.Size = new System.Drawing.Size(40, 23);
-			this.selectAvatarsDirButton.TabIndex = 10;
-			this.selectAvatarsDirButton.Text = "...";
-			this.selectAvatarsDirButton.UseVisualStyleBackColor = true;
-			this.selectAvatarsDirButton.Click += new System.EventHandler(this.selectAvatarsDirButton_Click);
+			this.viewAvatarsCheckBox.AutoSize = true;
+			this.viewAvatarsCheckBox.Location = new System.Drawing.Point(240, 25);
+			this.viewAvatarsCheckBox.Name = "viewAvatarsCheckBox";
+			this.viewAvatarsCheckBox.Size = new System.Drawing.Size(62, 17);
+			this.viewAvatarsCheckBox.TabIndex = 4;
+			this.viewAvatarsCheckBox.Text = "Avatars";
+			this.viewAvatarsCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 
@@ -668,10 +649,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(619, 447);
-			this.Controls.Add(this.selectAvatarsDirButton);
-			this.Controls.Add(this.avatarsDirTextBox);
-			this.Controls.Add(this.avatarsDirLabel);
+			this.ClientSize = new System.Drawing.Size(619, 411);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
@@ -768,10 +746,7 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.RadioButton liveStreamRadioButton;
         private System.Windows.Forms.RadioButton historyRadioButton;
-        private System.Windows.Forms.CheckBox viewFilesExtentionMapCheckBox;
-		private System.Windows.Forms.Label avatarsDirLabel;
-		private System.Windows.Forms.TextBox avatarsDirTextBox;
-		private System.Windows.Forms.Button selectAvatarsDirButton;
-		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.CheckBox viewFilesExtentionMapCheckBox;
+		private System.Windows.Forms.CheckBox viewAvatarsCheckBox;
     }
 }

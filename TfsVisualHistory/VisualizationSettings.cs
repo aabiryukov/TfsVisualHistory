@@ -39,6 +39,7 @@ namespace Sitronics.TfsVisualHistory
 	    public bool ViewFileNames;
         public bool ViewDirNames;
         public bool ViewUserNames;
+		public bool ViewAvatars;
         
         public int SecondsPerDay;
         public TimeScaleOption TimeScale;
@@ -49,9 +50,6 @@ namespace Sitronics.TfsVisualHistory
         public bool SetResolution;
         public int ResolutionWidth;
         public int ResolutionHeight;
-
-		public string AvatarsDirectory { get; set; }
-
 
         public VisualizationSettings()
         {
@@ -66,6 +64,7 @@ namespace Sitronics.TfsVisualHistory
             ViewFileNames = false;
             ViewDirNames = true;
             ViewUserNames = true;
+			ViewAvatars = true;
 
             TimeScale = TimeScaleOption.None;
             SecondsPerDay = 5;

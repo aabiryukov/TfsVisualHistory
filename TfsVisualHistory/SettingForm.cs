@@ -24,9 +24,6 @@ namespace Sitronics.TfsVisualHistory
         {
             InitializeComponent();
 
-			toolTip1.SetToolTip(selectAvatarsDirButton, AvatarsDirectoryHelp);
-			toolTip1.SetToolTip(avatarsDirLabel, AvatarsDirectoryHelp);
-
             // Loading recent configuration
             try
             {
@@ -70,8 +67,8 @@ namespace Sitronics.TfsVisualHistory
                     ViewFileNames = viewFileNamesCheckBox.Checked,
                     ViewDirNames = viewDirNamesCheckBox.Checked,
                     ViewUserNames = viewUserNamesCheckBox.Checked,
+					ViewAvatars = viewAvatarsCheckBox.Checked,
                     ViewFilesExtentionMap = viewFilesExtentionMapCheckBox.Checked,
-					AvatarsDirectory = avatarsDirTextBox.Text
                 };
 
 
@@ -153,6 +150,7 @@ namespace Sitronics.TfsVisualHistory
             viewFileNamesCheckBox.Checked = settigs.ViewFileNames;
             viewDirNamesCheckBox.Checked = settigs.ViewDirNames;
             viewUserNamesCheckBox.Checked = settigs.ViewUserNames;
+			viewAvatarsCheckBox.Checked = settigs.ViewAvatars;
             
             timeScaleComboBox.SelectedIndex = (int)settigs.TimeScale;
             secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
@@ -164,8 +162,6 @@ namespace Sitronics.TfsVisualHistory
             resolutionHeightTextBox.Text = settigs.ResolutionHeight.ToString(CultureInfo.CurrentCulture);
 
             maxFilesTextBox.Text = settigs.MaxFiles.ToString(CultureInfo.CurrentCulture);
-
-	        avatarsDirTextBox.Text = settigs.AvatarsDirectory;
         }
 
         private static string RecentConfigurationFile
@@ -175,8 +171,7 @@ namespace Sitronics.TfsVisualHistory
 
         private void okButton_Click(object sender, EventArgs e)
         {
-			if(!ValidateSettingsUI())
-				return;
+//			if(!ValidateSettingsUI()) return;
 
             Settigs = GetSettigs();
             if (Settigs != null)
@@ -193,28 +188,6 @@ namespace Sitronics.TfsVisualHistory
                 DialogResult = DialogResult.OK;
             }
         }
-
-	    private void ShowValidationError(Control focusControl, string message)
-	    {
-			MessageBox.Show(this, message, "Settings validation error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-			ActiveControl = focusControl;
-		}
-	    private void ShowValidationError(Control focusControl, string messageFmt, params object[] args)
-	    {
-		    ShowValidationError(focusControl, string.Format(CultureInfo.CurrentCulture, messageFmt, args));
-	    }
-
-// ReSharper disable once InconsistentNaming
-	    private bool ValidateSettingsUI()
-	    {
-		    if (!string.IsNullOrEmpty(avatarsDirTextBox.Text) && !Directory.Exists(avatarsDirTextBox.Text))
-		    {
-				ShowValidationError(avatarsDirTextBox, "Avatars directory '{0}' does not exist.", avatarsDirTextBox.Text);
-			    return false;
-		    }
-
-		    return true;
-	    }
 
 	    private void interactiveKeyboardCommandsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -287,22 +260,5 @@ namespace Sitronics.TfsVisualHistory
         {
             historySettingsGroupBox.Enabled = historyRadioButton.Checked;
         }
-
-	    private const string AvatarsDirectoryHelp =
-		    "Directory containing .jpg or .png images of users (eg 'Full Name.png') to use as avatars.";
-
-		private void selectAvatarsDirButton_Click(object sender, EventArgs e)
-		{
-			using (var folderBrowser = new FolderBrowserDialog())
-			{
-				folderBrowser.SelectedPath = avatarsDirTextBox.Text;
-				folderBrowser.Description = "Select directory with avatars.\n" + AvatarsDirectoryHelp;
-
-				if (folderBrowser.ShowDialog() == DialogResult.OK)
-				{
-					avatarsDirTextBox.Text = folderBrowser.SelectedPath;
-				}
-			}
-		}
     }
 }

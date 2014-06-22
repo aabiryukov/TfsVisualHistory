@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.TeamFoundation.Client;
+using Microsoft.TeamFoundation.Framework.Client;
+using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using System.Linq;
 
@@ -10,7 +13,8 @@ namespace Sitronics.TfsVisualHistory
 	{
 	    public static bool CreateGourceLogFile(
 	        string outputFile,
-	        Uri sourceControlUrl,
+			string outputAvatarsDir,
+			Uri sourceControlUrl,
 	        string serverPath,
 	        VisualizationSettings settings,
 	        ref bool cancel,
@@ -25,18 +29,77 @@ namespace Sitronics.TfsVisualHistory
 
 	            var vcs = tpc.GetService<VersionControlServer>();
 
-	            return CreateGourceLogFile(
+		        HashSet<string> commiters = null;
+
+		        if (!string.IsNullOrEmpty(outputAvatarsDir))
+		        {
+			        commiters = new HashSet<string>();
+		        }
+
+	            var result = CreateGourceLogFile(
 	                outputFile,
+					commiters,
 	                vcs,
 	                serverPath,
 	                settings,
 	                ref cancel,
 	                progressReporter);
+
+		        if (result && commiters != null)
+		        {
+					var identityService = tpc.GetService<IIdentityManagementService2>();
+					DownloadAvatars(identityService, outputAvatarsDir, commiters);
+		        }
+
+		        return result;
 	        }
 	    }
 
-	    private static bool CreateGourceLogFile(
+
+//		private static readonly HashSet<string> st_commiterImageCache = new HashSet<string>();
+
+		private static void DownloadAvatars(IIdentityManagementService2 identityService, string outputAvatarsDir, IEnumerable<string> commiters)
+		{
+			var invalidFileChars = new []{'\\', ',', '/', '<', '>', '?', '|', ':', '*'};
+
+			foreach (var commiter in commiters)
+			{
+				if(string.IsNullOrEmpty(commiter) || commiter.IndexOfAny(invalidFileChars) >= 0)
+					continue;
+
+				var imagePath = Path.Combine(outputAvatarsDir, commiter + ".png");
+				if (File.Exists(imagePath))
+				{
+					if ((DateTime.Now - File.GetLastWriteTime(imagePath)).TotalHours < 24)
+						continue;
+
+					// File is expired
+					File.Delete(imagePath);
+				}
+
+				var identity = identityService.ReadIdentity(IdentitySearchFactor.DisplayName,
+					commiter, MembershipQuery.Expanded, ReadIdentityOptions.ExtendedProperties);
+
+				if(identity == null) 
+					continue;
+
+				object imageData;
+				if (!identity.TryGetProperty("Microsoft.TeamFoundation.Identity.Image.Data", out imageData)) 
+					continue;
+				
+				var imageBytes = imageData as byte[];
+				if (imageBytes == null) 
+					continue;
+
+	//			var imageFormat = GetImageFormat(imageBytes);
+	//			Trace.WriteLine(imageFormat);
+				File.WriteAllBytes(imagePath, imageBytes);
+			}
+		}
+
+		private static bool CreateGourceLogFile(
 			string outputFile,
+			HashSet<string> outputCommiters,
             VersionControlServer vcs,
 			string serverPath,
 			VisualizationSettings settings,
@@ -96,7 +159,7 @@ namespace Sitronics.TfsVisualHistory
 					false,
 					true); // sorted
 
-                foreach (var changeset in csList.Cast<Changeset>())
+				foreach (var changeset in csList.Cast<Changeset>())
                 {
                     if (cancel) return false;
 
@@ -110,11 +173,16 @@ namespace Sitronics.TfsVisualHistory
                         progressReporter(progressTotal > 0 ? progressValue * 100 / progressTotal : 100);
                     }
 
-                    foreach (var line in changesetConverter.GetLogLines(changeset))
-                    {
+	                var usefulChangeset = false;
+					foreach (var line in changesetConverter.GetLogLines(changeset))
+					{
+						usefulChangeset = true;
                         writer.WriteLine(line);
                     }
-				}
+
+					if (usefulChangeset && outputCommiters != null)
+						outputCommiters.Add(changeset.OwnerDisplayName);
+                }
 			}
 
             return true;
