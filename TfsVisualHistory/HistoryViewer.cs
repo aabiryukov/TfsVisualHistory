@@ -107,6 +107,8 @@ namespace Sitronics.TfsVisualHistory
                 {
                     arguments += " --loop";
                 }
+
+				arguments += " --file-idle-time 60"; // 60 is default in gource 0.40 and older. Since 0.41 default 0.
             }
             else
             {
@@ -149,15 +151,15 @@ namespace Sitronics.TfsVisualHistory
             {
                 arguments += " --fullscreen";
 
-                // By default gource not using full area of screen width ( It's a bug. Must be fixed in gource 0.41).
-                // Fixing fullscreen resolution to real full screen.
-                if (!m_settigs.SetResolution)
-                {
-                    var screenBounds = Screen.PrimaryScreen.Bounds;
-                    arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", screenBounds.Width,
-                                               screenBounds.Height);
-                }
-            }
+				// By default gource not using full area of screen width ( It's a bug. Must be fixed in gource 0.41).
+				// Fixing fullscreen resolution to real full screen.
+				if (!m_settigs.SetResolution)
+				{
+					var screenBounds = Screen.PrimaryScreen.Bounds;
+					arguments += string.Format(CultureInfo.InvariantCulture, " --viewport {0}x{1}", screenBounds.Width,
+											   screenBounds.Height);
+				}
+			}
 
             if (m_settigs.SetResolution)
             {
@@ -169,6 +171,11 @@ namespace Sitronics.TfsVisualHistory
             {
                 arguments += " --key";
             }
+
+			if(!string.IsNullOrEmpty(m_settigs.AvatarsDirectory))
+			{
+				arguments += string.Format(CultureInfo.InvariantCulture, " --user-image-dir \"{0}\"", m_settigs.AvatarsDirectory);
+			}
 
             // Process "--hide" option
             {
@@ -227,6 +234,7 @@ namespace Sitronics.TfsVisualHistory
         {
             var process = Process.Start(gourceStartInfo);
 
+// ReSharper disable once PossibleNullReferenceException
             while (!process.HasExited)
             {
                 var line = reader.ReadLine();

@@ -2,6 +2,10 @@
 
 Release Notes:
 
+v2.3 (22 Jun 2014)
+------------------
+Added avatars support
+
 v2.2 (08 Apr 2014)
 ------------------
 Fixed compatibility with VS2012

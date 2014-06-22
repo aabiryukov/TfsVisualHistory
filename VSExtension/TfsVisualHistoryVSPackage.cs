@@ -121,6 +121,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 	        System.Windows.Forms.MessageBox.Show("UserRegistryRoot=" + UserRegistryRoot);
 #endif
 
+// ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
 			if (UserRegistryRoot.ToString().Contains(@"\11"))
 	        {
 		        m_vsVersion = VisualStudioVersion.VS2012;
@@ -189,7 +190,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                            0,
                            ref clsid,
                            "TfsSourceControlVisualization",
-                           string.Format(CultureInfo.CurrentCulture, "{0}\n\nDetails:\n{1}", ex.Message, ex.ToString()),
+                           string.Format(CultureInfo.CurrentCulture, "{0}\n\nDetails:\n{1}", ex.Message, ex),
                            string.Empty,
                            0,
                            OLEMSGBUTTON.OLEMSGBUTTON_OK,

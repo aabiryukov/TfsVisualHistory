@@ -34,7 +34,7 @@ namespace Sitronics.TfsVisualHistory
 		public DateTime DateFrom { get; set; }
 		public DateTime DateTo { get; set; }
 
-        public bool ViewFilesExtentionMap;
+		public bool ViewFilesExtentionMap;
 
 	    public bool ViewFileNames;
         public bool ViewDirNames;
@@ -49,6 +49,9 @@ namespace Sitronics.TfsVisualHistory
         public bool SetResolution;
         public int ResolutionWidth;
         public int ResolutionHeight;
+
+		public string AvatarsDirectory { get; set; }
+
 
         public VisualizationSettings()
         {
@@ -66,7 +69,7 @@ namespace Sitronics.TfsVisualHistory
 
             TimeScale = TimeScaleOption.None;
             SecondsPerDay = 5;
-            MaxFiles = 1000;
+            MaxFiles = 10000;
 
             ResolutionWidth = Screen.PrimaryScreen.Bounds.Width;
             ResolutionHeight = Screen.PrimaryScreen.Bounds.Height;

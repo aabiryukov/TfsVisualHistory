@@ -84,9 +84,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2012.csproj">
-      <Project>{61e0268d-184e-440d-91cb-950c8ba525a9}</Project>
-      <Name>TfsVisualHistory.VS2012</Name>
+    <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2013.csproj">
+      <Project>{a040df02-c510-417b-a5ec-9c4a88d114ea}</Project>
+      <Name>TfsVisualHistory.VS2013</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
