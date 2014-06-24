@@ -213,7 +213,12 @@ namespace Sitronics.TfsVisualHistory
 
             arguments += " --max-files " + m_settigs.MaxFiles.ToString(CultureInfo.InvariantCulture);
 
-            if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
+			if (SystemInformation.TerminalServerSession)
+			{
+				arguments += " --disable-bloom";
+			}
+
+			if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
             {
                 var si = new ProcessStartInfo(gourcePath, arguments)
                     {
