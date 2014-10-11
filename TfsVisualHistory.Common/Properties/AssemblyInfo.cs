@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TfsVisualHistory.Common")]
+[assembly: AssemblyTitle("Sitronics.TfsVisualHistory.Common")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Alexander Biryukov")]
 [assembly: AssemblyProduct("TfsVisualHistory.Common")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright (c) 2014 Alexander Biryukov <aabiryukov@gmail.com> (aka alexbirk)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

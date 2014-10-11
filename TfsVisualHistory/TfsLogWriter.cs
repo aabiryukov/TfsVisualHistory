@@ -11,7 +11,14 @@ namespace Sitronics.TfsVisualHistory
 {
 	internal static class TfsLogWriter
 	{
-	    public static bool CreateGourceLogFile(
+		public enum GourceLogResult
+		{
+			Success,
+			NoItemsOnHistoryStep,
+			NoItemsOnFilterStep
+		}
+
+		public static bool CreateGourceLogFile(
 	        string outputFile,
 			string outputAvatarsDir,
 			Uri sourceControlUrl,
@@ -25,7 +32,7 @@ namespace Sitronics.TfsVisualHistory
 	        using (var tpc = new TfsTeamProjectCollection(sourceControlUrl))
 	        {
 	            tpc.EnsureAuthenticated();
-	            if (cancel) return false;
+				if (cancel) return false;
 
 	            var vcs = tpc.GetService<VersionControlServer>();
 
@@ -159,6 +166,8 @@ namespace Sitronics.TfsVisualHistory
 					false,
 					true); // sorted
 
+				var hasLines = false;
+
 				foreach (var changeset in csList.Cast<Changeset>())
                 {
                     if (cancel) return false;
@@ -180,12 +189,16 @@ namespace Sitronics.TfsVisualHistory
                         writer.WriteLine(line);
                     }
 
-					if (usefulChangeset && outputCommiters != null)
-						outputCommiters.Add(changeset.OwnerDisplayName);
+	                if (usefulChangeset)
+	                {
+		                hasLines = true;
+		                if (outputCommiters != null)
+			                outputCommiters.Add(changeset.OwnerDisplayName);
+	                }
                 }
-			}
 
-            return true;
+				return hasLines;
+			}
 		}
 	}
 }

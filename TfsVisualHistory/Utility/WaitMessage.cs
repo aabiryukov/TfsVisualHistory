@@ -255,9 +255,9 @@ namespace Sitronics.TfsVisualHistory.Utility
 
 		#endregion
 
-        public WaitMessageProgress<T> CreateProgress<T>(string format)
+        public WaitMessageProgress CreateProgress(string format)
 	    {
-            return new WaitMessageProgress<T>(this, format);
+            return new WaitMessageProgress(this, format);
 	    }
 	}
 }

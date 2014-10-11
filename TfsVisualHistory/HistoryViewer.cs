@@ -72,11 +72,12 @@ namespace Sitronics.TfsVisualHistory
 		            }
 	            }
 
-	            bool hasLines;
+				bool historyFound;
+				bool hasLines;
 
                 using (var waitMessage = new WaitMessage("Connecting to Team Foundation Server...", OnCancelByUser))
                 {
-                    var progress = waitMessage.CreateProgress<int>("Loading history ({0}% done) ...");
+                    var progress = waitMessage.CreateProgress("Loading history ({0}% done) ...");
 
                     hasLines =
                         TfsLogWriter.CreateGourceLogFile(
@@ -89,19 +90,24 @@ namespace Sitronics.TfsVisualHistory
                             progress.SetValue
                             );
 
+	                historyFound = progress.LastValue > 0;
                     progress.Done();
                 }
 
+                if (m_canceled)
+					return;
+
                 if (!hasLines)
                 {
-                    if (!m_canceled)
-                    {
-                        MessageBox.Show("History items not found.", "TFS History Visualization");
-                    }
-                    return;
+	                MessageBox.Show(
+		                historyFound
+			                ? "No items found.\nCheck your filters: 'User name' and 'File type'."
+							: "No items found.\nTry to change period of the history (From/To dates).",
+		                "TFS History Visualization");
+	                return;
                 }
 
-                arguments = string.Format(CultureInfo.InvariantCulture, " \"{0}\" ", logFile);
+	            arguments = string.Format(CultureInfo.InvariantCulture, " \"{0}\" ", logFile);
 
 
                 // Setting other history settings

@@ -54,6 +54,20 @@ namespace Sitronics.TfsVisualHistory
 
         private VisualizationSettings GetSettigs()
         {
+	        if (string.IsNullOrWhiteSpace(userIncludeTextBox.Text))
+	        {
+				MessageBox.Show("User name filter 'include' can not be empty.", DialogCaption);
+				ActiveControl = userIncludeTextBox;
+				return null;
+			}
+
+			if (string.IsNullOrWhiteSpace(filesIncludeTextBox.Text))
+			{
+				MessageBox.Show("File type filter 'include' can not be empty.", DialogCaption);
+				ActiveControl = filesIncludeTextBox;
+				return null;
+			}
+
             var settigs = new VisualizationSettings
                 {
                     PlayMode = historyRadioButton.Checked

@@ -56,6 +56,7 @@
 			this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.viewAvatarsCheckBox = new System.Windows.Forms.CheckBox();
 			this.viewFilesExtentionMapCheckBox = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.viewUserNamesCheckBox = new System.Windows.Forms.CheckBox();
@@ -83,7 +84,6 @@
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.liveStreamRadioButton = new System.Windows.Forms.RadioButton();
 			this.historyRadioButton = new System.Windows.Forms.RadioButton();
-			this.viewAvatarsCheckBox = new System.Windows.Forms.CheckBox();
 			this.historySettingsGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -260,9 +260,9 @@
 			this.label4.AutoSize = true;
 			this.label4.Location = new System.Drawing.Point(61, 67);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(183, 13);
+			this.label4.Size = new System.Drawing.Size(147, 13);
 			this.label4.TabIndex = 4;
-			this.label4.Text = "Example: *John*; MyDomain\\*; *robot";
+			this.label4.Text = "Example: John*; *Eva; *robot*";
 			// 
 			// userExcludeTextBox
 			// 
@@ -384,6 +384,16 @@
 			this.groupBox3.TabIndex = 7;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Visualization";
+			// 
+			// viewAvatarsCheckBox
+			// 
+			this.viewAvatarsCheckBox.AutoSize = true;
+			this.viewAvatarsCheckBox.Location = new System.Drawing.Point(240, 25);
+			this.viewAvatarsCheckBox.Name = "viewAvatarsCheckBox";
+			this.viewAvatarsCheckBox.Size = new System.Drawing.Size(62, 17);
+			this.viewAvatarsCheckBox.TabIndex = 4;
+			this.viewAvatarsCheckBox.Text = "Avatars";
+			this.viewAvatarsCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// viewFilesExtentionMapCheckBox
 			// 
@@ -632,16 +642,6 @@
 			this.historyRadioButton.Text = "Visualize History";
 			this.historyRadioButton.UseVisualStyleBackColor = true;
 			this.historyRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
-			// 
-			// viewAvatarsCheckBox
-			// 
-			this.viewAvatarsCheckBox.AutoSize = true;
-			this.viewAvatarsCheckBox.Location = new System.Drawing.Point(240, 25);
-			this.viewAvatarsCheckBox.Name = "viewAvatarsCheckBox";
-			this.viewAvatarsCheckBox.Size = new System.Drawing.Size(62, 17);
-			this.viewAvatarsCheckBox.TabIndex = 4;
-			this.viewAvatarsCheckBox.Text = "Avatars";
-			this.viewAvatarsCheckBox.UseVisualStyleBackColor = true;
 			// 
 			// SettingForm
 			// 

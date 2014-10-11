@@ -2,8 +2,9 @@
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Sitronics.TfsSourceControlHistoryVisualization")]
+[assembly: AssemblyTitle("Sitronics.TfsVisualHistory")]
 [assembly: AssemblyDescription("TFS Source Control History Visualization. Project site: https://tfsvisualhistory.codeplex.com/ E-mail: aabiryukov@gmail.com")]
+[assembly: AssemblyCompany("Alexander Biryukov")]
 [assembly: AssemblyProduct("TfsSourceControlHistoryVisualization")]
 [assembly: AssemblyCopyright("Copyright (c) 2013-2014 Alexander Biryukov <aabiryukov@gmail.com> (aka alexbirk)")]
 [assembly: AssemblyVersion("2.0.0.0")]

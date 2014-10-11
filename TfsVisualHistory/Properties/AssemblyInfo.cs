@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TeamExplorerIntegrator.VS20XX")]
+[assembly: AssemblyTitle("Sitronics.TfsVisualHistory.VS201x")]
 [assembly: AssemblyDescription("TFS Source Control History Visualization. Project site: https://tfsvisualhistory.codeplex.com/ E-mail: aabiryukov@gmail.com")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Alexander Biryukov")]
 [assembly: AssemblyProduct("TfsSourceControlHistoryVisualization")]
-[assembly: AssemblyCopyright("Copyright (c) 2013 Alexander Biryukov <aabiryukov@gmail.com> (aka alexbirk)")]
+[assembly: AssemblyCopyright("Copyright (c) 2014 Alexander Biryukov <aabiryukov@gmail.com> (aka alexbirk)")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
