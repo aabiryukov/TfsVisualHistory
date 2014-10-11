@@ -155,15 +155,16 @@ namespace Sitronics.TfsVisualHistory
             // ******************************************************
 
             arguments +=
-                string.Format(CultureInfo.InvariantCulture,
-                              " --highlight-users"
-                              //                    + " --auto-skip-seconds 1"
-                              //                    + " --user-image-dir Avatars"
-                              //                    + " --background-colour FFFFFF"
-                              + " --logo \"{0}\""
-                              + " --title \"{1}\"",
-                              Path.Combine(dataPath, "Logo.png"), title
-                    );
+                string.Format(CultureInfo.InvariantCulture, " --highlight-users --title \"{0}\"", title);
+
+			if (m_settigs.ViewLogo != CheckState.Unchecked)
+			{
+				var logoFile = m_settigs.ViewLogo == CheckState.Indeterminate
+					? Path.Combine(dataPath, "Logo.png")
+					: m_settigs.LogoFileName;
+
+				arguments += string.Format(CultureInfo.InvariantCulture, " --logo \"{0}\"", logoFile);
+			}
 
             if (m_settigs.FullScreen)
             {

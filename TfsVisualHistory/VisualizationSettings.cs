@@ -51,6 +51,9 @@ namespace Sitronics.TfsVisualHistory
         public int ResolutionWidth;
         public int ResolutionHeight;
 
+		public CheckState ViewLogo;
+		public string LogoFileName;
+
         public VisualizationSettings()
         {
             PlayMode = PlayModeOption.History;
@@ -72,6 +75,9 @@ namespace Sitronics.TfsVisualHistory
 
             ResolutionWidth = Screen.PrimaryScreen.Bounds.Width;
             ResolutionHeight = Screen.PrimaryScreen.Bounds.Height;
+
+	        ViewLogo = CheckState.Indeterminate;
+	        LogoFileName = null;
         }
 
         public static VisualizationSettings LoadFromFile(string fileName)

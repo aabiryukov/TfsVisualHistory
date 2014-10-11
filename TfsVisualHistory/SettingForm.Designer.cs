@@ -56,6 +56,8 @@
 			this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.LogoFileTextBox = new System.Windows.Forms.TextBox();
+			this.ViewLogoCheckBox = new System.Windows.Forms.CheckBox();
 			this.viewAvatarsCheckBox = new System.Windows.Forms.CheckBox();
 			this.viewFilesExtentionMapCheckBox = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
@@ -84,6 +86,7 @@
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.liveStreamRadioButton = new System.Windows.Forms.RadioButton();
 			this.historyRadioButton = new System.Windows.Forms.RadioButton();
+			this.selectLogoFileButton = new System.Windows.Forms.Button();
 			this.historySettingsGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -97,7 +100,7 @@
 			// 
 			this.okButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.okButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.okButton.Location = new System.Drawing.Point(391, 376);
+			this.okButton.Location = new System.Drawing.Point(391, 409);
 			this.okButton.Name = "okButton";
 			this.okButton.Size = new System.Drawing.Size(135, 23);
 			this.okButton.TabIndex = 0;
@@ -109,7 +112,7 @@
 			// 
 			this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(532, 376);
+			this.cancelButton.Location = new System.Drawing.Point(532, 409);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
 			this.cancelButton.TabIndex = 1;
@@ -302,7 +305,7 @@
 			// resetToDefaultButton
 			// 
 			this.resetToDefaultButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.resetToDefaultButton.Location = new System.Drawing.Point(15, 376);
+			this.resetToDefaultButton.Location = new System.Drawing.Point(15, 409);
 			this.resetToDefaultButton.Name = "resetToDefaultButton";
 			this.resetToDefaultButton.Size = new System.Drawing.Size(96, 23);
 			this.resetToDefaultButton.TabIndex = 14;
@@ -370,6 +373,9 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.selectLogoFileButton);
+			this.groupBox3.Controls.Add(this.LogoFileTextBox);
+			this.groupBox3.Controls.Add(this.ViewLogoCheckBox);
 			this.groupBox3.Controls.Add(this.viewAvatarsCheckBox);
 			this.groupBox3.Controls.Add(this.viewFilesExtentionMapCheckBox);
 			this.groupBox3.Controls.Add(this.label12);
@@ -380,10 +386,29 @@
 			this.groupBox3.Controls.Add(this.viewFileNamesCheckBox);
 			this.groupBox3.Location = new System.Drawing.Point(12, 262);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(306, 104);
+			this.groupBox3.Size = new System.Drawing.Size(306, 131);
 			this.groupBox3.TabIndex = 7;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Visualization";
+			// 
+			// LogoFileTextBox
+			// 
+			this.LogoFileTextBox.Location = new System.Drawing.Point(79, 102);
+			this.LogoFileTextBox.Name = "LogoFileTextBox";
+			this.LogoFileTextBox.Size = new System.Drawing.Size(191, 20);
+			this.LogoFileTextBox.TabIndex = 9;
+			// 
+			// ViewLogoCheckBox
+			// 
+			this.ViewLogoCheckBox.AutoSize = true;
+			this.ViewLogoCheckBox.Location = new System.Drawing.Point(9, 104);
+			this.ViewLogoCheckBox.Name = "ViewLogoCheckBox";
+			this.ViewLogoCheckBox.Size = new System.Drawing.Size(69, 17);
+			this.ViewLogoCheckBox.TabIndex = 8;
+			this.ViewLogoCheckBox.Text = "Logo file:";
+			this.ViewLogoCheckBox.ThreeState = true;
+			this.ViewLogoCheckBox.UseVisualStyleBackColor = true;
+			this.ViewLogoCheckBox.CheckStateChanged += new System.EventHandler(this.ViewLogoCheckBox_CheckStateChanged);
 			// 
 			// viewAvatarsCheckBox
 			// 
@@ -643,13 +668,23 @@
 			this.historyRadioButton.UseVisualStyleBackColor = true;
 			this.historyRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
 			// 
+			// selectLogoFileButton
+			// 
+			this.selectLogoFileButton.Location = new System.Drawing.Point(272, 101);
+			this.selectLogoFileButton.Name = "selectLogoFileButton";
+			this.selectLogoFileButton.Size = new System.Drawing.Size(30, 22);
+			this.selectLogoFileButton.TabIndex = 10;
+			this.selectLogoFileButton.Text = "...";
+			this.selectLogoFileButton.UseVisualStyleBackColor = true;
+			this.selectLogoFileButton.Click += new System.EventHandler(this.selectLogoFileButton_Click);
+			// 
 			// SettingForm
 			// 
 			this.AcceptButton = this.okButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(619, 411);
+			this.ClientSize = new System.Drawing.Size(619, 444);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
@@ -748,5 +783,8 @@
         private System.Windows.Forms.RadioButton historyRadioButton;
 		private System.Windows.Forms.CheckBox viewFilesExtentionMapCheckBox;
 		private System.Windows.Forms.CheckBox viewAvatarsCheckBox;
+		private System.Windows.Forms.TextBox LogoFileTextBox;
+		private System.Windows.Forms.CheckBox ViewLogoCheckBox;
+		private System.Windows.Forms.Button selectLogoFileButton;
     }
 }

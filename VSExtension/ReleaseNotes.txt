@@ -2,8 +2,9 @@
 
 Release Notes:
 
-v2.5 (11 Oct 2014)
+v2.5 (12 Oct 2014)
 ------------------
+Logo image customization
 Improved filters criteria handling (more informative)
 
 v2.4 (25 Jun 2014)

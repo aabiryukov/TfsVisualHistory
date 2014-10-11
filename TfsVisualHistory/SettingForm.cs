@@ -142,6 +142,16 @@ namespace Sitronics.TfsVisualHistory
                 }
             }
 
+	        if (ViewLogoCheckBox.CheckState == CheckState.Checked && !File.Exists(LogoFileTextBox.Text))
+	        {
+				MessageBox.Show("Logo file path does not exist.", DialogCaption);
+				ActiveControl = LogoFileTextBox;
+				return null;
+			}
+
+			settigs.ViewLogo = ViewLogoCheckBox.CheckState;
+			settigs.LogoFileName = settigs.ViewLogo == CheckState.Checked ? LogoFileTextBox.Text : null;
+
             return settigs;
         }
 
@@ -176,6 +186,9 @@ namespace Sitronics.TfsVisualHistory
             resolutionHeightTextBox.Text = settigs.ResolutionHeight.ToString(CultureInfo.CurrentCulture);
 
             maxFilesTextBox.Text = settigs.MaxFiles.ToString(CultureInfo.CurrentCulture);
+
+			ViewLogoCheckBox.CheckState = settigs.ViewLogo;
+			LogoFileTextBox.Text = settigs.LogoFileName;
         }
 
         private static string RecentConfigurationFile
@@ -274,5 +287,35 @@ namespace Sitronics.TfsVisualHistory
         {
             historySettingsGroupBox.Enabled = historyRadioButton.Checked;
         }
+
+		private void ViewLogoCheckBox_CheckStateChanged(object sender, EventArgs e)
+		{
+			LogoFileTextBox.Enabled = ViewLogoCheckBox.CheckState == CheckState.Checked;
+			selectLogoFileButton.Enabled = LogoFileTextBox.Enabled;
+		}
+
+		private void selectLogoFileButton_Click(object sender, EventArgs e)
+		{
+			using (var fileDialog = new OpenFileDialog())
+			{
+				if (string.IsNullOrEmpty(LogoFileTextBox.Text))
+				{
+					fileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+				}
+				else
+				{
+					fileDialog.FileName = LogoFileTextBox.Text;
+					fileDialog.InitialDirectory = Path.GetDirectoryName(fileDialog.FileName);
+				}
+
+				fileDialog.Filter = "Images|*.jpg;*.jpeg;*.png;*.bmp";
+				fileDialog.Title = "Select Logo image file";
+
+				if (fileDialog.ShowDialog(this) == DialogResult.OK)
+				{
+					LogoFileTextBox.Text = fileDialog.FileName;
+				}
+			}
+		}
     }
 }
