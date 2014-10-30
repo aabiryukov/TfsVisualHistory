@@ -1,33 +1,33 @@
 ﻿namespace Sitronics.TfsVisualHistory
 {
-    partial class SettingForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class SettingForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			this.okButton = new System.Windows.Forms.Button();
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.pathTextBox = new System.Windows.Forms.TextBox();
@@ -56,9 +56,11 @@
 			this.filesIncludeTextBox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.selectLogoFileButton = new System.Windows.Forms.Button();
 			this.LogoFileTextBox = new System.Windows.Forms.TextBox();
 			this.ViewLogoCheckBox = new System.Windows.Forms.CheckBox();
 			this.viewAvatarsCheckBox = new System.Windows.Forms.CheckBox();
+			this.unlimitedCheckBox = new System.Windows.Forms.CheckBox();
 			this.viewFilesExtentionMapCheckBox = new System.Windows.Forms.CheckBox();
 			this.label12 = new System.Windows.Forms.Label();
 			this.viewUserNamesCheckBox = new System.Windows.Forms.CheckBox();
@@ -85,8 +87,12 @@
 			this.resolutionWidthTextBox = new System.Windows.Forms.TextBox();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.liveStreamRadioButton = new System.Windows.Forms.RadioButton();
+			this.liveWithHistoryRadioButton = new System.Windows.Forms.RadioButton();
 			this.historyRadioButton = new System.Windows.Forms.RadioButton();
-			this.selectLogoFileButton = new System.Windows.Forms.Button();
+			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.retainIndefinitelyCheckBox = new System.Windows.Forms.CheckBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.secondsTextBox = new System.Windows.Forms.TextBox();
 			this.historySettingsGroupBox.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
@@ -94,6 +100,7 @@
 			this.menuStrip1.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
+			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// okButton
@@ -377,6 +384,7 @@
 			this.groupBox3.Controls.Add(this.LogoFileTextBox);
 			this.groupBox3.Controls.Add(this.ViewLogoCheckBox);
 			this.groupBox3.Controls.Add(this.viewAvatarsCheckBox);
+			this.groupBox3.Controls.Add(this.unlimitedCheckBox);
 			this.groupBox3.Controls.Add(this.viewFilesExtentionMapCheckBox);
 			this.groupBox3.Controls.Add(this.label12);
 			this.groupBox3.Controls.Add(this.viewUserNamesCheckBox);
@@ -390,6 +398,16 @@
 			this.groupBox3.TabIndex = 7;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Visualization";
+			// 
+			// selectLogoFileButton
+			// 
+			this.selectLogoFileButton.Location = new System.Drawing.Point(272, 101);
+			this.selectLogoFileButton.Name = "selectLogoFileButton";
+			this.selectLogoFileButton.Size = new System.Drawing.Size(30, 22);
+			this.selectLogoFileButton.TabIndex = 10;
+			this.selectLogoFileButton.Text = "...";
+			this.selectLogoFileButton.UseVisualStyleBackColor = true;
+			this.selectLogoFileButton.Click += new System.EventHandler(this.selectLogoFileButton_Click);
 			// 
 			// LogoFileTextBox
 			// 
@@ -419,6 +437,17 @@
 			this.viewAvatarsCheckBox.TabIndex = 4;
 			this.viewAvatarsCheckBox.Text = "Avatars";
 			this.viewAvatarsCheckBox.UseVisualStyleBackColor = true;
+			// 
+			// unlimitedCheckBox
+			// 
+			this.unlimitedCheckBox.AutoSize = true;
+			this.unlimitedCheckBox.Location = new System.Drawing.Point(215, 54);
+			this.unlimitedCheckBox.Name = "unlimitedCheckBox";
+			this.unlimitedCheckBox.Size = new System.Drawing.Size(69, 17);
+			this.unlimitedCheckBox.TabIndex = 7;
+			this.unlimitedCheckBox.Text = "Unlimited";
+			this.unlimitedCheckBox.UseVisualStyleBackColor = true;
+			this.unlimitedCheckBox.CheckedChanged += new System.EventHandler(this.unlimitedCheckBox_CheckedChanged);
 			// 
 			// viewFilesExtentionMapCheckBox
 			// 
@@ -576,9 +605,9 @@
 			this.groupBox4.Controls.Add(this.resolutionHeightTextBox);
 			this.groupBox4.Controls.Add(this.label10);
 			this.groupBox4.Controls.Add(this.resolutionWidthTextBox);
-			this.groupBox4.Location = new System.Drawing.Point(327, 263);
+			this.groupBox4.Location = new System.Drawing.Point(328, 243);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(280, 103);
+			this.groupBox4.Size = new System.Drawing.Size(280, 71);
 			this.groupBox4.TabIndex = 13;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "View Size";
@@ -636,8 +665,9 @@
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.liveStreamRadioButton);
+			this.groupBox5.Controls.Add(this.liveWithHistoryRadioButton);
 			this.groupBox5.Controls.Add(this.historyRadioButton);
-			this.groupBox5.Location = new System.Drawing.Point(12, 53);
+			this.groupBox5.Location = new System.Drawing.Point(15, 53);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(308, 72);
 			this.groupBox5.TabIndex = 5;
@@ -647,7 +677,7 @@
 			// liveStreamRadioButton
 			// 
 			this.liveStreamRadioButton.AutoSize = true;
-			this.liveStreamRadioButton.Location = new System.Drawing.Point(149, 33);
+			this.liveStreamRadioButton.Location = new System.Drawing.Point(9, 43);
 			this.liveStreamRadioButton.Name = "liveStreamRadioButton";
 			this.liveStreamRadioButton.Size = new System.Drawing.Size(138, 17);
 			this.liveStreamRadioButton.TabIndex = 1;
@@ -655,11 +685,24 @@
 			this.liveStreamRadioButton.UseVisualStyleBackColor = true;
 			this.liveStreamRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
 			// 
+			// liveWithHistoryRadioButton
+			// 
+			this.liveWithHistoryRadioButton.AutoSize = true;
+			this.liveWithHistoryRadioButton.Checked = true;
+			this.liveWithHistoryRadioButton.Location = new System.Drawing.Point(181, 21);
+			this.liveWithHistoryRadioButton.Name = "liveWithHistoryRadioButton";
+			this.liveWithHistoryRadioButton.Size = new System.Drawing.Size(113, 17);
+			this.liveWithHistoryRadioButton.TabIndex = 0;
+			this.liveWithHistoryRadioButton.TabStop = true;
+			this.liveWithHistoryRadioButton.Text = "Live with all history";
+			this.liveWithHistoryRadioButton.UseVisualStyleBackColor = true;
+			this.liveWithHistoryRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
+			// 
 			// historyRadioButton
 			// 
 			this.historyRadioButton.AutoSize = true;
 			this.historyRadioButton.Checked = true;
-			this.historyRadioButton.Location = new System.Drawing.Point(22, 33);
+			this.historyRadioButton.Location = new System.Drawing.Point(10, 21);
 			this.historyRadioButton.Name = "historyRadioButton";
 			this.historyRadioButton.Size = new System.Drawing.Size(101, 17);
 			this.historyRadioButton.TabIndex = 0;
@@ -668,15 +711,46 @@
 			this.historyRadioButton.UseVisualStyleBackColor = true;
 			this.historyRadioButton.CheckedChanged += new System.EventHandler(this.historyRadioButton_CheckedChanged);
 			// 
-			// selectLogoFileButton
+			// groupBox6
 			// 
-			this.selectLogoFileButton.Location = new System.Drawing.Point(272, 101);
-			this.selectLogoFileButton.Name = "selectLogoFileButton";
-			this.selectLogoFileButton.Size = new System.Drawing.Size(30, 22);
-			this.selectLogoFileButton.TabIndex = 10;
-			this.selectLogoFileButton.Text = "...";
-			this.selectLogoFileButton.UseVisualStyleBackColor = true;
-			this.selectLogoFileButton.Click += new System.EventHandler(this.selectLogoFileButton_Click);
+			this.groupBox6.Controls.Add(this.retainIndefinitelyCheckBox);
+			this.groupBox6.Controls.Add(this.label13);
+			this.groupBox6.Controls.Add(this.secondsTextBox);
+			this.groupBox6.Location = new System.Drawing.Point(328, 321);
+			this.groupBox6.Name = "groupBox6";
+			this.groupBox6.Size = new System.Drawing.Size(279, 72);
+			this.groupBox6.TabIndex = 15;
+			this.groupBox6.TabStop = false;
+			this.groupBox6.Text = "File idle time";
+			// 
+			// retainIndefinitelyCheckBox
+			// 
+			this.retainIndefinitelyCheckBox.AutoSize = true;
+			this.retainIndefinitelyCheckBox.Location = new System.Drawing.Point(14, 46);
+			this.retainIndefinitelyCheckBox.Name = "retainIndefinitelyCheckBox";
+			this.retainIndefinitelyCheckBox.Size = new System.Drawing.Size(109, 17);
+			this.retainIndefinitelyCheckBox.TabIndex = 1;
+			this.retainIndefinitelyCheckBox.Text = "Retain indefinitely";
+			this.retainIndefinitelyCheckBox.UseVisualStyleBackColor = true;
+			this.retainIndefinitelyCheckBox.CheckedChanged += new System.EventHandler(this.retainIndefinitelyCheckBox_CheckedChanged);
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(11, 23);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(52, 13);
+			this.label13.TabIndex = 5;
+			this.label13.Text = "Seconds:";
+			// 
+			// secondsTextBox
+			// 
+			this.secondsTextBox.Location = new System.Drawing.Point(69, 20);
+			this.secondsTextBox.MaxLength = 4;
+			this.secondsTextBox.Name = "secondsTextBox";
+			this.secondsTextBox.Size = new System.Drawing.Size(47, 20);
+			this.secondsTextBox.TabIndex = 2;
+			this.secondsTextBox.Text = "60";
 			// 
 			// SettingForm
 			// 
@@ -685,6 +759,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
 			this.ClientSize = new System.Drawing.Size(619, 444);
+			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.groupBox5);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.groupBox3);
@@ -720,71 +795,79 @@
 			this.groupBox4.PerformLayout();
 			this.groupBox5.ResumeLayout(false);
 			this.groupBox5.PerformLayout();
+			this.groupBox6.ResumeLayout(false);
+			this.groupBox6.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
+		#endregion
 
-        private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Button cancelButton;
-        private System.Windows.Forms.TextBox pathTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox historySettingsGroupBox;
-        private System.Windows.Forms.Label dateToLabel;
-        private System.Windows.Forms.Label dateFromLabel;
-        private System.Windows.Forms.DateTimePicker dateToPicker;
-        private System.Windows.Forms.DateTimePicker dateFromPicker;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox userExcludeTextBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox userIncludeTextBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button resetToDefaultButton;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox filesExcludeTextBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox filesIncludeTextBox;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox viewFileNamesCheckBox;
-        private System.Windows.Forms.TextBox secondsPerDayTextBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox maxFilesTextBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveSettingsToFileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem restoreDefaultToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem interactiveKeyboardCommandsToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox resolutionHeightTextBox;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox resolutionWidthTextBox;
-        private System.Windows.Forms.CheckBox setResolutionCheckBox;
-        private System.Windows.Forms.CheckBox fullScreenCheckBox;
-        private System.Windows.Forms.CheckBox loopPlaybackCheckBox;
-        private System.Windows.Forms.CheckBox viewDirNamesCheckBox;
-        private System.Windows.Forms.ComboBox timeScaleComboBox;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox viewUserNamesCheckBox;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.RadioButton liveStreamRadioButton;
-        private System.Windows.Forms.RadioButton historyRadioButton;
+		private System.Windows.Forms.Button okButton;
+		private System.Windows.Forms.Button cancelButton;
+		private System.Windows.Forms.TextBox pathTextBox;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.GroupBox historySettingsGroupBox;
+		private System.Windows.Forms.Label dateToLabel;
+		private System.Windows.Forms.Label dateFromLabel;
+		private System.Windows.Forms.DateTimePicker dateToPicker;
+		private System.Windows.Forms.DateTimePicker dateFromPicker;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.TextBox userExcludeTextBox;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.TextBox userIncludeTextBox;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Button resetToDefaultButton;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.TextBox filesExcludeTextBox;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.TextBox filesIncludeTextBox;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.CheckBox viewFileNamesCheckBox;
+		private System.Windows.Forms.TextBox secondsPerDayTextBox;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.TextBox maxFilesTextBox;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.MenuStrip menuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem saveSettingsToFileToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem loadSettingsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+		private System.Windows.Forms.ToolStripMenuItem restoreDefaultToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem interactiveKeyboardCommandsToolStripMenuItem;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+		private System.Windows.Forms.OpenFileDialog openFileDialog1;
+		private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.TextBox resolutionHeightTextBox;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.TextBox resolutionWidthTextBox;
+		private System.Windows.Forms.CheckBox setResolutionCheckBox;
+		private System.Windows.Forms.CheckBox fullScreenCheckBox;
+		private System.Windows.Forms.CheckBox loopPlaybackCheckBox;
+		private System.Windows.Forms.CheckBox viewDirNamesCheckBox;
+		private System.Windows.Forms.ComboBox timeScaleComboBox;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.CheckBox viewUserNamesCheckBox;
+		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.RadioButton liveStreamRadioButton;
+		private System.Windows.Forms.RadioButton historyRadioButton;
 		private System.Windows.Forms.CheckBox viewFilesExtentionMapCheckBox;
 		private System.Windows.Forms.CheckBox viewAvatarsCheckBox;
 		private System.Windows.Forms.TextBox LogoFileTextBox;
 		private System.Windows.Forms.CheckBox ViewLogoCheckBox;
 		private System.Windows.Forms.Button selectLogoFileButton;
-    }
+		private System.Windows.Forms.GroupBox groupBox6;
+		private System.Windows.Forms.CheckBox retainIndefinitelyCheckBox;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.TextBox secondsTextBox;
+		private System.Windows.Forms.RadioButton liveWithHistoryRadioButton;
+		private System.Windows.Forms.CheckBox unlimitedCheckBox;
+	}
 }

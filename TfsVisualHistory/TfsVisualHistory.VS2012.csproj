@@ -118,8 +118,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activator.VS2012.cs" />
+    <Compile Include="ArgumentGenerator.cs" />
     <Compile Include="ChangesetConverter.cs" />
     <Compile Include="HistoryViewer.cs" />
+    <Compile Include="HistoryViewerManager.cs" />
+    <Compile Include="PathProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingForm.cs">
       <SubType>Form</SubType>

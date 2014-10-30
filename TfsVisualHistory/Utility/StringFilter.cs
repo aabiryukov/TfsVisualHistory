@@ -1,18 +1,22 @@
-﻿namespace Sitronics.TfsVisualHistory.Utility
+﻿using System;
+
+namespace Sitronics.TfsVisualHistory.Utility
 {
-    public class StringFilter
-    {
-        public string IncludeMask { get; set; }
-        public string ExcludeMask { get; set; }
+	[Serializable]
+	public class StringFilter
+	{
+		public string IncludeMask { get; set; }
+		public string ExcludeMask { get; set; }
 
-        public StringFilter()
-        {
-        }
+		// Necessary for serialization
+		public StringFilter()
+		{
+		}
 
-        public StringFilter(string includeMask, string excludeMask)
-        {
-            IncludeMask = includeMask;
-            ExcludeMask = excludeMask;
-        }
-    }
+		public StringFilter(string includeMask, string excludeMask)
+		{
+			IncludeMask = includeMask;
+			ExcludeMask = excludeMask;
+		}
+	}
 }

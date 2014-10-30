@@ -2,159 +2,202 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.VersionControl.Client;
 using Sitronics.TfsVisualHistory.Utility;
 
 namespace Sitronics.TfsVisualHistory
 {
-    /// <summary>
-    /// TFS Version Control live changes reader
-    /// </summary>
-    internal class VersionControlLogReader : TextReader
-    {
-        private readonly TfsTeamProjectCollection m_tpc;
-        private VersionControlServer m_vcs;
-        private readonly string m_serverPath;
-        private readonly Queue<string> m_latestChanges = new Queue<string>();
-        private int m_latestChangesetId;
-        private readonly ChangesetConverter m_changesetConverter;
+	/// <summary>
+	/// TFS Version Control live changes reader
+	/// </summary>
+	internal class VersionControlLogReader : TextReader
+	{
+		private const int MaxChangesetsToGet = 10;
 
-        // Time simulation
-        private int m_lastReadLineTicks;
-        // How mutch a wait before get next line
-        private int m_waitMilliseconds;
+		private readonly TfsTeamProjectCollection _tfsTeamProjectCollection;
+		private readonly VersionControlServer _versionControlServer;
+		private readonly string _sourceControlPath;
+		private readonly bool _readAllHistory;
+		private readonly Queue<string> _logLinesQueue;
+		private readonly ChangesetConverter _changesetConverter;
+		private readonly int _latestChangesetIdAtStartup;
 
-        public VersionControlLogReader(
-            Uri sourceControlUrl,
-            string serverPath,
-            StringFilter usersFilter, 
-            StringFilter filesFilter)
-        {
-            m_changesetConverter = new ChangesetConverter(usersFilter, filesFilter);
-            m_serverPath = serverPath;
+		private int _previousChangesetId;
+		// Time simulation
+		private int _lastReadLineTicks;
 
-	        m_tpc = new TfsTeamProjectCollection(sourceControlUrl);
-        }
+		// How mutch a wait before get next line
+		private int _waitMilliseconds;
 
-        public void Connect()
-        {
-            m_tpc.EnsureAuthenticated();
-            m_vcs = m_tpc.GetService<VersionControlServer>();
-        }
+		private bool IsFirstRun
+		{
+			get { return _previousChangesetId == 0; }
+		}
 
-        private Changeset GetLatestChangeset(bool includeChanges = true)
-        {
-            var queryParams = new QueryHistoryParameters(m_serverPath, RecursionType.Full)
-                {
-                    MaxResults = 1,
-                    IncludeChanges = includeChanges,
-                    IncludeDownloadInfo = false,
-                    SortAscending = false
-                };
+		/// <summary>
+		/// Initializes a new instance of the <see cref="VersionControlLogReader"/> class.
+		/// </summary>
+		public VersionControlLogReader(
+			Uri sourceControlUrl,
+			string sourceControlPath,
+			StringFilter usersFilter,
+			StringFilter filesFilter,
+			bool readAllHistory)
+		{
+			_changesetConverter = new ChangesetConverter(usersFilter, filesFilter);
+			_sourceControlPath = sourceControlPath;
+			_readAllHistory = readAllHistory;
 
-            return m_vcs.QueryHistory(queryParams).FirstOrDefault();
-        }
+			_tfsTeamProjectCollection = new TfsTeamProjectCollection(sourceControlUrl);
+			_tfsTeamProjectCollection.EnsureAuthenticated();
+			_versionControlServer = _tfsTeamProjectCollection.GetService<VersionControlServer>();
 
-        private int GetLatestChangesetId()
-        {
-            var latestChaneset = GetLatestChangeset(false);
-            return latestChaneset != null ? latestChaneset.ChangesetId : 0;
-        }
+			_logLinesQueue = new Queue<string>();
+			_latestChangesetIdAtStartup = GetLatestChangesetId();
+		}
 
-        private IEnumerable<Changeset> FindLatestChanges(int latestChangesetId)
-        {
-            // Before query a new changesets we need to check the new latest changeset to avoid exception "Changeset does not exist"
-            if (GetLatestChangesetId() <= latestChangesetId)
-                return null;
+		public override string ReadLine()
+		{
+			if (IsFirstRun)
+			{
+				Changeset changeset;
 
-            var queryParams = new QueryHistoryParameters(m_serverPath, RecursionType.Full)
-            {
-                MaxResults = 10,
-                IncludeChanges = true,
-                IncludeDownloadInfo = false,
-                SortAscending = true,
-                VersionStart = new ChangesetVersionSpec(latestChangesetId+1),
-                VersionEnd = VersionSpec.Latest
-            };
+				if (_readAllHistory)
+				{
+					changeset = GetFirstChangeset(true);
+				}
+				else
+				{
+					changeset = GetLatestChangeset(true);
+				}
 
-            return m_vcs.QueryHistory(queryParams);
-        }
+				Enqueue(changeset);
+			}
+			else if (IsQueueEmpty)
+			{
+				var changesets = GetChangesetsAfter(_previousChangesetId);
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                m_tpc.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+				Enqueue(changesets);
+			}
 
-        public override string ReadLine()
-        {
-            const int ChangesetTimeMilliseconds = 3000;
+			if (IsQueueEmpty)
+				return null;
 
-            if (m_vcs == null)
-                Connect();
+			// Simulate changes time to avoid super fast when in real time mode
+			if (_latestChangesetIdAtStartup < _previousChangesetId)
+			{
+				Sleep();
+			}
 
-            if (m_latestChangesetId == 0)
-            {
-                // First run. Searching latest changeset
-                var latestChangeset = GetLatestChangeset();
-                if (latestChangeset == null)
-                    return null; // No any chanesets found!
+			return _logLinesQueue.Dequeue();
+		}
 
-                foreach (var line in m_changesetConverter.GetLogLines(latestChangeset))
-                {
-                    m_latestChanges.Enqueue(line);
-                }
+		private void Sleep()
+		{
+			var sleepTime = _waitMilliseconds - (Environment.TickCount - _lastReadLineTicks);
+			if (0 < sleepTime && sleepTime <= _waitMilliseconds)
+			{
+				Thread.Sleep(sleepTime);
+			}
 
-                // How mutch a wait before get next line
-                m_waitMilliseconds = m_latestChanges.Count > 0 ? ChangesetTimeMilliseconds / m_latestChanges.Count : 0;
+			_lastReadLineTicks = Environment.TickCount;
+		}
 
-                m_latestChangesetId = latestChangeset.ChangesetId;
-            }
-            else
-            {
-               if (m_latestChanges.Count == 0)
-               {
-                   // Getting new changes after latest previous changeset Id
-                   var foundChanges = FindLatestChanges(m_latestChangesetId);
-                   if (foundChanges != null)
-                   {
-                       foreach (var changeset in foundChanges)
-                       {
-                           foreach (var line in m_changesetConverter.GetLogLines(changeset))
-                           {
-                               m_latestChanges.Enqueue(line);
-                           }
+		private bool IsQueueEmpty
+		{
+			get { return _logLinesQueue.Count == 0; }
+		}
 
-                           m_latestChangesetId = changeset.ChangesetId;
-                       }
-                   }
+		private void Enqueue(Changeset latestChangeset)
+		{
+			if (latestChangeset == null)
+				return;
 
-                   // How mutch a wait before get next line
-                   m_waitMilliseconds = m_latestChanges.Count > 0 ? ChangesetTimeMilliseconds / m_latestChanges.Count : 0;
-               }
-            }
+			foreach (var logLine in _changesetConverter.GetLogLines(latestChangeset))
+			{
+				_logLinesQueue.Enqueue(logLine);
+			}
 
-            if (m_latestChanges.Count == 0)
-                return null;
+			_previousChangesetId = latestChangeset.ChangesetId;
 
-            // Simulate changes time to avoid super fast
-            var sleepTime = m_waitMilliseconds - (Environment.TickCount - m_lastReadLineTicks);
-            if (sleepTime > 0 && sleepTime <= m_waitMilliseconds)
-            {
-                System.Diagnostics.Debug.WriteLine("WAIT: " + sleepTime);
-                System.Threading.Thread.Sleep(sleepTime);
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("WAIT: none");
-            }
-            m_lastReadLineTicks = Environment.TickCount;
+			// How mutch a wait before get next line
+			const int changesetTimeMilliseconds = 3000;
 
-            return m_latestChanges.Dequeue();
-        }
-    }
+			_waitMilliseconds = _logLinesQueue.Count > 0 ? changesetTimeMilliseconds / _logLinesQueue.Count : 0;
+		}
+
+		private void Enqueue(IEnumerable<Changeset> changesets)
+		{
+			if (changesets == null)
+				return;
+
+			foreach (var changeset in changesets)
+			{
+				Enqueue(changeset);
+			}
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				_tfsTeamProjectCollection.Dispose();
+			}
+
+			base.Dispose(disposing);
+		}
+
+		private IEnumerable<Changeset> GetChangesetsAfter(int changesetId)
+		{
+			// Before query a new changesets we need to check the new latest changeset to avoid exception "Changeset does not exist"
+			if (GetLatestChangesetId() <= changesetId)
+				return null;
+
+			var queryParams = new QueryHistoryParameters(_sourceControlPath, RecursionType.Full)
+			{
+				MaxResults = MaxChangesetsToGet,
+				IncludeChanges = true,
+				IncludeDownloadInfo = false,
+				SortAscending = true,
+				VersionStart = new ChangesetVersionSpec(changesetId + 1),
+				VersionEnd = VersionSpec.Latest
+			};
+
+			return _versionControlServer.QueryHistory(queryParams);
+		}
+
+		private int GetLatestChangesetId()
+		{
+			var latestChangeset = GetLatestChangeset(false);
+			return latestChangeset != null ? latestChangeset.ChangesetId : 0;
+		}
+
+		private Changeset GetLatestChangeset(bool includeChanges)
+		{
+			var queryParams = new QueryHistoryParameters(_sourceControlPath, RecursionType.Full)
+			{
+				MaxResults = 1,
+				IncludeChanges = includeChanges,
+				IncludeDownloadInfo = false,
+				SortAscending = false
+			};
+
+			return _versionControlServer.QueryHistory(queryParams).FirstOrDefault();
+		}
+
+		private Changeset GetFirstChangeset(bool includeChanges)
+		{
+			var queryParams = new QueryHistoryParameters(_sourceControlPath, RecursionType.Full)
+			{
+				MaxResults = 1,
+				IncludeChanges = includeChanges,
+				IncludeDownloadInfo = false,
+				SortAscending = true
+			};
+
+			return _versionControlServer.QueryHistory(queryParams).FirstOrDefault();
+		}
+	}
 }
