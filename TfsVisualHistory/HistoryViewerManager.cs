@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -103,7 +104,7 @@ namespace Sitronics.TfsVisualHistory
 			}
 		}
 
-		private static void RunLiveChangesMonitor(VersionControlLogReader reader, ProcessStartInfo startInfo)
+		private static void RunLiveChangesMonitor(TextReader reader, ProcessStartInfo startInfo)
 		{
 			var process = Process.Start(startInfo);
 
