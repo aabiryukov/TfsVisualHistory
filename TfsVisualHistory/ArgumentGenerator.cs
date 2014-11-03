@@ -226,9 +226,26 @@ namespace Sitronics.TfsVisualHistory
 		{
 			if (_visualizationSettings.TimeScale != TimeScale.None)
 			{
-				var optionValue = _visualizationSettings.TimeScaleAsString();
-				if (optionValue != null)
-					return " --time-scale " + optionValue;
+				string optionValue;
+
+				switch (_visualizationSettings.TimeScale)
+				{
+					case TimeScale.Slow8: optionValue = "0.125";
+						break;
+					case TimeScale.Slow4: optionValue = "0.25";
+						break;
+					case TimeScale.Slow2: optionValue = "0.5";
+						break;
+					case TimeScale.Fast2: optionValue = "2";
+						break;
+					case TimeScale.Fast3: optionValue = "3";
+						break;
+					case TimeScale.Fast4: optionValue = "4";
+						break;
+					default: throw new NotImplementedException();
+				}
+
+				return " --time-scale " + optionValue;
 			}
 
 			return string.Empty;

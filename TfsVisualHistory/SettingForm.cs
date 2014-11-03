@@ -29,7 +29,7 @@ namespace Sitronics.TfsVisualHistory
 			try
 			{
 				var pathProvider = new PathProvider();
-				Settings = File.Exists(pathProvider.RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(pathProvider.RecentConfigurationFile) : DefaultSettigs;
+				Settings = File.Exists(pathProvider.RecentConfigurationFile) ? VisualizationSettingsFileAccess.Read(pathProvider.RecentConfigurationFile) : DefaultSettigs;
 				SetSettigs(Settings);
 			}
 			catch (Exception ex)
@@ -216,15 +216,14 @@ namespace Sitronics.TfsVisualHistory
 
 		private void okButton_Click(object sender, EventArgs e)
 		{
-			//			if(!ValidateSettingsUI()) return;
-
 			Settings = GetSettings();
+
 			if (Settings != null)
 			{
 				try
 				{
 					var pathProvider = new PathProvider();
-					Settings.SaveToFile(pathProvider.RecentConfigurationFile);
+					VisualizationSettingsFileAccess.Save(Settings, pathProvider.RecentConfigurationFile);
 				}
 				catch (Exception ex)
 				{
@@ -265,12 +264,14 @@ namespace Sitronics.TfsVisualHistory
 
 		private void saveSettingsToFileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var settigs = GetSettings();
-			if (settigs == null) return;
+			var settings = GetSettings();
+
+			if (settings == null)
+				return;
 
 			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				settigs.SaveToFile(saveFileDialog1.FileName);
+				VisualizationSettingsFileAccess.Save(settings, saveFileDialog1.FileName);
 			}
 		}
 
@@ -281,7 +282,7 @@ namespace Sitronics.TfsVisualHistory
 			{
 				try
 				{
-					var settings = VisualizationSettings.LoadFromFile(openFileDialog1.FileName);
+					var settings = VisualizationSettingsFileAccess.Read(openFileDialog1.FileName);
 					SetSettigs(settings);
 				}
 				catch (Exception ex)

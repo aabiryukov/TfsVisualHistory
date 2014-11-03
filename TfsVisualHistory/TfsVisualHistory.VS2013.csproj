@@ -146,6 +146,7 @@
     <Compile Include="Utility\Wildcard.cs" />
     <Compile Include="VersionControlLogReader.cs" />
     <Compile Include="VisualizationSettings.cs" />
+    <Compile Include="VisualizationSettingsFileAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SettingForm.resx">
