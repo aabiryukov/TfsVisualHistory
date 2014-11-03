@@ -21,11 +21,6 @@ namespace Sitronics.TfsVisualHistory
 			}
 		}
 
-		private static string RecentConfigurationFile
-		{
-			get { return Path.Combine(Path.GetTempPath(), "TfsVisualHistoryRecentSettings.VHCfg"); }
-		}
-
 		public SettingForm()
 		{
 			InitializeComponent();
@@ -33,7 +28,8 @@ namespace Sitronics.TfsVisualHistory
 			// Loading recent configuration
 			try
 			{
-				Settings = File.Exists(RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(RecentConfigurationFile) : DefaultSettigs;
+				var pathProvider = new PathProvider();
+				Settings = File.Exists(pathProvider.RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(pathProvider.RecentConfigurationFile) : DefaultSettigs;
 				SetSettigs(Settings);
 			}
 			catch (Exception ex)
@@ -97,13 +93,13 @@ namespace Sitronics.TfsVisualHistory
 				{
 					var timeScaleMapping = new[]
                         {
-                            VisualizationSettings.TimeScaleOption.None,
-                            VisualizationSettings.TimeScaleOption.Slow8,
-                            VisualizationSettings.TimeScaleOption.Slow4,
-                            VisualizationSettings.TimeScaleOption.Slow2,
-                            VisualizationSettings.TimeScaleOption.Fast2,
-                            VisualizationSettings.TimeScaleOption.Fast3,
-                            VisualizationSettings.TimeScaleOption.Fast4
+                            TimeScale.None,
+                            TimeScale.Slow8,
+                            TimeScale.Slow4,
+                            TimeScale.Slow2,
+                            TimeScale.Fast2,
+                            TimeScale.Fast3,
+                            TimeScale.Fast4
                         };
 
 					settings.TimeScale = timeScaleMapping[timeScaleComboBox.SelectedIndex];
@@ -160,25 +156,25 @@ namespace Sitronics.TfsVisualHistory
 			return settings;
 		}
 
-		private VisualizationSettings.PlayModeOption GetPlayMode()
+		private PlayMode GetPlayMode()
 		{
 			if (historyRadioButton.Checked)
-				return VisualizationSettings.PlayModeOption.History;
+				return PlayMode.History;
 
 			if (liveStreamRadioButton.Checked)
-				return VisualizationSettings.PlayModeOption.Live;
+				return PlayMode.Live;
 
 			if (liveWithHistoryRadioButton.Checked)
-				return VisualizationSettings.PlayModeOption.HistoryThenLive;
+				return PlayMode.HistoryThenLive;
 
 			throw new Exception();
 		}
 
 		internal void SetSettigs(VisualizationSettings settings)
 		{
-			historyRadioButton.Checked = settings.PlayMode == VisualizationSettings.PlayModeOption.History;
-			liveStreamRadioButton.Checked = settings.PlayMode == VisualizationSettings.PlayModeOption.Live;
-			liveWithHistoryRadioButton.Checked = settings.PlayMode == VisualizationSettings.PlayModeOption.HistoryThenLive;
+			historyRadioButton.Checked = settings.PlayMode == PlayMode.History;
+			liveStreamRadioButton.Checked = settings.PlayMode == PlayMode.Live;
+			liveWithHistoryRadioButton.Checked = settings.PlayMode == PlayMode.HistoryThenLive;
 
 			dateFromPicker.Value = settings.DateFrom;
 			dateToPicker.Value = settings.DateTo;
@@ -227,7 +223,8 @@ namespace Sitronics.TfsVisualHistory
 			{
 				try
 				{
-					Settings.SaveToFile(RecentConfigurationFile);
+					var pathProvider = new PathProvider();
+					Settings.SaveToFile(pathProvider.RecentConfigurationFile);
 				}
 				catch (Exception ex)
 				{

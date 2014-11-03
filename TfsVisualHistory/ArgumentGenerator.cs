@@ -22,11 +22,11 @@ namespace Sitronics.TfsVisualHistory
 		{
 			switch (_visualizationSettings.PlayMode)
 			{
-				case VisualizationSettings.PlayModeOption.History:
+				case PlayMode.History:
 					return GenerateForHistory(sourceControlFolder);
-				case VisualizationSettings.PlayModeOption.Live:
+				case PlayMode.Live:
 					return GenerateForLive(sourceControlFolder);
-				case VisualizationSettings.PlayModeOption.HistoryThenLive:
+				case PlayMode.HistoryThenLive:
 					return GenerateForHistoryThenLive(sourceControlFolder);
 				default:
 					throw new NotImplementedException();
@@ -85,13 +85,13 @@ namespace Sitronics.TfsVisualHistory
 
 			switch (_visualizationSettings.PlayMode)
 			{
-				case VisualizationSettings.PlayModeOption.History:
+				case PlayMode.History:
 					title = "History of " + sourceControlFolder;
 					break;
-				case VisualizationSettings.PlayModeOption.Live:
+				case PlayMode.Live:
 					title = "Live changes of " + sourceControlFolder;
 					break;
-				case VisualizationSettings.PlayModeOption.HistoryThenLive:
+				case PlayMode.HistoryThenLive:
 					title = "Live changes of " + sourceControlFolder + " with history";
 					break;
 			}
@@ -224,7 +224,7 @@ namespace Sitronics.TfsVisualHistory
 
 		private string AddTimeScale()
 		{
-			if (_visualizationSettings.TimeScale != VisualizationSettings.TimeScaleOption.None)
+			if (_visualizationSettings.TimeScale != TimeScale.None)
 			{
 				var optionValue = _visualizationSettings.TimeScaleAsString();
 				if (optionValue != null)

@@ -120,6 +120,8 @@
     <Compile Include="Activator.VS2012.cs" />
     <Compile Include="ArgumentGenerator.cs" />
     <Compile Include="ChangesetConverter.cs" />
+    <Compile Include="Enums\PlayMode.cs" />
+    <Compile Include="Enums\TimeScale.cs" />
     <Compile Include="HistoryViewer.cs" />
     <Compile Include="HistoryViewerManager.cs" />
     <Compile Include="PathProvider.cs" />

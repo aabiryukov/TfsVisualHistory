@@ -30,7 +30,7 @@ namespace Sitronics.TfsVisualHistory
 
 		internal void ExecViewHistory(Uri tfsCollectionUri, string sourceControlFolder)
 		{
-			if (_visualizationSettings.PlayMode == VisualizationSettings.PlayModeOption.History)
+			if (_visualizationSettings.PlayMode == PlayMode.History)
 			{
 				bool historyFound;
 				bool hasLines;
@@ -71,19 +71,19 @@ namespace Sitronics.TfsVisualHistory
 			var si = new ProcessStartInfo(_pathProvider.GourceExecutableFilePath, arguments)
 			{
 				WindowStyle = ProcessWindowStyle.Maximized,
-				UseShellExecute = _visualizationSettings.PlayMode == VisualizationSettings.PlayModeOption.History,
-				RedirectStandardInput = _visualizationSettings.PlayMode != VisualizationSettings.PlayModeOption.History
+				UseShellExecute = _visualizationSettings.PlayMode == PlayMode.History,
+				RedirectStandardInput = _visualizationSettings.PlayMode != PlayMode.History
 			};
 
 			switch (_visualizationSettings.PlayMode)
 			{
-				case VisualizationSettings.PlayModeOption.History:
+				case PlayMode.History:
 					{
 						Process.Start(si);
 					}
 					break;
-				case VisualizationSettings.PlayModeOption.Live:
-				case VisualizationSettings.PlayModeOption.HistoryThenLive:
+				case PlayMode.Live:
+				case PlayMode.HistoryThenLive:
 					{
 						VersionControlLogReader logReader;
 
@@ -94,7 +94,7 @@ namespace Sitronics.TfsVisualHistory
 								sourceControlFolder,
 								_visualizationSettings.UsersFilter,
 								_visualizationSettings.FilesFilter,
-								_visualizationSettings.PlayMode == VisualizationSettings.PlayModeOption.HistoryThenLive);
+								_visualizationSettings.PlayMode == PlayMode.HistoryThenLive);
 						}
 
 						Task.Factory.StartNew(() => RunLiveChangesMonitor(logReader, si));

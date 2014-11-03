@@ -17,11 +17,16 @@ namespace Sitronics.TfsVisualHistory
 				baseDirectory += @"\..\..\..\VSExtension";
 			}
 
+			var tempPath = Path.GetTempPath();
+
 			GourceExecutableFilePath = Path.Combine(baseDirectory, @"Gource\Gource.exe");
 			DataDirectoryPath = Path.Combine(baseDirectory, @"Data");
+
 			LogoFilePath = Path.Combine(DataDirectoryPath, "Logo.png");
-			LogFilePath = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
-			AvatarsDirectoryPath = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.Avatars");
+
+			LogFilePath = Path.Combine(tempPath, "TfsHistoryLog.tmp.txt");
+			RecentConfigurationFile = Path.Combine(tempPath, "TfsVisualHistoryRecentSettings.VHCfg");
+			AvatarsDirectoryPath = Path.Combine(tempPath, "TfsHistoryLog.tmp.Avatars");
 
 			if (!Directory.Exists(AvatarsDirectoryPath))
 			{
@@ -34,5 +39,6 @@ namespace Sitronics.TfsVisualHistory
 		public string AvatarsDirectoryPath { get; private set; }
 		public string LogoFilePath { get; private set; }
 		public string LogFilePath { get; private set; }
+		public string RecentConfigurationFile { get; private set; }
 	}
 }

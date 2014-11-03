@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -10,26 +9,7 @@ namespace Sitronics.TfsVisualHistory
 	[Serializable]
 	public class VisualizationSettings
 	{
-		public enum TimeScaleOption
-		{
-			None,
-			Slow8 = 1,
-			Slow4 = 2,
-			Slow2 = 3,
-			Fast2 = 4,
-			Fast3 = 5,
-			Fast4 = 6
-		}
-
-		[SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
-		public enum PlayModeOption
-		{
-			History,
-			Live,
-			HistoryThenLive
-		}
-
-		public PlayModeOption PlayMode;
+		public PlayMode PlayMode;
 
 		public StringFilter UsersFilter { get; set; }
 		public StringFilter FilesFilter { get; set; }
@@ -45,7 +25,7 @@ namespace Sitronics.TfsVisualHistory
 		public bool ViewAvatars;
 
 		public int SecondsPerDay;
-		public TimeScaleOption TimeScale;
+		public TimeScale TimeScale;
 		public int MaxFiles;
 		public bool LoopPlayback;
 
@@ -61,7 +41,7 @@ namespace Sitronics.TfsVisualHistory
 
 		public VisualizationSettings()
 		{
-			PlayMode = PlayModeOption.History;
+			PlayMode = PlayMode.History;
 
 			DateFrom = new DateTime(1900, 1, 1);
 			DateTo = new DateTime(2099, 1, 1);
@@ -74,7 +54,7 @@ namespace Sitronics.TfsVisualHistory
 			ViewUserNames = true;
 			ViewAvatars = true;
 
-			TimeScale = TimeScaleOption.None;
+			TimeScale = TimeScale.None;
 			SecondsPerDay = 5;
 			MaxFiles = 10000;
 
@@ -107,12 +87,12 @@ namespace Sitronics.TfsVisualHistory
 		{
 			switch (TimeScale)
 			{
-				case TimeScaleOption.Slow8: return "0.125";
-				case TimeScaleOption.Slow4: return "0.25";
-				case TimeScaleOption.Slow2: return "0.5";
-				case TimeScaleOption.Fast2: return "2";
-				case TimeScaleOption.Fast3: return "3";
-				case TimeScaleOption.Fast4: return "4";
+				case TimeScale.Slow8: return "0.125";
+				case TimeScale.Slow4: return "0.25";
+				case TimeScale.Slow2: return "0.5";
+				case TimeScale.Fast2: return "2";
+				case TimeScale.Fast3: return "3";
+				case TimeScale.Fast4: return "4";
 				default: return null;
 			}
 		}
