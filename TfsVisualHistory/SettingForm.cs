@@ -1,63 +1,61 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.IO;
 using System.Windows.Forms;
+using System.IO;
 using Sitronics.TfsVisualHistory.Utility;
 
 namespace Sitronics.TfsVisualHistory
 {
-	public partial class SettingForm : Form
-	{
-		const string DialogCaption = "Visualization Settings";
+    public partial class SettingForm : Form
+    {
+        const string DialogCaption = "Visualization Settings";
 
-		internal VisualizationSettings Settings { get; private set; }
+        internal VisualizationSettings Settigs { get; private set; }
 
-		internal static VisualizationSettings DefaultSettigs
-		{
-			get
-			{
-				return new VisualizationSettings();
-			}
-		}
+        internal static VisualizationSettings DefaultSettigs
+        {
+            get 
+            {
+                return new VisualizationSettings();
+            }
+        }
 
-		public SettingForm()
-		{
-			InitializeComponent();
+        public SettingForm()
+        {
+            InitializeComponent();
 
-			// Loading recent configuration
-			try
-			{
-				var pathProvider = new PathProvider();
-				Settings = File.Exists(pathProvider.RecentConfigurationFile) ? VisualizationSettingsFileAccess.Read(pathProvider.RecentConfigurationFile) : DefaultSettigs;
-				SetSettigs(Settings);
-			}
-			catch (Exception ex)
-			{
-				ShowError(ex);
-				SetSettigs(DefaultSettigs);
-			}
-		}
+            // Loading recent configuration
+            try
+            {
+                Settigs = File.Exists(RecentConfigurationFile) ? VisualizationSettings.LoadFromFile(RecentConfigurationFile) : DefaultSettigs;
+                SetSettigs(Settigs);
+            }
+            catch (Exception ex)
+            {
+                ShowError(ex);
+                SetSettigs(DefaultSettigs);
+            }
+        }
 
-		public void SetSourcePath(string sourcePath)
-		{
-			pathTextBox.Text = sourcePath;
-		}
+        public void SetSourcePath(string sourcePath)
+        {
+            pathTextBox.Text = sourcePath;
+        }
 
-		private void resetToDefaultButton_Click(object sender, EventArgs e)
-		{
-			SetSettigs(DefaultSettigs);
-		}
+        private void resetToDefaultButton_Click(object sender, EventArgs e)
+        {
+            SetSettigs(DefaultSettigs);
+        }
 
-		private static bool TryParseInt(string text, out int value)
-		{
-			return int.TryParse(text, NumberStyles.Integer, CultureInfo.CurrentCulture, out value);
-		}
+        private static bool TryParseInt(string text, out int value)
+        {
+            return int.TryParse(text, NumberStyles.Integer, CultureInfo.CurrentCulture, out value);
+        }
 
-		private VisualizationSettings GetSettings()
-		{
-			if (string.IsNullOrWhiteSpace(userIncludeTextBox.Text))
-			{
+        private VisualizationSettings GetSettigs()
+        {
+	        if (string.IsNullOrWhiteSpace(userIncludeTextBox.Text))
+	        {
 				MessageBox.Show("User name filter 'include' can not be empty.", DialogCaption);
 				ActiveControl = userIncludeTextBox;
 				return null;
@@ -70,177 +68,161 @@ namespace Sitronics.TfsVisualHistory
 				return null;
 			}
 
-			var settings = new VisualizationSettings
-				{
-					PlayMode = GetPlayMode(),
-					DateFrom = dateFromPicker.Value,
-					DateTo = dateToPicker.Value,
-					LoopPlayback = loopPlaybackCheckBox.Checked,
-					UsersFilter = new StringFilter(userIncludeTextBox.Text, userExcludeTextBox.Text),
-					FilesFilter = new StringFilter(filesIncludeTextBox.Text, filesExcludeTextBox.Text),
-					ViewFileNames = viewFileNamesCheckBox.Checked,
-					ViewDirNames = viewDirNamesCheckBox.Checked,
-					ViewUserNames = viewUserNamesCheckBox.Checked,
+            var settigs = new VisualizationSettings
+                {
+                    PlayMode = historyRadioButton.Checked
+                                           ? VisualizationSettings.PlayModeOption.History
+                                           : VisualizationSettings.PlayModeOption.Live,
+                    DateFrom = dateFromPicker.Value,
+                    DateTo = dateToPicker.Value,
+                    LoopPlayback = loopPlaybackCheckBox.Checked,
+                    UsersFilter = new StringFilter(userIncludeTextBox.Text, userExcludeTextBox.Text),
+                    FilesFilter = new StringFilter(filesIncludeTextBox.Text, filesExcludeTextBox.Text), 
+                    ViewFileNames = viewFileNamesCheckBox.Checked,
+                    ViewDirNames = viewDirNamesCheckBox.Checked,
+                    ViewUserNames = viewUserNamesCheckBox.Checked,
 					ViewAvatars = viewAvatarsCheckBox.Checked,
-					ViewFilesExtentionMap = viewFilesExtentionMapCheckBox.Checked,
-				};
+                    ViewFilesExtentionMap = viewFilesExtentionMapCheckBox.Checked,
+                };
 
 
-			// History settings
-			if (historyRadioButton.Checked)
-			{
-				if (timeScaleComboBox.SelectedIndex >= 0)
-				{
-					var timeScaleMapping = new[]
+            // History settings
+            if (historyRadioButton.Checked)
+            {
+                if (timeScaleComboBox.SelectedIndex >= 0)
+                {
+                    var timeScaleMapping = new[]
                         {
-                            TimeScale.None,
-                            TimeScale.Slow8,
-                            TimeScale.Slow4,
-                            TimeScale.Slow2,
-                            TimeScale.Fast2,
-                            TimeScale.Fast3,
-                            TimeScale.Fast4
+                            VisualizationSettings.TimeScaleOption.None,
+                            VisualizationSettings.TimeScaleOption.Slow8,
+                            VisualizationSettings.TimeScaleOption.Slow4,
+                            VisualizationSettings.TimeScaleOption.Slow2,
+                            VisualizationSettings.TimeScaleOption.Fast2,
+                            VisualizationSettings.TimeScaleOption.Fast3,
+                            VisualizationSettings.TimeScaleOption.Fast4
                         };
 
-					settings.TimeScale = timeScaleMapping[timeScaleComboBox.SelectedIndex];
-				}
+                    settigs.TimeScale = timeScaleMapping[timeScaleComboBox.SelectedIndex];
+                }
 
-				if (!TryParseInt(secondsPerDayTextBox.Text, out settings.SecondsPerDay) || settings.SecondsPerDay < 1 || settings.SecondsPerDay > 1000)
-				{
-					MessageBox.Show("Incorrect value in 'Seconds Per Day' (1-1000).", DialogCaption);
-					ActiveControl = secondsPerDayTextBox;
-					return null;
-				}
-			}
-
-
-			if (!TryParseInt(maxFilesTextBox.Text, out settings.MaxFiles) || settings.MaxFiles < 0 || settings.MaxFiles > 1000000)
-			{
-				MessageBox.Show("Incorrect value in 'Max Files' (Range: 0-1000000).", DialogCaption);
-				ActiveControl = maxFilesTextBox;
-				return null;
-			}
+                if (!TryParseInt(secondsPerDayTextBox.Text, out settigs.SecondsPerDay) || settigs.SecondsPerDay < 1 || settigs.SecondsPerDay > 1000)
+                {
+                    MessageBox.Show("Incorrect value in 'Seconds Per Day' (1-1000).", DialogCaption);
+                    ActiveControl = secondsPerDayTextBox;
+                    return null;
+                }
+            }
 
 
-			settings.FullScreen = fullScreenCheckBox.Checked;
-			settings.SetResolution = setResolutionCheckBox.Checked;
+            if (!TryParseInt(maxFilesTextBox.Text, out settigs.MaxFiles) || settigs.MaxFiles < 1 || settigs.MaxFiles > 1000000)
+            {
+                MessageBox.Show("Incorrect value in 'Max Files' (Range: 1-1000000).", DialogCaption);
+                ActiveControl = maxFilesTextBox;
+                return null;
+            }
 
-			if (setResolutionCheckBox.Checked)
-			{
-				if (!TryParseInt(resolutionWidthTextBox.Text, out settings.ResolutionWidth) || settings.ResolutionWidth < 100)
-				{
-					MessageBox.Show("Incorrect value in 'Resolution width' (min: 100).", DialogCaption);
-					ActiveControl = resolutionWidthTextBox;
-					return null;
-				}
 
-				if (!TryParseInt(resolutionHeightTextBox.Text, out settings.ResolutionHeight) || settings.ResolutionHeight < 100)
-				{
-					MessageBox.Show("Incorrect value in 'Resolution height' (min: 100).", DialogCaption);
-					ActiveControl = resolutionHeightTextBox;
-					return null;
-				}
-			}
+            settigs.FullScreen = fullScreenCheckBox.Checked;
+            settigs.SetResolution = setResolutionCheckBox.Checked;
 
-			if (ViewLogoCheckBox.CheckState == CheckState.Checked && !File.Exists(LogoFileTextBox.Text))
-			{
+            if (setResolutionCheckBox.Checked)
+            {
+                if (!TryParseInt(resolutionWidthTextBox.Text, out settigs.ResolutionWidth) || settigs.ResolutionWidth < 100)
+                {
+                    MessageBox.Show("Incorrect value in 'Resolution width' (min: 100).", DialogCaption);
+                    ActiveControl = resolutionWidthTextBox;
+                    return null;
+                }
+
+                if (!TryParseInt(resolutionHeightTextBox.Text, out settigs.ResolutionHeight) || settigs.ResolutionHeight < 100)
+                {
+                    MessageBox.Show("Incorrect value in 'Resolution height' (min: 100).", DialogCaption);
+                    ActiveControl = resolutionHeightTextBox;
+                    return null;
+                }
+            }
+
+	        if (ViewLogoCheckBox.CheckState == CheckState.Checked && !File.Exists(LogoFileTextBox.Text))
+	        {
 				MessageBox.Show("Logo file path does not exist.", DialogCaption);
 				ActiveControl = LogoFileTextBox;
 				return null;
 			}
 
-			settings.ViewLogo = ViewLogoCheckBox.CheckState;
-			settings.LogoFileName = settings.ViewLogo == CheckState.Checked ? LogoFileTextBox.Text : null;
-			settings.FileIdleTime = int.Parse(secondsTextBox.Text);
+			settigs.ViewLogo = ViewLogoCheckBox.CheckState;
+			settigs.LogoFileName = settigs.ViewLogo == CheckState.Checked ? LogoFileTextBox.Text : null;
 
-			return settings;
-		}
+            return settigs;
+        }
 
-		private PlayMode GetPlayMode()
-		{
-			if (historyRadioButton.Checked)
-				return PlayMode.History;
+        internal void SetSettigs(VisualizationSettings settigs)
+        {
+            historyRadioButton.Checked = settigs.PlayMode == VisualizationSettings.PlayModeOption.History;
+            liveStreamRadioButton.Checked = settigs.PlayMode == VisualizationSettings.PlayModeOption.Live;
 
-			if (liveStreamRadioButton.Checked)
-				return PlayMode.Live;
+            dateFromPicker.Value = settigs.DateFrom;
+            dateToPicker.Value = settigs.DateTo;
 
-			if (liveWithHistoryRadioButton.Checked)
-				return PlayMode.HistoryThenLive;
+            userIncludeTextBox.Text = settigs.UsersFilter.IncludeMask;
+            userExcludeTextBox.Text = settigs.UsersFilter.ExcludeMask;
 
-			throw new Exception();
-		}
+            filesIncludeTextBox.Text = settigs.FilesFilter.IncludeMask;
+            filesExcludeTextBox.Text = settigs.FilesFilter.ExcludeMask;
 
-		internal void SetSettigs(VisualizationSettings settings)
-		{
-			historyRadioButton.Checked = settings.PlayMode == PlayMode.History;
-			liveStreamRadioButton.Checked = settings.PlayMode == PlayMode.Live;
-			liveWithHistoryRadioButton.Checked = settings.PlayMode == PlayMode.HistoryThenLive;
+            viewFilesExtentionMapCheckBox.Checked = settigs.ViewFilesExtentionMap;
 
-			dateFromPicker.Value = settings.DateFrom;
-			dateToPicker.Value = settings.DateTo;
+            viewFileNamesCheckBox.Checked = settigs.ViewFileNames;
+            viewDirNamesCheckBox.Checked = settigs.ViewDirNames;
+            viewUserNamesCheckBox.Checked = settigs.ViewUserNames;
+			viewAvatarsCheckBox.Checked = settigs.ViewAvatars;
+            
+            timeScaleComboBox.SelectedIndex = (int)settigs.TimeScale;
+            secondsPerDayTextBox.Text = settigs.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
+            loopPlaybackCheckBox.Checked = settigs.LoopPlayback;
 
-			userIncludeTextBox.Text = settings.UsersFilter.IncludeMask;
-			userExcludeTextBox.Text = settings.UsersFilter.ExcludeMask;
+            fullScreenCheckBox.Checked = settigs.FullScreen;
+            setResolutionCheckBox.Checked = settigs.SetResolution;
+            resolutionWidthTextBox.Text = settigs.ResolutionWidth.ToString(CultureInfo.CurrentCulture);
+            resolutionHeightTextBox.Text = settigs.ResolutionHeight.ToString(CultureInfo.CurrentCulture);
 
-			filesIncludeTextBox.Text = settings.FilesFilter.IncludeMask;
-			filesExcludeTextBox.Text = settings.FilesFilter.ExcludeMask;
+            maxFilesTextBox.Text = settigs.MaxFiles.ToString(CultureInfo.CurrentCulture);
 
-			viewFilesExtentionMapCheckBox.Checked = settings.ViewFilesExtentionMap;
+			ViewLogoCheckBox.CheckState = settigs.ViewLogo;
+			LogoFileTextBox.Text = settigs.LogoFileName;
+        }
 
-			viewFileNamesCheckBox.Checked = settings.ViewFileNames;
-			viewDirNamesCheckBox.Checked = settings.ViewDirNames;
-			viewUserNamesCheckBox.Checked = settings.ViewUserNames;
-			viewAvatarsCheckBox.Checked = settings.ViewAvatars;
+        private static string RecentConfigurationFile
+        {
+            get { return Path.Combine(Path.GetTempPath(), "TfsVisualHistoryRecentSettings.VHCfg"); }
+        }
 
-			timeScaleComboBox.SelectedIndex = (int)settings.TimeScale;
-			secondsPerDayTextBox.Text = settings.SecondsPerDay.ToString(CultureInfo.CurrentCulture);
-			loopPlaybackCheckBox.Checked = settings.LoopPlayback;
+        private void okButton_Click(object sender, EventArgs e)
+        {
+//			if(!ValidateSettingsUI()) return;
 
-			fullScreenCheckBox.Checked = settings.FullScreen;
-			setResolutionCheckBox.Checked = settings.SetResolution;
-			resolutionWidthTextBox.Text = settings.ResolutionWidth.ToString(CultureInfo.CurrentCulture);
-			resolutionHeightTextBox.Text = settings.ResolutionHeight.ToString(CultureInfo.CurrentCulture);
+            Settigs = GetSettigs();
+            if (Settigs != null)
+            {
+                try
+                {
+                    Settigs.SaveToFile(RecentConfigurationFile);
+                }
+                catch (Exception ex)
+                {
+                    ShowError(ex);
+                }
 
-			maxFilesTextBox.Text = settings.MaxFiles.ToString(CultureInfo.CurrentCulture);
+                DialogResult = DialogResult.OK;
+            }
+        }
 
-			ViewLogoCheckBox.CheckState = settings.ViewLogo;
-			LogoFileTextBox.Text = settings.LogoFileName;
-
-			secondsTextBox.Text = settings.FileIdleTime.ToString(CultureInfo.InvariantCulture);
-		}
-
-		private void ShowError(Exception ex)
-		{
-			MessageBox.Show(this, ex.Message, DialogCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-		}
-
-		private void okButton_Click(object sender, EventArgs e)
-		{
-			Settings = GetSettings();
-
-			if (Settings != null)
-			{
-				try
-				{
-					var pathProvider = new PathProvider();
-					VisualizationSettingsFileAccess.Save(Settings, pathProvider.RecentConfigurationFile);
-				}
-				catch (Exception ex)
-				{
-					ShowError(ex);
-				}
-
-				DialogResult = DialogResult.OK;
-			}
-		}
-
-		private void interactiveKeyboardCommandsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			const string Help =
+	    private void interactiveKeyboardCommandsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            const string Help =
 "\"Gource\" window interactive keyboard commands:\n" +
 "\n" +
 "    (V)   Toggle camera mode\n" +
-				//"    (C)   Displays Gource logo\n" +
+//"    (C)   Displays Gource logo\n" +
 "    (K)   Toggle file extension key.\n" +
 "    (M)   Toggle mouse visibility\n" +
 "    (N)   Jump forward in time to next log entry.\n" +
@@ -259,61 +241,52 @@ namespace Sitronics.TfsVisualHistory
 "Copyright (C) 2009 Andrew Caudwell <acaudwell@gmail.com>\n" +
 "Project site: http://code.google.com/p/gource/\n";
 
-			MessageBox.Show(this, Help, DialogCaption);
-		}
+            MessageBox.Show(this, Help, DialogCaption);
+        }
 
-		private void saveSettingsToFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var settings = GetSettings();
+        private void saveSettingsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var settigs = GetSettigs();
+            if (settigs == null) return;
 
-			if (settings == null)
-				return;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                settigs.SaveToFile(saveFileDialog1.FileName);
+            }
+        }
 
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				VisualizationSettingsFileAccess.Save(settings, saveFileDialog1.FileName);
-			}
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private void loadSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    var settings = VisualizationSettings.LoadFromFile(openFileDialog1.FileName);
+                    SetSettigs(settings);
+                }
+                catch (Exception ex)
+                {
+                    ShowError(ex);
+                }
+            }
+        }
 
-		[SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-		private void loadSettingsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (openFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				try
-				{
-					var settings = VisualizationSettingsFileAccess.Read(openFileDialog1.FileName);
-					SetSettigs(settings);
-				}
-				catch (Exception ex)
-				{
-					ShowError(ex);
-				}
-			}
-		}
+        private void ShowError(Exception ex)
+        {
+            MessageBox.Show(this, ex.Message, DialogCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
 
-		private void setResolutionCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			resolutionHeightTextBox.Enabled = setResolutionCheckBox.Checked;
-			resolutionWidthTextBox.Enabled = setResolutionCheckBox.Checked;
-		}
+        private void setResolutionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            resolutionHeightTextBox.Enabled = setResolutionCheckBox.Checked;
+            resolutionWidthTextBox.Enabled = setResolutionCheckBox.Checked;
+        }
 
-		private void historyRadioButton_CheckedChanged(object sender, EventArgs e)
-		{
-			historySettingsGroupBox.Enabled = (historyRadioButton.Checked || liveWithHistoryRadioButton.Checked);
-
-			if (!retainIndefinitelyCheckBox.Checked)
-			{
-				if (historyRadioButton.Checked)
-				{
-					secondsTextBox.Text = "60";
-				}
-				else
-				{
-					secondsTextBox.Text = "28800";
-				}
-			}
-		}
+        private void historyRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            historySettingsGroupBox.Enabled = historyRadioButton.Checked;
+        }
 
 		private void ViewLogoCheckBox_CheckStateChanged(object sender, EventArgs e)
 		{
@@ -344,40 +317,5 @@ namespace Sitronics.TfsVisualHistory
 				}
 			}
 		}
-
-		private void retainIndefinitelyCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			secondsTextBox.Enabled = !retainIndefinitelyCheckBox.Checked;
-
-			if (retainIndefinitelyCheckBox.Checked)
-			{
-				secondsTextBox.Text = "0";
-			}
-			else
-			{
-				if (historyRadioButton.Checked)
-				{
-					secondsTextBox.Text = "60";
-				}
-				else
-				{
-					secondsTextBox.Text = "28800";
-				}
-			}
-		}
-
-		private void unlimitedCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (unlimitedCheckBox.Checked)
-			{
-				maxFilesTextBox.Text = "0";
-			}
-			else
-			{
-				maxFilesTextBox.Text = "10000";
-			}
-
-			maxFilesTextBox.Enabled = !unlimitedCheckBox.Checked;
-		}
-	}
+    }
 }

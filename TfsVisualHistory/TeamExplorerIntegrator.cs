@@ -1,32 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using EnvDTE;
-using EnvDTE80;
-using Extensibility;
-using Microsoft.TeamFoundation.Client;
-using Microsoft.TeamFoundation.VersionControl.Client;
-using Microsoft.VisualStudio.TeamFoundation;
-using Microsoft.VisualStudio.TeamFoundation.VersionControl;
+﻿using EnvDTE;
 using Sitronics.TfsVisualHistory.Common;
 
 namespace Sitronics.TfsVisualHistory
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+	using System.Linq;
+	using EnvDTE80;
+	using Extensibility;
+	using Microsoft.TeamFoundation.Client;
+	using Microsoft.TeamFoundation.VersionControl.Client;
+	using Microsoft.VisualStudio.TeamFoundation;
+	using Microsoft.VisualStudio.TeamFoundation.VersionControl;
+
 	public class TeamExplorerIntegrator : ITeamExplorerIntegrator
 	{
+		//        private ITeamFoundationContextManager m_tfsContextManager;
 		private DTE2 m_applicationObject;
+
 		private VersionControlExt m_srcCtrlExplorer;
 		private TeamFoundationServerExt m_tfsExt;
+
 		private readonly List<string> m_dirtyPath = new List<string>();
 
-		/// <summary>
-		/// Initializes a new instance of the TeamExplorerIntegrator class, The constructor for the Add-in object. Place your initialization code within this method.
-		/// </summary> 
+		/// <summary>Initializes a new instance of the TeamExplorerIntegrator class, The constructor for the Add-in object. Place your initialization code within this method.</summary> 
 		public void Initialize(IVsExtensibility extensibility)
 		{
 			if (m_applicationObject != null)
+			{
 				throw new ApplicationException("TeamExplorerIntegrator already initialized");
+			}
 
 			if (extensibility == null)
 				throw new ArgumentNullException("extensibility");
@@ -41,6 +45,8 @@ namespace Sitronics.TfsVisualHistory
 			var tfsExt = (TeamFoundationServerExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.TeamFoundationServerExt");
 			m_srcCtrlExplorer = (VersionControlExt)dte2.Application.GetObject("Microsoft.VisualStudio.TeamFoundation.VersionControl.VersionControlExt");
 
+			//            var events = m_applicationObject.Events;
+
 			DoConnect(tfsExt);
 		}
 
@@ -50,7 +56,11 @@ namespace Sitronics.TfsVisualHistory
 
 		public Uri TeamProjectCollectionUri
 		{
-			get { return TeamProjectCollection == null ? null : TeamProjectCollection.Uri; }
+			get
+			{
+				if (TeamProjectCollection == null) return null;
+				return TeamProjectCollection.Uri;
+			}
 		}
 
 		public bool IsSingleSelected
@@ -97,6 +107,7 @@ namespace Sitronics.TfsVisualHistory
 			catch (Exception ex)
 			{
 				Trace.WriteLine("[TfsVisualHistory][DoConnect] " + ex.Message);
+				////MessageBox.Show(ex.Message); 
 			}
 		}
 
@@ -143,7 +154,7 @@ namespace Sitronics.TfsVisualHistory
 		public void OnDisconnection(ext_DisconnectMode disconnectMode, ref Array custom)
 		{
 			// Unhook the ProjectContextChanged event handler. 
-			if (m_tfsExt != null)
+			if (null != m_tfsExt)
 			{
 				m_tfsExt.ProjectContextChanged -= TfsExt_ProjectContextChanged;
 				m_tfsExt = null;

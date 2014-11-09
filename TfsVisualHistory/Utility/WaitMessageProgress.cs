@@ -2,37 +2,30 @@
 
 namespace Sitronics.TfsVisualHistory.Utility
 {
-	public class WaitMessageProgress
-	{
-		private WaitMessage _waitMessage;
-		private readonly string _formatString;
+    public class WaitMessageProgress
+    {
+        private WaitMessage m_waitMessage;
+        private readonly string m_formatString;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="WaitMessageProgress"/> class.
-		/// </summary>
-		internal WaitMessageProgress(WaitMessage waitMessage, string formatString)
-		{
-			LastValue = -1;
-			_waitMessage = waitMessage;
-			_formatString = formatString;
-		}
+        internal WaitMessageProgress(WaitMessage waitMessage, string formatString)
+        {
+	        LastValue = -1;
+            m_waitMessage = waitMessage;
+            m_formatString = formatString;
+        }
 
-		public int LastValue { get; private set; }
-
-		public void SetValue(int value)
-		{
+        public void SetValue(int value)
+        {
 			if (LastValue == value)
 				return;
 
-			LastValue = value;
+	        LastValue = value;
+            if (m_waitMessage != null)
+                m_waitMessage.Text = string.Format(CultureInfo.CurrentCulture, m_formatString, value);
+        }
+//                m_waitMessage.Text = "Loading history (" + value.ToString(CultureInfo.CurrentCulture) + "% done) ...";
 
-			if (_waitMessage != null)
-				_waitMessage.Text = string.Format(CultureInfo.CurrentCulture, _formatString, value);
-		}
-
-		public void Done()
-		{
-			_waitMessage = null;
-		}
-	}
+        public void Done() { m_waitMessage = null; }
+		public int LastValue { get; private set; }
+    }
 }

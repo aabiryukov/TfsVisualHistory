@@ -117,13 +117,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activator.VS2013.cs" />
-    <Compile Include="ArgumentGenerator.cs" />
     <Compile Include="ChangesetConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HistoryViewer.cs" />
-    <Compile Include="HistoryViewerManager.cs" />
-    <Compile Include="PathProvider.cs" />
-    <Compile Include="Enums\PlayMode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingForm.cs">
       <SubType>Form</SubType>
@@ -133,7 +129,6 @@
     </Compile>
     <Compile Include="TeamExplorerIntegrator.cs" />
     <Compile Include="TfsLogWriter.cs" />
-    <Compile Include="Enums\TimeScale.cs" />
     <Compile Include="Utility\StringFilter.cs" />
     <Compile Include="Utility\WaitMessage.cs" />
     <Compile Include="Utility\WaitMessageForm.cs">
@@ -146,7 +141,6 @@
     <Compile Include="Utility\Wildcard.cs" />
     <Compile Include="VersionControlLogReader.cs" />
     <Compile Include="VisualizationSettings.cs" />
-    <Compile Include="VisualizationSettingsFileAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SettingForm.resx">

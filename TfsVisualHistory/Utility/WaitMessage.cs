@@ -37,28 +37,37 @@ namespace Sitronics.TfsVisualHistory.Utility
 		private bool m_disposed;
 		private volatile bool m_closing;
 		private readonly Cursor m_saveCursor;
-		readonly EventHandler m_onCancel;
+	    readonly EventHandler m_onCancel;
 
 		#endregion
 
 		#region Construction & Destruction
-
+/*
 		/// <summary>
-		/// Constructs a new <see cref="WaitMessage"/> object with the specified setup.
+		/// Constructs a new <see cref="WaitMessage"/> object.
 		/// </summary>
-		/// <param name="showNow">
-		/// Wether to show the busy form right away.
-		/// </param>
-		/// <param name="message">
-		/// The text to show on the form.
-		/// </param>
-		/// <param name="onCancel">Event handler for cancel the message</param>
-		protected WaitMessage(bool showNow, string message, EventHandler onCancel)
+		public WaitMessage()
 		{
-			Text = message ?? "Please wait... completing request...";
+			// Do nothing here
+		}
+*/
+
+	    /// <summary>
+	    /// Constructs a new <see cref="WaitMessage"/> object with the specified setup.
+	    /// </summary>
+	    /// <param name="showNow">
+	    /// Wether to show the busy form right away.
+	    /// </param>
+	    /// <param name="message">
+	    /// The text to show on the form.
+	    /// </param>
+	    /// <param name="onCancel">Event handler for cancel the message</param>
+	    protected WaitMessage(bool showNow, string message, EventHandler onCancel)
+		{
+            Text = message ?? "Please wait... completing request...";
 			AllowAbort = false;
 			VerifyAbort = true;
-			m_onCancel = onCancel;
+            m_onCancel = onCancel;
 
 			m_saveCursor = Cursor.Current;
 			Cursor.Current = Cursors.WaitCursor;
@@ -67,15 +76,15 @@ namespace Sitronics.TfsVisualHistory.Utility
 				Show();
 		}
 
-		public WaitMessage(string message, EventHandler onCancel)
-			: this(true, message, onCancel)
+        public WaitMessage(string message, EventHandler onCancel)
+            : this(true, message, onCancel)
 		{
 		}
 
-		public WaitMessage(string message)
-			: this(true, message, null)
-		{
-		}
+        public WaitMessage(string message)
+            : this(true, message, null)
+        {
+        }
 
 		#endregion
 
@@ -86,7 +95,7 @@ namespace Sitronics.TfsVisualHistory.Utility
 		/// </summary>
 		public bool AllowAbort { get; set; }
 
-		//        public bool Canceled { get; private set; }
+//        public bool Canceled { get; private set; }
 
 		/// <summary>
 		/// Gets or sets wether to verify that the user wanted to abort or not, defaults to <c>true</c>.
@@ -110,14 +119,14 @@ namespace Sitronics.TfsVisualHistory.Utility
 
 			set
 			{
-				if (m_text != value)
-				{
-					m_text = (value == null) ? string.Empty : value.Trim();
-					if (m_form != null)
-					{
-						m_form.Invoke(new Procedure(() => { m_form.Message = m_text; }));
-					}
-				}
+                if (m_text != value)
+                {
+                    m_text = (value == null) ? string.Empty : value.Trim();
+                    if (m_form != null)
+                    {
+                        m_form.Invoke(new Procedure(() => { m_form.Message = m_text; }));
+                    }
+                }
 			}
 		}
 
@@ -133,15 +142,15 @@ namespace Sitronics.TfsVisualHistory.Utility
 			if (m_thread == null)
 			{
 				m_thread = new Thread(FormThreadMethod)
-							{
-								Name = "WaitMessage Thread",
+				          	{
+								Name = "WaitMessage Thread", 
 								IsBackground = Thread.CurrentThread.IsBackground
-							};
+				          	};
 				m_thread.Start();
 			}
 		}
 
-		private delegate void Procedure();
+        private delegate void Procedure();
 
 		/// <summary>
 		/// Closes the form.
@@ -168,7 +177,7 @@ namespace Sitronics.TfsVisualHistory.Utility
 		private void FormThreadMethod()
 		{
 			// Wait 1 sec before show window
-			for (var i = 0; i < 10; ++i)
+			for(var i = 0; i < 10; ++i)
 			{
 				Thread.Sleep(100);
 				if (m_closing)
@@ -180,7 +189,7 @@ namespace Sitronics.TfsVisualHistory.Utility
 				if (m_closing)
 					return;
 
-				m_form = new WaitMessageForm(m_onCancel)
+                m_form = new WaitMessageForm(m_onCancel)
 				{
 					Message = m_text,
 					TopLevel = true
@@ -246,9 +255,9 @@ namespace Sitronics.TfsVisualHistory.Utility
 
 		#endregion
 
-		public WaitMessageProgress CreateProgress(string format)
-		{
-			return new WaitMessageProgress(this, format);
-		}
+        public WaitMessageProgress CreateProgress(string format)
+	    {
+            return new WaitMessageProgress(this, format);
+	    }
 	}
 }
