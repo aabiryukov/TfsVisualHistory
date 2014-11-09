@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="TeamExplorerIntegrator.cs" />
     <Compile Include="TfsLogWriter.cs" />
+    <Compile Include="Utility\FileUtils.cs" />
     <Compile Include="Utility\StringFilter.cs" />
     <Compile Include="Utility\WaitMessage.cs" />
     <Compile Include="Utility\WaitMessageForm.cs">

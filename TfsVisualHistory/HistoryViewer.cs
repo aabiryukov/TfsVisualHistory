@@ -61,12 +61,12 @@ namespace Sitronics.TfsVisualHistory
             if (m_settigs.PlayMode == VisualizationSettings.PlayModeOption.History)
             {
                 title = "History of " + sourceControlFolder;
-                var logFile = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.txt");
+				var logFile = Path.Combine(FileUtils.GetTempPath(), "TfsHistoryLog.tmp.txt");
 	            
 	            if (m_settigs.ViewAvatars)
 	            {
-		            avatarsDirectory = Path.Combine(Path.GetTempPath(), "TfsHistoryLog.tmp.Avatars");
-		            if (!Directory.Exists(avatarsDirectory))
+		            avatarsDirectory = Path.Combine(FileUtils.GetTempPath(), "TfsHistoryLog.tmp.Avatars");
+					if (!Directory.Exists(avatarsDirectory))
 		            {
 			            Directory.CreateDirectory(avatarsDirectory);
 		            }
@@ -139,6 +139,8 @@ namespace Sitronics.TfsVisualHistory
 
             var baseDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ??
                                 "unknown";
+
+
             if (baseDirectory.Contains("Test"))
             {
                 baseDirectory += @"\..\..\..\VSExtension";
@@ -162,6 +164,9 @@ namespace Sitronics.TfsVisualHistory
 				var logoFile = m_settigs.ViewLogo == CheckState.Indeterminate
 					? Path.Combine(dataPath, "Logo.png")
 					: m_settigs.LogoFileName;
+
+				// fix gource unicode path problems
+				logoFile = FileUtils.GetShortPath(logoFile);
 
 				arguments += string.Format(CultureInfo.InvariantCulture, " --logo \"{0}\"", logoFile);
 			}
