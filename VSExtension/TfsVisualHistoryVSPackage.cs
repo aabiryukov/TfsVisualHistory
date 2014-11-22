@@ -127,6 +127,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 		        m_vsVersion = VisualStudioVersion.VS2012;
 	        }
 	        else
+			if (UserRegistryRoot.ToString().Contains(@"\14"))
+	        {
+		        m_vsVersion = VisualStudioVersion.VS2015;
+	        }
+	        else
 	        {
 				m_vsVersion = VisualStudioVersion.VS2013;
 			}

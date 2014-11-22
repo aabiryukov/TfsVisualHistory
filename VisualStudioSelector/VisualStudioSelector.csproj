@@ -60,6 +60,10 @@
       <Project>{a040df02-c510-417b-a5ec-9c4a88d114ea}</Project>
       <Name>TfsVisualHistory.VS2013</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2015.csproj">
+      <Project>{850d0fc1-695c-4a40-bf29-b04dea5eaef8}</Project>
+      <Name>TfsVisualHistory.VS2015</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="SitronicsPublic.snk" />
