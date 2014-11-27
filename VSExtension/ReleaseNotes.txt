@@ -2,6 +2,12 @@
 
 Release Notes:
 
+v2.6 (27 Nov 2014)
+------------------
+Added VS2015 support
+Fixed "file not found" in non-latin user profiles 
+Fixed view of persian symbols in the user names
+
 v2.5 (12 Oct 2014)
 ------------------
 Logo image customization
