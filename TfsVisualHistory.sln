@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistoryVSExtension", "VSExtension\TfsVisualHistoryVSExtension.csproj", "{63817546-D392-4E3E-B485-520FE334623C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A040DF02-C510-417B-A5EC-9C4A88D114EA} = {A040DF02-C510-417B-A5EC-9C4A88D114EA}
+		{61E0268D-184E-440D-91CB-950C8BA525A9} = {61E0268D-184E-440D-91CB-950C8BA525A9}
+		{850D0FC1-695C-4A40-BF29-B04DEA5EAEF8} = {850D0FC1-695C-4A40-BF29-B04DEA5EAEF8}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistoryTest", "Test\TfsVisualHistoryTest.csproj", "{72E3CD87-0576-46CB-8C0E-90B2B5E4A0C1}"
 EndProject
