@@ -127,13 +127,13 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 		        m_vsVersion = VisualStudioVersion.VS2012;
 	        }
 	        else
-			if (UserRegistryRoot.ToString().Contains(@"\14"))
+			if (UserRegistryRoot.ToString().Contains(@"\12"))
 	        {
-		        m_vsVersion = VisualStudioVersion.VS2015;
+		        m_vsVersion = VisualStudioVersion.VS2013;
 	        }
 	        else
 	        {
-				m_vsVersion = VisualStudioVersion.VS2013;
+				m_vsVersion = VisualStudioVersion.VS2015;
 			}
 
 	        // Add our command handlers for menu (commands must exist in the .vsct file)

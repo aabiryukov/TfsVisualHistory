@@ -109,7 +109,6 @@ namespace Sitronics.TfsVisualHistory
 
 	            arguments = string.Format(CultureInfo.InvariantCulture, " \"{0}\" ", logFile);
 
-
                 // Setting other history settings
 
                 arguments += " --seconds-per-day " + m_settigs.SecondsPerDay.ToString(CultureInfo.InvariantCulture);
@@ -235,8 +234,8 @@ namespace Sitronics.TfsVisualHistory
                 var si = new ProcessStartInfo(gourcePath, arguments)
                     {
                         WindowStyle = ProcessWindowStyle.Maximized,
-                        UseShellExecute = true
-                    };
+ //                       UseShellExecute = true
+					};
 
                 Process.Start(si);
             }
