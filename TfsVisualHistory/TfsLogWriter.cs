@@ -69,6 +69,7 @@ namespace Sitronics.TfsVisualHistory
 		{
 			var invalidFileChars = new []{'\\', ',', '/', '<', '>', '?', '|', ':', '*'};
 
+			var searchCommiters1 = new string[1];
 			foreach (var commiter in commiters)
 			{
 				if(string.IsNullOrEmpty(commiter) || commiter.IndexOfAny(invalidFileChars) >= 0)
@@ -84,23 +85,29 @@ namespace Sitronics.TfsVisualHistory
 					File.Delete(imagePath);
 				}
 
-				var identity = identityService.ReadIdentity(IdentitySearchFactor.DisplayName,
-					commiter, MembershipQuery.Expanded, ReadIdentityOptions.ExtendedProperties);
+				searchCommiters1[0] = commiter;
+				var identities = identityService.ReadIdentities(IdentitySearchFactor.DisplayName,
+					searchCommiters1, MembershipQuery.Expanded, ReadIdentityOptions.ExtendedProperties);
 
-				if(identity == null) 
+				if (identities == null || !identities.Any()) 
 					continue;
 
-				object imageData;
-				if (!identity.TryGetProperty("Microsoft.TeamFoundation.Identity.Image.Data", out imageData)) 
-					continue;
-				
-				var imageBytes = imageData as byte[];
-				if (imageBytes == null) 
-					continue;
+				foreach (var identity in identities[0])
+				{
+					object imageData;
+					if (!identity.TryGetProperty("Microsoft.TeamFoundation.Identity.Image.Data", out imageData))
+						continue;
 
-	//			var imageFormat = GetImageFormat(imageBytes);
-	//			Trace.WriteLine(imageFormat);
-				File.WriteAllBytes(imagePath, imageBytes);
+					var imageBytes = imageData as byte[];
+					if (imageBytes == null)
+						continue;
+
+					//			var imageFormat = GetImageFormat(imageBytes);
+					//			Trace.WriteLine(imageFormat);
+					File.WriteAllBytes(imagePath, imageBytes);
+					
+					break;
+				}
 			}
 		}
 
