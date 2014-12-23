@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Diagnostics;
+using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
 using Sitronics.TfsVisualHistory.Utility;
@@ -247,37 +248,46 @@ namespace Sitronics.TfsVisualHistory
                 {
                     logReader.Connect();
                 }
-                var si = new ProcessStartInfo(gourcePath, arguments)
-                    {
-                        WindowStyle = ProcessWindowStyle.Maximized,
-                        RedirectStandardInput = true,
-                        UseShellExecute = false
-                    };
 
-                System.Threading.Tasks.Task.Factory.StartNew(() => RunLiveChangesMonitor(logReader, si));
+				System.Threading.Tasks.Task.Factory.StartNew(() => RunLiveChangesMonitor(logReader, gourcePath, arguments));
             }
         }
 
-        private static void RunLiveChangesMonitor(VersionControlLogReader reader, ProcessStartInfo gourceStartInfo)
-        {
+		private static void RunLiveChangesMonitor(VersionControlLogReader reader, string gourcePath, string arguments)
+	    {
+			var gourceStartInfo = new ProcessStartInfo(gourcePath, arguments)
+			{
+				WindowStyle = ProcessWindowStyle.Maximized,
+				RedirectStandardInput = true,
+				UseShellExecute = false
+			};
+
             var process = Process.Start(gourceStartInfo);
 
-// ReSharper disable once PossibleNullReferenceException
-            while (!process.HasExited)
-            {
-                var line = reader.ReadLine();
-                Debug.WriteLine("LOG: " + (line ?? "<NULL>"));
-                if (line == null)
-                {
-                    // Waiting for second to avoid frequent server calls 
-                    System.Threading.Thread.Sleep(1000);
-                }
-                else
-                {
-                    process.StandardInput.WriteLine(line);
-                    // System.Threading.Thread.Sleep(100);
-                }
-            }
+			if (process == null)
+				throw new InvalidDataException("Failed to start process: " + gourceStartInfo.FileName);
+
+	        using (var gourceWriter = new StreamWriter(process.StandardInput.BaseStream, Encoding.UTF8))
+	        {
+		        gourceWriter.AutoFlush = process.StandardInput.AutoFlush;
+		        gourceWriter.NewLine = process.StandardInput.NewLine;
+
+		        while (!process.HasExited)
+		        {
+			        var line = reader.ReadLine();
+			        Debug.WriteLine("LOG: " + (line ?? "<NULL>"));
+			        if (line == null)
+			        {
+				        // Waiting for second to avoid frequent server calls 
+				        System.Threading.Thread.Sleep(1000);
+			        }
+			        else
+			        {
+						gourceWriter.WriteLine(line);
+				        // System.Threading.Thread.Sleep(100);
+			        }
+		        }
+	        }
         }
     }
 }
