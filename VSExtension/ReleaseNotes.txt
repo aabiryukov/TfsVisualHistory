@@ -2,6 +2,11 @@
 
 Release Notes:
 
+v2.7 (02 Sen 2015)
+------------------
+Settings dialog redesigned (simplified, more usable)
+Fixed output encoding in "live changes" mode
+
 v2.6 (27 Nov 2014)
 ------------------
 Added VS2015 support
