@@ -132,9 +132,19 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 		        m_vsVersion = VisualStudioVersion.VS2013;
 	        }
 	        else
-	        {
-				m_vsVersion = VisualStudioVersion.VS2015;
-			}
+            if (UserRegistryRoot.ToString().Contains(@"\14"))
+            {
+                m_vsVersion = VisualStudioVersion.VS2015;
+            }
+            else
+            if (UserRegistryRoot.ToString().Contains(@"\15"))
+            {
+                m_vsVersion = VisualStudioVersion.VS2017;
+            }
+            else
+            {
+                throw new ApplicationException($"Unknown version of VisualStudioVersion: {UserRegistryRoot}");
+            }
 
 	        // Add our command handlers for menu (commands must exist in the .vsct file)
             var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;

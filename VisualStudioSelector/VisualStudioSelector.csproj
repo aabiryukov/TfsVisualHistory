@@ -9,12 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitronics.VisualStudioSelector</RootNamespace>
     <AssemblyName>Sitronics.VisualStudioSelector</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,6 +64,10 @@
     <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2015.csproj">
       <Project>{850d0fc1-695c-4a40-bf29-b04dea5eaef8}</Project>
       <Name>TfsVisualHistory.VS2015</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2017.csproj">
+      <Project>{dac5ab83-279a-499b-8034-458889346eeb}</Project>
+      <Name>TfsVisualHistory.VS2017</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
