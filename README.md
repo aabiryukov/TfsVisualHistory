@@ -14,3 +14,8 @@ Project documentation: https://github.com/aabiryukov/TfsVisualHistory/wiki
 # Screenshot
 
 ![GitHub Logo](/Wiki/Images/ViewSmall.png )
+
+# Donate
+If you find the library useful and would like to donate, please send some bitcoins here:
+
+BTC: 1EMohdsDGtqqYCR8e26etLPX6jQbceHp5R
