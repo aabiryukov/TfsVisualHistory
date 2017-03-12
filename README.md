@@ -13,4 +13,4 @@ Project documentation: https://github.com/aabiryukov/TfsVisualHistory/wiki
 
 # Screenshot
 
-![GitHub Logo](/Wiki/Images/SmallView.png )
+![GitHub Logo](/Wiki/Images/ViewSmall.png )
