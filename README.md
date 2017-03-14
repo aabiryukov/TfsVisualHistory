@@ -16,7 +16,7 @@ Project documentation: https://github.com/aabiryukov/TfsVisualHistory/wiki
 ![GitHub Logo](/Wiki/Images/ViewSmall.png )
 
 # Donate
-If you find the extension/sources useful and would like to donate, please send some bitcoins here:
+If you find the extension or sources useful, please send some bitcoins here for further development of ideas:
 
 BTC: 1EMohdsDGtqqYCR8e26etLPX6jQbceHp5R
 
