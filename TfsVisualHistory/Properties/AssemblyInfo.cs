@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Sitronics.TfsVisualHistory.VS201x")]
-[assembly: AssemblyDescription("TFS Source Control History Visualization. Project site: https://tfsvisualhistory.codeplex.com/ E-mail: aabiryukov@gmail.com")]
+[assembly: AssemblyDescription("TFS Source Control History Visualization. Project site: https://github.com/aabiryukov/TfsVisualHistory/ E-mail: aabiryukov@gmail.com")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Alexander Biryukov")]
 [assembly: AssemblyProduct("TfsSourceControlHistoryVisualization")]
-[assembly: AssemblyCopyright("Copyright (c) 2014 Alexander Biryukov <aabiryukov@gmail.com> (aka alexbirk)")]
+[assembly: AssemblyCopyright("Copyright (c) 2013-2017 Alexander Biryukov <aabiryukov@gmail.com>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

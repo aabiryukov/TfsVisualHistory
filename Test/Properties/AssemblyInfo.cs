@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("TfsVisualHistoryTest")]
-[assembly: AssemblyCopyright("Copyright (c) 2013 Alexander Biryukov <aabiryukov@gmail.com>")]
+[assembly: AssemblyCopyright("Copyright (c) 2013-2017 Alexander Biryukov <aabiryukov@gmail.com>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
