@@ -150,7 +150,7 @@ namespace Sitronics.TfsVisualHistory
                     return false;
                 }
                 latestChangesetId = latestChangeset.ChangesetId;
-                if (cancel) return false;
+                if (cancel) return false; //-V3022
             }
 
 		    var firstChangesetId = 0;
@@ -177,7 +177,7 @@ namespace Sitronics.TfsVisualHistory
 
 				foreach (var changeset in csList.Cast<Changeset>())
                 {
-                    if (cancel) return false;
+                    if (cancel) return false; //-V3022
 
                     if (firstChangesetId == 0) firstChangesetId = changeset.ChangesetId;
 
