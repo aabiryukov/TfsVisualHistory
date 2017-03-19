@@ -1,3 +1,5 @@
+![Build Info](https://sitronics.visualstudio.com/_apis/public/build/definitions/44b8084e-8ff4-43b5-9d33-47918d33f1f0/9/badge)
+
 # About project
 TFS source control history visualization (Visual Studio 2013-2015 extension), dynamic & interactive.
 Looks like a fascinating creation of a new galaxies in space.
