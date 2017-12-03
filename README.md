@@ -1,25 +1,19 @@
 ![Build Info](https://sitronics.visualstudio.com/_apis/public/build/definitions/44b8084e-8ff4-43b5-9d33-47918d33f1f0/9/badge)
 
 # About project
-TFS source control history visualization (Visual Studio 2013-2015 extension), dynamic & interactive.
+TFS source control history visualization (Visual Studio 2013-2017 extension), dynamic & interactive.
 Looks like a fascinating creation of a new galaxies in space.
 
-The project is TFS frontend for Gource visualization tool (binaries included into project) .
-Gource project site: http://code.google.com/p/gource/
+Simple documentation: https://github.com/aabiryukov/TfsVisualHistory/wiki
 
-Project documentation: https://github.com/aabiryukov/TfsVisualHistory/wiki
+The extension is TFS frontend for [Gource visualization tool](http://gource.io/) (binaries included into project).
 
 # Links
-- Project in Visual Studio Gallery: https://visualstudiogallery.msdn.microsoft.com/6a8e7330-8395-4915-935f-941dc3bde29c
-- Project author twitter: https://twitter.com/aabiryukov
+- Extension in Visual Studio Marketplace: https://marketplace.visualstudio.com/items?itemName=AlexandrBiryukov.TFSSourceControlHistoryVisualization
+- Gource project on Github: https://github.com/acaudwell/Gource
+
 
 # Screenshot
 
 ![GitHub Logo](/Wiki/Images/ViewSmall.png )
 
-# Donate
-If you find the extension or sources useful, please send some bitcoins here for further development of ideas:
-
-BTC: 1EMohdsDGtqqYCR8e26etLPX6jQbceHp5R
-
-Thank you!
