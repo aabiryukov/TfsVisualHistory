@@ -68,15 +68,12 @@ namespace Sitronics.TfsVisualHistory
 			get { return m_srcCtrlExplorer.Explorer.SelectedItems.Length == 1; }
 		}
 
-		public string CurrentSourceControlFolder
+		public string GetCurrentSourceControlFolder()
 		{
-			get
-			{
-				var itm = m_srcCtrlExplorer.Explorer.SelectedItems.First();
-				return itm == null
-					? m_srcCtrlExplorer.Explorer.CurrentFolderItem.SourceServerPath
-					: itm.SourceServerPath;
-			}
+			var itm = m_srcCtrlExplorer.Explorer.SelectedItems.First();
+			return itm == null
+				? m_srcCtrlExplorer.Explorer.CurrentFolderItem.SourceServerPath
+				: itm.SourceServerPath;
 		}
 
 		/// <summary>Implements the ExecuteCommand method.</summary>         
@@ -132,9 +129,11 @@ namespace Sitronics.TfsVisualHistory
 
 		public void ViewHistory()
 		{
-			if (TeamProjectCollectionUri != null && !string.IsNullOrEmpty(CurrentSourceControlFolder))
+            var currentSCFolder = GetCurrentSourceControlFolder();
+
+			if (TeamProjectCollectionUri != null && !string.IsNullOrEmpty(currentSCFolder))
 			{
-				HistoryViewer.ViewHistory(TeamProjectCollectionUri, CurrentSourceControlFolder);
+				HistoryViewer.ViewHistory(TeamProjectCollectionUri, currentSCFolder);
 			}
 			else
 			{

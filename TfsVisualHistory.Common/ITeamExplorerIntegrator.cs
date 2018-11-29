@@ -14,7 +14,7 @@ namespace Sitronics.TfsVisualHistory.Common
 
 		string TeamProjectName { get; set; }
 
-		string CurrentSourceControlFolder { get; }
+        string GetCurrentSourceControlFolder();
 
 		void SetSourceControlExplorerDirty(string serverPath);
 

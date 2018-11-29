@@ -1,16 +1,11 @@
-﻿using Sitronics.TfsVisualHistory.Common;
-using Sitronics.VisualStudioSelector;
-
-namespace Sitronics.TfsVisualHistory.VSExtension
+﻿namespace Sitronics.TfsVisualHistory.VSExtension
 {
     using System;
-    using System.ComponentModel.Design;
     using System.Diagnostics;
     using System.Globalization;
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.Shell;
-    using Microsoft.VisualStudio.Shell.Interop;
-  
+
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
     /// <para></para>
@@ -35,9 +30,6 @@ namespace Sitronics.TfsVisualHistory.VSExtension
     [Guid(GuidList.GuidTfsVisualHistoryVSExtensionPkgString)]
     public sealed class TfsVisualHistoryVSExtensionPackage : Package
     {
-		private ITeamExplorerIntegrator m_teamexpIntegrator;
-		private VisualStudioVersion m_vsVersion = VisualStudioVersion.Unknown;
-
         /// <summary>
         /// Initializes a new instance of the TfsVisualHistoryVSExtensionPackage class.
         /// Inside this method you can place any initialization code that does not require 
@@ -48,60 +40,6 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         public TfsVisualHistoryVSExtensionPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
-        }
-/*
-		private static IEnumerable<Type> GetTypesSafely(Assembly assembly)
-		{
-			try
-			{
-				return assembly.GetTypes();
-			}
-			catch (ReflectionTypeLoadException ex)
-			{
-				return ex.Types.Where(x => x != null);
-			}
-		}
-*/
-		[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFrom")]
-		public ITeamExplorerIntegrator TeamExplorerIntegrator
-        {
-            get
-            {
-	            if (m_teamexpIntegrator != null) return m_teamexpIntegrator;
-
-/*
-	            var pluginPath = Path.Combine(
-		            Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) ?? "unknown",
-		            "Sitronics.TfsVisualHistory.VS2012.dll");
-	            var assembly = Assembly.LoadFrom(pluginPath);
-
-	            foreach (var type in GetTypesSafely(assembly))
-	            {
-		            if (type.IsAbstract || !type.IsClass || !type.IsPublic) continue;
-		            if (!type.IsSubclassOf(typeof(ITeamExplorerIntegrator))) continue;
-
-		            m_teamexpIntegrator = (ITeamExplorerIntegrator)Activator.CreateInstance(type);
-		            m_teamexpIntegrator.Initialize(
-			            GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
-			            //                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
-			            );
-		            break;
-	            }
-
-	            if (m_teamexpIntegrator == null)
-	            {
-		            throw new ApplicationException("Interface ITeamExplorerIntegrator not found!");
-	            }
-*/
-				//typeof(Package).Assembly.Location
-				m_teamexpIntegrator = VSSelector.CreateTeamExplorerIntegrator(m_vsVersion);
-				m_teamexpIntegrator.Initialize(
-					GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
-					//                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
-					);
-
-	            return m_teamexpIntegrator;
-            }
         }
 
         /////////////////////////////////////////////////////////////////////////////
@@ -115,100 +53,10 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         protected override void Initialize()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
+            ViewSourceControlHistoryCommand.Initialize(this);
+
             base.Initialize();
-
-#if DEBUG
-	        System.Windows.Forms.MessageBox.Show("UserRegistryRoot=" + UserRegistryRoot);
-#endif
-
-// ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-			if (UserRegistryRoot.ToString().Contains(@"\12"))
-	        {
-		        m_vsVersion = VisualStudioVersion.VS2013;
-	        }
-	        else
-            if (UserRegistryRoot.ToString().Contains(@"\14"))
-            {
-                m_vsVersion = VisualStudioVersion.VS2015;
-            }
-            else
-            if (UserRegistryRoot.ToString().Contains(@"\15"))
-            {
-                m_vsVersion = VisualStudioVersion.VS2017;
-            }
-            else
-            {
-                throw new ApplicationException($"Unknown version of VisualStudioVersion: {UserRegistryRoot}");
-            }
-
-	        // Add our command handlers for menu (commands must exist in the .vsct file)
-            var mcs = GetService(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (null != mcs)
-            {
-                // Create the command for the menu item.
-                var menuCommandID = new CommandID(GuidList.GuidTfsVisualHistoryVSExtensionCmdSet, (int)PkgCmdIDList.CmdidSitronicsMotionTooling);
-                var menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
-/*
-                menuItem.BeforeQueryStatus += (sender, evt) =>
-                {
-                    // I don't need this next line since this is a lambda.
-                    // But I just wanted to show that sender is the OleMenuCommand.
-                    var item = (OleMenuCommand)sender;
-
-                    // var service = (EnvDTE.DTE)this.GetService(typeof(EnvDTE.DTE));
-                    item.Enabled = false;//TeamExplorerIntegrator.IsSingleSelected;
-                };
- */ 
-                mcs.AddCommand(menuItem);
-            }
         }
         #endregion
-
-        /// <summary>
-        /// This function is the callback used to execute a command when the a menu item is clicked.
-        /// See the Initialize method to see how the menu item is associated to this function using
-        /// the OleMenuCommandService service and the MenuCommand class.
-        /// </summary>
-        private void MenuItemCallback(object sender, EventArgs e)
-        {
-            var uiShell = (IVsUIShell)GetService(typeof(SVsUIShell));
-             
-            try
-            {
-                uiShell.SetWaitCursor();
-             
-                switch ((uint)((MenuCommand)sender).CommandID.ID)
-                {
-                    case PkgCmdIDList.CmdidSitronicsMotionTooling:
-                        // Views.SelectBranchPlan dlg = new Views.SelectBranchPlan(TeamExplorerIntegrator);
-                        // WindowHelper.ShowModal(dlg);
-                        // System.Windows.Forms.MessageBox.Show("CurrentSourceControlFolder=" + (TeamExplorerIntegrator.CurrentSourceControlFolder ?? "null"));
-                        // System.Windows.Forms.MessageBox.Show("TeamProjectCollectionUri=" + (TeamExplorerIntegrator.TeamProjectCollectionUri != null ? TeamExplorerIntegrator.TeamProjectCollectionUri.ToString() : "null"));
-
-						if (TeamExplorerIntegrator != null)
-						{
-							TeamExplorerIntegrator.ViewHistory();
-                        }
-                        break;
-                }                
-            }
-            catch (Exception ex)
-            {
-                var clsid = Guid.Empty;
-                int result;
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
-                           0,
-                           ref clsid,
-                           "TfsSourceControlVisualization",
-                           string.Format(CultureInfo.CurrentCulture, "{0}\n\nDetails:\n{1}", ex.Message, ex),
-                           string.Empty,
-                           0,
-                           OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                           OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
-                           OLEMSGICON.OLEMSGICON_CRITICAL,
-                           0,        // false
-                           out result));
-            }
-        }
     }
 }
