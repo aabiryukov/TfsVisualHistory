@@ -7,7 +7,6 @@ namespace Sitronics.VisualStudioSelector
 	public enum VisualStudioVersion
 	{
 		Unknown,
-		VS2012,
 		VS2013,
 		VS2015,
         VS2017
@@ -19,8 +18,6 @@ namespace Sitronics.VisualStudioSelector
 	    {
 		    switch (vsVersion)
 		    {
-				case VisualStudioVersion.VS2012:
-				    return ActivatorVS2012.CreateTeamExplorerIntegrator();
 				case VisualStudioVersion.VS2013:
 					return ActivatorVS2013.CreateTeamExplorerIntegrator();
 				case VisualStudioVersion.VS2015:

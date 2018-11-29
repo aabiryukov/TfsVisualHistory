@@ -308,10 +308,6 @@
       <Project>{f7387705-8e05-4ae1-90f0-29830d275681}</Project>
       <Name>TfsVisualHistory.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2012.csproj">
-      <Project>{61e0268d-184e-440d-91cb-950c8ba525a9}</Project>
-      <Name>TfsVisualHistory.VS2012</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TfsVisualHistory\TfsVisualHistory.VS2013.csproj">
       <Project>{a040df02-c510-417b-a5ec-9c4a88d114ea}</Project>
       <Name>TfsVisualHistory.VS2013</Name>

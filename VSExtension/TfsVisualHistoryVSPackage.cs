@@ -122,11 +122,6 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 #endif
 
 // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-			if (UserRegistryRoot.ToString().Contains(@"\11"))
-	        {
-		        m_vsVersion = VisualStudioVersion.VS2012;
-	        }
-	        else
 			if (UserRegistryRoot.ToString().Contains(@"\12"))
 	        {
 		        m_vsVersion = VisualStudioVersion.VS2013;
