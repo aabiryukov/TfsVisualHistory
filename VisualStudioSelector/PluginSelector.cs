@@ -9,7 +9,8 @@ namespace Sitronics.VisualStudioSelector
 		Unknown,
 		VS2013,
 		VS2015,
-        VS2017
+        VS2017,
+        VS2019,
     }
 
     public static class VSSelector
@@ -24,6 +25,8 @@ namespace Sitronics.VisualStudioSelector
 					return ActivatorVS2015.CreateTeamExplorerIntegrator();
                 case VisualStudioVersion.VS2017:
                     return ActivatorVS2017.CreateTeamExplorerIntegrator();
+                case VisualStudioVersion.VS2019:
+                    return ActivatorVS2019.CreateTeamExplorerIntegrator();
             }
 
             throw new ApplicationException("Unknown version of VisualStudioVersion");

@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 namespace Sitronics.TfsVisualHistory.Utility
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft", "CA1501")]
     internal partial class WaitMessageForm : Form
     {
 		#region Private Member Variables

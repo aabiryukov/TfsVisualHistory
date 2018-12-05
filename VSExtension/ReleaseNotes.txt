@@ -2,6 +2,10 @@
 
 Release Notes:
 
+v2.9 (05 Dev 2018)
+------------------
+Added support Visual Studio 2019 (.Net Framework 4.7.2 required)
+
 v2.8 (12 Mar 2017)
 ------------------
 Added support Visual Studio 2017

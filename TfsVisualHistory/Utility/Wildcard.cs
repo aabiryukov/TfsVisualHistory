@@ -41,7 +41,7 @@ namespace Sitronics.TfsVisualHistory.Utility
         /// <returns>A regex equivalent of the given wildcard.</returns>
         public static string WildcardToRegex(string pattern)
         {
-            if (pattern == null) throw new ArgumentNullException("pattern");
+            if (pattern == null) throw new ArgumentNullException(nameof(pattern));
 
             // Remove whitespaces
             var items = pattern.Split(new []{';'}, StringSplitOptions.RemoveEmptyEntries);

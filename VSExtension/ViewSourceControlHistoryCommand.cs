@@ -43,6 +43,11 @@ namespace Sitronics.TfsVisualHistory.VSExtension
                     _vsVersion = VisualStudioVersion.VS2017;
                 }
                 else
+                if (vsRegistryRoot.Contains(@"\16"))
+                {
+                    _vsVersion = VisualStudioVersion.VS2019;
+                }
+                else
                 {
                     throw new ApplicationException($"Unknown version of VisualStudioVersion: {vsRegistryRoot}");
                 }

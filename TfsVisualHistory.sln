@@ -1,8 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28315.86
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionSpecific", "VersionSpecific", "{1E4505BD-AD5D-49F2-B18B-8D16785DD555}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistoryVSExtension", "VSExtension\TfsVisualHistoryVSExtension.csproj", "{63817546-D392-4E3E-B485-520FE334623C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A040DF02-C510-417B-A5EC-9C4A88D114EA} = {A040DF02-C510-417B-A5EC-9C4A88D114EA}
@@ -21,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistory.VS2015", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistory.VS2017", "TfsVisualHistory\TfsVisualHistory.VS2017.csproj", "{DAC5AB83-279A-499B-8034-458889346EEB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VersionSpecific", "VersionSpecific", "{1E4505BD-AD5D-49F2-B18B-8D16785DD555}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TfsVisualHistory.VS2019", "TfsVisualHistory\TfsVisualHistory.VS2019.csproj", "{A4027447-2533-4D07-9FD1-C8F2AE6F5396}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{DAC5AB83-279A-499B-8034-458889346EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAC5AB83-279A-499B-8034-458889346EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAC5AB83-279A-499B-8034-458889346EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4027447-2533-4D07-9FD1-C8F2AE6F5396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4027447-2533-4D07-9FD1-C8F2AE6F5396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4027447-2533-4D07-9FD1-C8F2AE6F5396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4027447-2533-4D07-9FD1-C8F2AE6F5396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +71,7 @@ Global
 		{A040DF02-C510-417B-A5EC-9C4A88D114EA} = {1E4505BD-AD5D-49F2-B18B-8D16785DD555}
 		{850D0FC1-695C-4A40-BF29-B04DEA5EAEF8} = {1E4505BD-AD5D-49F2-B18B-8D16785DD555}
 		{DAC5AB83-279A-499B-8034-458889346EEB} = {1E4505BD-AD5D-49F2-B18B-8D16785DD555}
+		{A4027447-2533-4D07-9FD1-C8F2AE6F5396} = {1E4505BD-AD5D-49F2-B18B-8D16785DD555}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C92134DF-5ADF-4FCD-9A55-5C08D2C04CAB}

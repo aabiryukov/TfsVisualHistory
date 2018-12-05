@@ -6,6 +6,7 @@ using Sitronics.TfsVisualHistory.Utility;
 
 namespace Sitronics.TfsVisualHistory
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft", "CA1501")]
     public partial class SettingForm : Form
     {
         const string DialogCaption = "Visualization Settings";

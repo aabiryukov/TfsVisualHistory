@@ -33,7 +33,7 @@ namespace Sitronics.TfsVisualHistory
 			}
 
 			if (extensibility == null)
-				throw new ArgumentNullException("extensibility");
+				throw new ArgumentNullException(nameof(extensibility));
 
 			// get IDE Globals object and DTE from that
 			var dte2 = extensibility.GetGlobalsObject(null).DTE as DTE2;

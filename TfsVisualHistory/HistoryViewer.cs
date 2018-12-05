@@ -249,7 +249,7 @@ namespace Sitronics.TfsVisualHistory
                     logReader.Connect();
                 }
 
-				System.Threading.Tasks.Task.Factory.StartNew(() => RunLiveChangesMonitor(logReader, gourcePath, arguments));
+                System.Threading.Tasks.Task.Factory.StartNew(() => RunLiveChangesMonitor(logReader, gourcePath, arguments));
             }
         }
 
