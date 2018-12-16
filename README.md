@@ -1,4 +1,8 @@
-![Build Info](https://sitronics.visualstudio.com/_apis/public/build/definitions/44b8084e-8ff4-43b5-9d33-47918d33f1f0/9/badge)
+[![Build Status](https://sitronics.visualstudio.com/GitHubBuilds/_apis/build/status/TfsVisualHistory?branchName=master)](https://sitronics.visualstudio.com/GitHubBuilds/_build/latest?definitionId=9?branchName=master)
+[![](https://img.shields.io/vscode-marketplace/v/AlexandrBiryukov.TFSSourceControlHistoryVisualization.svg)](https://marketplace.visualstudio.com/items?itemName=AlexandrBiryukov.TFSSourceControlHistoryVisualization)
+
+
+
 
 # About project
 TFS source control history visualization (Visual Studio 2013-2017 extension), dynamic & interactive.
