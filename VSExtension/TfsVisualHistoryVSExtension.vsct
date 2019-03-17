@@ -21,8 +21,6 @@
   <Extern href="vsshlids.h"/>
 
 
-
-
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
   <Commands package="guidTfsVisualHistoryVSExtensionPkg">
@@ -34,32 +32,14 @@
     group; your package should define its own command set in order to avoid collisions  
     with command ids defined by other packages. -->
 
-    <Menus>
-      <Menu guid="guidTfsVisualHistoryVSExtensionCmdSet" id="menuidSubMenu" priority="0x100" type="Menu">
-        <Parent guid="guidTfsVisualHistoryVSExtensionCmdSet" id="grpSCEMainMenu" />
-        <CommandFlag>AlwaysCreate</CommandFlag>
-        <Strings>
-          <ButtonText>History Motion</ButtonText>
-          <CommandName>History Motion</CommandName>
-        </Strings>
-      </Menu>
-    </Menus>
-
-
     <!-- In this section you can define new menu groups. A menu group is a container for 
          other menus or buttons (commands); from a visual point of view you can see the 
          group as the part of a menu contained between two lines. The parent of a group 
          must be a menu. -->
     <Groups>
-      <Group guid="guidTfsVisualHistoryVSExtensionCmdSet" id="grpSCEMainMenu" priority="0x0600">
-        <Parent guid="guidTE_TeamExplorerCmdSet" id="IDM_SourceControlExplorerMS"/>
+      <Group guid="guid_SitronicsVSExtensionCmdSet" id="grpId_SitronicsVisualizeHistoryMenuGroup" priority="0x0600">
+        <Parent guid="guid_Std_TeamExplorer_TFVC_CmdSet" id="IDM_Std_SourceControlExplorer_Menu"/>
       </Group>
-      <Group guid="guidTfsVisualHistoryVSExtensionCmdSet" id="grpBranchToolMainMenu" priority="0x0600">
-        <Parent guid="guidTfsVisualHistoryVSExtensionCmdSet" id="menuidSubMenu" />
-      </Group>
-
-
-
     </Groups>
     
     <!--Buttons section. -->
@@ -74,15 +54,15 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
 
-      <Button guid="guidTfsVisualHistoryVSExtensionCmdSet" id="cmdidSitronicsMotionTooling" priority="0x0100" type="Button">
-        <Parent guid="guidTfsVisualHistoryVSExtensionCmdSet" id="grpSCEMainMenu" />
+      <Button guid="guid_SitronicsVSExtensionCmdSet" id="cmdId_SitronicsVisualizeHistoryCmd" priority="0x0100" type="Button">
+        <Parent guid="guid_SitronicsVSExtensionCmdSet" id="grpId_SitronicsVisualizeHistoryMenuGroup" />
        
         <Strings>
           <ButtonText>Visualize History (using Gource)</ButtonText>
         </Strings>
       </Button>
     </Buttons>
-   
+
   </Commands>
 
 
@@ -91,16 +71,13 @@
     <GuidSymbol name="guidTfsVisualHistoryVSExtensionPkg" value="{69625F51-97BE-4B83-AAE0-2302F4661AFF}" />
     
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidTfsVisualHistoryVSExtensionCmdSet" value="{EC8DE40B-426B-4438-BC25-5B818A87C9FF}">
-      <IDSymbol name="menuidSubMenu" value="0x0104" />
-      <IDSymbol name="grpSCEMainMenu" value="0x1020" />
-      <IDSymbol name="grpBranchToolMainMenu" value="0x1100" />
-      
-      <IDSymbol name="cmdidSitronicsMotionTooling" value="0x0100" />
+    <GuidSymbol name="guid_SitronicsVSExtensionCmdSet" value="{EC8DE40B-426B-4438-BC25-5B818A87C9FF}">
+      <IDSymbol name="grpId_SitronicsVisualizeHistoryMenuGroup" value="0x1020" />
+      <IDSymbol name="cmdId_SitronicsVisualizeHistoryCmd" value="0x0100" />
     </GuidSymbol>
 
-    <GuidSymbol name="guidTE_TeamExplorerCmdSet" value="{FFE1131C-8EA1-4D05-9728-34AD4611BDA9}">
-      <IDSymbol name="IDM_SourceControlExplorerMS" value="4113" />
+    <GuidSymbol name="guid_Std_TeamExplorer_TFVC_CmdSet" value="{FFE1131C-8EA1-4D05-9728-34AD4611BDA9}">
+      <IDSymbol name="IDM_Std_SourceControlExplorer_Menu" value="4113" />
     </GuidSymbol>
   </Symbols>
 
