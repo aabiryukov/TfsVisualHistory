@@ -3,18 +3,17 @@ using Sitronics.TfsVisualHistory.Common;
 
 namespace Sitronics.TfsVisualHistory
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics;
-	using System.Linq;
-	using EnvDTE80;
-	using Extensibility;
-	using Microsoft.TeamFoundation.Client;
-	using Microsoft.TeamFoundation.VersionControl.Client;
-	using Microsoft.VisualStudio.TeamFoundation;
-	using Microsoft.VisualStudio.TeamFoundation.VersionControl;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using EnvDTE80;
+    using Microsoft.TeamFoundation.Client;
+    using Microsoft.TeamFoundation.VersionControl.Client;
+    using Microsoft.VisualStudio.TeamFoundation;
+    using Microsoft.VisualStudio.TeamFoundation.VersionControl;
 
-	public class TeamExplorerIntegrator : ITeamExplorerIntegrator
+    public class TeamExplorerIntegrator : ITeamExplorerIntegrator
 	{
 		//        private ITeamFoundationContextManager m_tfsContextManager;
 		private DTE2 m_applicationObject;
@@ -145,7 +144,7 @@ namespace Sitronics.TfsVisualHistory
 		{
 			m_dirtyPath.Add(serverPath);
 		}
-
+/*
 		/// <summary>Implements the OnDisconnection method of the IDTExtensibility2 interface. Receives notification that the Add-in is being unloaded.</summary> 
 		/// <param name='disconnectMode'>Describes how the Add-in is being unloaded.</param> 
 		/// <param name='custom'>Array of parameters that are host application specific.</param> 
@@ -160,7 +159,7 @@ namespace Sitronics.TfsVisualHistory
 			}
 		}
 
-		/// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary> 
+        /// <summary>Implements the OnAddInsUpdate method of the IDTExtensibility2 interface. Receives notification when the collection of Add-ins has changed.</summary> 
 		/// <param name='custom'>Array of parameters that are host application specific.</param> 
 		/// <seealso class='IDTExtensibility2' />        
 		public void OnAddInsUpdate(ref Array custom)
@@ -180,6 +179,7 @@ namespace Sitronics.TfsVisualHistory
 		public void OnBeginShutdown(ref Array custom)
 		{
 		}
+*/
 
 		/// <summary> 
 		/// Raised by the TFS Visual Studio integration package when the active project context changes. 

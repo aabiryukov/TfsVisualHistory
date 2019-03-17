@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.TeamFoundation.VersionControl.Client;
@@ -62,7 +61,7 @@ namespace Sitronics.TfsVisualHistory
 
         private static string FormatFileName(string fileName)
         {
-            // Преобразуем расширение к нижнему регистру, чтобы размер букв не влиял на визуализацию типов файлов.
+            // Converting file extensions to lower case to unify file extensions visualization
             return ConvertFileExtensionToLowerCase(fileName);
         }
 
@@ -74,7 +73,9 @@ namespace Sitronics.TfsVisualHistory
             if (pointIndex < slashIndex || pointIndex < 1 || pointIndex >= fileName.Length - 1)
                 return fileName;
 
+#pragma warning disable CA1308 // Normalize strings to uppercase
             return fileName.Substring(0, pointIndex + 1) + fileName.Substring(pointIndex + 1, fileName.Length - (pointIndex + 1)).ToLowerInvariant();
+#pragma warning restore CA1308 // Normalize strings to uppercase
         }
 
         public IEnumerable<string> GetLogLines(Changeset changeset)
@@ -85,8 +86,6 @@ namespace Sitronics.TfsVisualHistory
 
             foreach (var change in changeset.Changes)
             {
-
-                //                        if (change.Item.ItemType == ItemType.File)
                 {
                     // Filter files
                     if (!FilterByString(change.Item.ServerItem, m_includeFilesWildcard, m_excludeFilesWildcard))

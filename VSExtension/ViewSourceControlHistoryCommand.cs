@@ -1,9 +1,9 @@
 ﻿using System;
 using System.ComponentModel.Design;
-using System.Globalization;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Sitronics.TfsVisualHistory.Common;
+using Sitronics.TfsVisualHistory.VSExtension.Helpers;
 using Sitronics.VisualStudioSelector;
 
 namespace Sitronics.TfsVisualHistory.VSExtension
@@ -20,7 +20,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             _package = package;
 
 #if DEBUG
-            System.Windows.Forms.MessageBox.Show("UserRegistryRoot=" + _package.UserRegistryRoot);
+            MessageHelper.ShowMessage("UserRegistryRoot=" + _package.UserRegistryRoot);
 #endif
 
             // Detect Visual Studio version
@@ -57,7 +57,7 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             if (ServiceProvider.GetService(typeof(IMenuCommandService)) is OleMenuCommandService menuCommandService)
             {
                 // Create the command for the menu item.
-                var menuCommandID = new CommandID(GuidList.GuidTfsVisualHistoryVSExtensionCmdSet, (int)PkgCmdIDList.CmdidSitronicsMotionTooling);
+                var menuCommandID = new CommandID(GuidList.GuidTfsVisualHistoryVSExtensionCmdSet, (int)PkgCmdIDList.CmdSitronicsVisualizeHistory);
                 var menuItem = new MenuCommand(MenuItemCallback, menuCommandID);
                 /*
                                 menuItem.BeforeQueryStatus += (sender, evt) =>
@@ -95,11 +95,12 @@ namespace Sitronics.TfsVisualHistory.VSExtension
             {
                 if (_teamexpIntegrator != null) return _teamexpIntegrator;
 
+                var vsExtensibility = ServiceProvider.GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility;
+                if(vsExtensibility == null)
+                    throw new InvalidOperationException("Internal error: Interface EnvDTE.IVsExtensibility is not available (vsExtensibility is null)");
+
                 _teamexpIntegrator = VSSelector.CreateTeamExplorerIntegrator(_vsVersion);
-                _teamexpIntegrator.Initialize(
-                    ServiceProvider.GetService(typeof(EnvDTE.IVsExtensibility)) as EnvDTE.IVsExtensibility
-//                        ,(ITeamFoundationContextManager)GetService(typeof(ITeamFoundationContextManager))
-                    );
+                _teamexpIntegrator.Initialize(vsExtensibility);
 
                 return _teamexpIntegrator;
             }
@@ -121,7 +122,15 @@ namespace Sitronics.TfsVisualHistory.VSExtension
         /// </summary>
         private void MenuItemCallback(object sender, EventArgs e)
         {
+//            ThreadHelper.ThrowIfNotOnUIThread();
+
             var uiShell = (IVsUIShell)ServiceProvider.GetService(typeof(SVsUIShell));
+
+            if (uiShell == null)
+            {
+                MessageHelper.ShowMessage("Internal error: uiShell is null");
+                return;
+            }
 
             try
             {
@@ -129,34 +138,16 @@ namespace Sitronics.TfsVisualHistory.VSExtension
 
                 switch ((uint)((MenuCommand)sender).CommandID.ID)
                 {
-                    case PkgCmdIDList.CmdidSitronicsMotionTooling:
-                        // Views.SelectBranchPlan dlg = new Views.SelectBranchPlan(TeamExplorerIntegrator);
-                        // WindowHelper.ShowModal(dlg);
-                        // System.Windows.Forms.MessageBox.Show("CurrentSourceControlFolder=" + (TeamExplorerIntegrator.CurrentSourceControlFolder ?? "null"));
-                        // System.Windows.Forms.MessageBox.Show("TeamProjectCollectionUri=" + (TeamExplorerIntegrator.TeamProjectCollectionUri != null ? TeamExplorerIntegrator.TeamProjectCollectionUri.ToString() : "null"));
+                    case PkgCmdIDList.CmdSitronicsVisualizeHistory:
 
                         if (TeamExplorerIntegrator != null)
-                        {
                             TeamExplorerIntegrator.ViewHistory();
-                        }
                         break;
                 }
             }
             catch (Exception ex)
             {
-                var clsid = Guid.Empty;
-                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
-                           0,
-                           ref clsid,
-                           "TfsSourceControlVisualization",
-                           string.Format(CultureInfo.CurrentCulture, "{0}\n\nDetails:\n{1}", ex.Message, ex),
-                           string.Empty,
-                           0,
-                           OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                           OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST,
-                           OLEMSGICON.OLEMSGICON_CRITICAL,
-                           0,        // false
-                           out int result));
+                 MessageHelper.ShowShellErrorMessage(uiShell, ex);
             }
         }
     }

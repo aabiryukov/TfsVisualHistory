@@ -26,6 +26,7 @@ namespace Sitronics.TfsVisualHistory
             Live
         }
 
+#pragma warning disable CA1051 // Do not declare visible instance fields
 	    public PlayModeOption PlayMode;
 
         public StringFilter UsersFilter { get; set; }
@@ -52,7 +53,8 @@ namespace Sitronics.TfsVisualHistory
         public int ResolutionHeight;
 
 		public CheckState ViewLogo;
-		public string LogoFileName;
+        public string LogoFileName;
+#pragma warning restore CA1051 // Do not declare visible instance fields
 
         public VisualizationSettings()
         {
